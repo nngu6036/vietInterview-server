@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model='career.job_category' id='career.job_category_1'>
+            <field name='title'>Accounting</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_2'>
+            <field name='title'>Administrative/Clerical</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_3'>
+            <field name='title'>Advertising/Promotion/PR</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_4'>
+            <field name='title'>Agriculture/Forestry</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_5'>
+            <field name='title'>Airlines/Tourism</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_6'>
+            <field name='title'>Architecture/Interior Design</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_7'>
+            <field name='title'>Arts/Design</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_8'>
+            <field name='title'>Auditing</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_9'>
+            <field name='title'>Auto/Automotive</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_10'>
+            <field name='title'>Banking</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_11'>
+            <field name='title'>Chemical/Biochemical</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_12'>
+            <field name='title'>Civil/Construction</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_13'>
+            <field name='title'>Consulting</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_14'>
+            <field name='title'>Customer Service</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_15'>
+            <field name='title'>Doctors</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_16'>
+            <field name='title'>Doctors/nurses</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_17'>
+            <field name='title'>Education/Training</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_18'>
+            <field name='title'>Electrical/Electronics</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_19'>
+            <field name='title'>Entry level</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_20'>
+            <field name='title'>Environment/Waste Services</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_21'>
+            <field name='title'>Executive management</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_22'>
+            <field name='title'>Expatriate Jobs in Vietnam</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_23'>
+            <field name='title'>Export-Import</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_24'>
+            <field name='title'>Fashion/Lifestyle</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_25'>
+            <field name='title'>Finance/Investment</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_26'>
+            <field name='title'>FMCG</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_27'>
+            <field name='title'>Food &amp; Beverage</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_28'>
+            <field name='title'>Freight/Logistics</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_29'>
+            <field name='title'>Geology/Mineral</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_30'>
+            <field name='title'>Health/Medical Care</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_31'>
+            <field name='title'>High Technology</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_32'>
+            <field name='title'>Household</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_33'>
+            <field name='title'>HSE</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_34'>
+            <field name='title'>Human Resources</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_35'>
+            <field name='title'>HVAC</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_36'>
+            <field name='title'>Industrial Products</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_37'>
+            <field name='title'>Insurance</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_38'>
+            <field name='title'>Internet/Online Media</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_39'>
+            <field name='title'>Interpreter/Translator</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_40'>
+            <field name='title'>IT - Hardware/Networking</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_41'>
+            <field name='title'>IT - Software</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_42'>
+            <field name='title'>Legal/Contracts</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_43'>
+            <field name='title'>Luxury Goods</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_44'>
+            <field name='title'>Maintenance</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_45'>
+            <field name='title'>Marine</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_46'>
+            <field name='title'>Marketing</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_47'>
+            <field name='title'>Mechanical</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_48'>
+            <field name='title'>Merchandising/Purchasing/Supply Chain</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_49'>
+            <field name='title'>NGO/Non-Profit</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_50'>
+            <field name='title'>Oil/Gas</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_51'>
+            <field name='title'>Overseas Jobs</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_52'>
+            <field name='title'>Pharmaceutical representatives</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_53'>
+            <field name='title'>Pharmaceutical/Biotech</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_54'>
+            <field name='title'>Pharmacist</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_55'>
+            <field name='title'>Planning/Projects</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_56'>
+            <field name='title'>Printing</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_57'>
+            <field name='title'>Production/Process</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_58'>
+            <field name='title'>QA/QC</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_59'>
+            <field name='title'>Real Estate</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_60'>
+            <field name='title'>Restaurant/Hotel</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_61'>
+            <field name='title'>Retail/Wholesale</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_62'>
+            <field name='title'>Sales</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_63'>
+            <field name='title'>Sales Technical</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_64'>
+            <field name='title'>Securities &amp; Trading</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_65'>
+            <field name='title'>Telecommunications</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_66'>
+            <field name='title'>Temporary/Contract</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_67'>
+            <field name='title'>Textiles/Garments/Footwear</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_68'>
+            <field name='title'>TV/Media/Newspaper</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_69'>
+            <field name='title'>Warehouse</field>
+        </record>
+        <record model='career.job_category' id='career.job_category_70'>
+            <field name='title'>Other</field>
+        </record>
+
+        <record model='career.job_position' id='career.job_position_1'>
+            <field name='title'>Entry level</field>
+        </record>
+        <record model='career.job_position' id='career.job_position_2'>
+            <field name='title'>Experienced (non-manager)</field>
+        </record>
+        <record model='career.job_position' id='career.job_position_3'>
+            <field name='title'>Manager</field>
+        </record>
+        <record model='career.job_position' id='career.job_position_4'>
+            <field name='title'>Director and above</field>
+        </record>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,6 @@
+<openerp>
+    <data>
+        <function model="career.career" name="install"/>
+    </data>
+
+</openerp>

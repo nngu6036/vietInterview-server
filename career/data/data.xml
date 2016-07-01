@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="res.groups" id="career.admin_group">
+            <field name="name">Administrator group</field>
+        </record>
+        <record model="res.groups" id="career.employer_group">
+            <field name="name">Employer group</field>
+        </record>
+        <record model="res.groups" id="career.employee_group">
+            <field name="name">Employee group</field>
+        </record>
+        <record model="career.license" id="career.bronze_license">
+            <field name="name">Bronze</field>
+            <field name="assignment">5</field>
+            <field name="email">100</field>
+        </record>
+        <record model="career.license" id="career.silver_license">
+            <field name="name">Silver</field>
+            <field name="assignment">10</field>
+            <field name="email">500</field>
+        </record>
+        <record model="career.license" id="career.gold_license">
+            <field name="name">Gold</field>
+            <field name="assignment">25</field>
+            <field name="email">5000</field>
+        </record>
+        <record model="career.license" id="career.platnium_license">
+            <field name="name">Platnium</field>
+            <field name="assignment">100</field>
+            <field name="email">50000</field>
+        </record>
+
+
+    </data>
+
+</openerp>

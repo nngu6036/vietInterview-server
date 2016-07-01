@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="survey.survey" id="assessment_form">
+            <field name="title">Interview Assessment Form</field>
+            <field name="auth_required" eval="False" />
+            <field name="users_can_go_back" eval="True" />
+        </record>
+        <!-- Page 1 -->
+        <record model="survey.page" id="non_verbal_communication_page">
+            <field name="title">Non-verbal communication</field>
+            <field name="survey_id" ref="assessment_form" />
+            <field name="sequence">1</field>
+        </record>
+        <record model="survey.question" id="assessment_question_1">
+            <field name="page_id" ref="non_verbal_communication_page" />
+            <field name="sequence">1</field>
+            <field name="question">Direct Eye Contact</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_2">
+            <field name="page_id" ref="non_verbal_communication_page" />
+            <field name="sequence">2</field>
+            <field name="question">Appropriate Appearance/Atire</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_3">
+            <field name="page_id" ref="non_verbal_communication_page" />
+            <field name="sequence">3</field>
+            <field name="question">Upright posture</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_4">
+            <field name="page_id" ref="non_verbal_communication_page" />
+            <field name="sequence">4</field>
+            <field name="question">Friendly demeanor/Smile</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_5">
+            <field name="page_id" ref="non_verbal_communication_page" />
+            <field name="sequence">5</field>
+            <field name="question">Convey self-confidence</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.page" id="verbal_communication_page">
+            <field name="title">Verbal communication</field>
+            <field name="survey_id" ref="assessment_form" />
+            <field name="sequence">2</field>
+        </record>
+        <record model="survey.question" id="assessment_question_6">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">1</field>
+            <field name="question">Avoid saying uhm, like, I mean, I know</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_7">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">2</field>
+            <field name="question">Use proper grammar/ avoid slang terms</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_8">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">3</field>
+            <field name="question">Articulate relevant skills and accmplishments</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_9">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">4</field>
+            <field name="question">Communicate well-defined career goals</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_10">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">5</field>
+            <field name="question">Express idea clearly</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_10">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">6</field>
+            <field name="question">Convey decision making ability</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_11">
+            <field name="page_id" ref="verbal_communication_page" />
+            <field name="sequence">7</field>
+            <field name="question">Emphasize your strong points</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.page" id="other_page">
+            <field name="title">Other questions to consider</field>
+            <field name="survey_id" ref="assessment_form" />
+            <field name="sequence">3</field>
+        </record>
+        <record model="survey.question" id="assessment_question_12">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">1</field>
+            <field name="question">Did you answer the question/stick to the subject?</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_13">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">2</field>
+            <field name="question">How well did you focus your ability to learn quickly communication skills, analytical abilities and other strengths?</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_14">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">3</field>
+            <field name="question">Were you prepare to answer tough question?</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_15">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">4</field>
+            <field name="question">Could you comfortably discuss about any aspect of your resume?</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_16">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">5</field>
+            <field name="question">How well did you describer past experience? Did you criticize former employer, colleague, friend or were you able to remain positive</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+        <record model="survey.question" id="assessment_question_17">
+            <field name="page_id" ref="other_page" />
+            <field name="sequence">6</field>
+            <field name="question">Evaluate your grammar. Did you stumble?</field>
+            <field name="type">numerical_box</field>
+            <field name="validation_min_float_value">1</field>
+            <field name="validation_max_float_value">5</field>
+        </record>
+
+    </data>
+
+</openerp>
