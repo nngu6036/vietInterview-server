@@ -221,11 +221,10 @@ class EmployerService(osv.AbstractModel):
             assignment = self.env['hr.job'].create({'name':vals['name'],'description':vals['description'],
                                                     'deadline':vals['deadline'], 'company_id':company['id'],
                                                     'requirements':vals['requirements'] or False,
-                                                    'category_id':int(vals['categoryId']) or False,
-                                                    'position_id':int(vals['positionId']) or False,
-                                                    'country_id':int(vals['countryId']) or False,
-                                                    'province_id':int(vals['provinceId']) or False})
-
+                                                    'category_id':'categoryId' in vals and int(vals['categoryId']) ,
+                                                    'position_id':'positionId' in vals and int(vals['positionId']) ,
+                                                    'country_id':'countryId' in vals and int(vals['countryId']) ,
+                                                    'province_id':'provinceId' in vals and int(vals['provinceId'])} )
             return assignment.id
         return False
 
@@ -353,29 +352,21 @@ class EmployerService(osv.AbstractModel):
 
 
     @api.model
-    def submitAssessment(self,assignmentId,applicantId, vals):
-        cr, uid, context = self.env.args
-        assignment = self.env['hr.job'].browse(assignmentId)
-        employees = self.env['hr.employee'].search([('user_id','=',uid)])
-        if employees and assignment:
-            hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId)])
-            hr_interview_assessment.write({'rating':int(vals['vote']),'note_summary':vals['comment']})
-            for jQuestion in vals['questionList']:
-                for jAns in vals['answerList']:
-                    if int(jAns['questionId'])== int(jQuestion['id']):
-                        self.env['survey.user_input_line'].create({'user_input_id':hr_interview_assessment[0].request_id.id,
-                                                                                'question_id':int(jQuestion['id']),
-                                                                                'answer_type':'number',
-                                                                                'value_number':int(jAns['answer'])})
-            return True
-        return False
+    def submitAssessment(self,assessmentResult):
+        hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',int(assessmentResult['candidateId']))])
+        hr_interview_assessment.write({'rating':int(assessmentResult['vote']),'note_summary':assessmentResult['comment']})
+        for jAns in assessmentResult['answerList']:
+                self.env['survey.user_input_line'].create({'user_input_id':hr_interview_assessment[0].request_id.id,
+                                                                        'question_id':int(jAns['questionId']),
+                                                                        'answer_type':'number',
+                                                                        'value_number':int(jAns['answer'])})
+        return True
 
     @api.model
-    def getSelfAssessment(self,assignmentId,applicantId):
+    def getSelfAssessment(self,assessmentId,applicantId):
         cr, uid, context = self.env.args
-        assignment = self.env['hr.job'].browse(assignmentId)
         employees = self.env['hr.employee'].search([('user_id','=',uid)])
-        if employees and assignment:
+        if employees:
             company = self.getUserCompany()
             hr_eval_phase = self.env['hr_evaluation.plan.phase'].search([('company_id','=',company['id'])])
             hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','=',uid)])
@@ -384,43 +375,37 @@ class EmployerService(osv.AbstractModel):
                                                                        'plan_id':hr_eval_phase.plan_id.id,'state':'progress'})
                 hr_interview_assessment = self.env['hr.evaluation.interview'].create({'evaluation_id':hr_eval.id,'phase_id':hr_eval_phase.id,
                                                             'applicant_id':applicantId,'state':'waiting_answer','user_id':uid})
-            assessment_form = self.env.ref('career.assessment_form')
-            groupList=[]
-            questionList = []
-            for page in assessment_form.page_ids:
-                groupList.append({'id':page.id,'name':page.title,'order':page.sequence} )
-                for question in page.question_ids:
-                    questionList.append({'id':question.id,'content':question.question,'groupId':question.page_id.id,
-                                     'minVal':question.validation_min_float_value,'maxVal':question.validation_max_float_value} )
             answerList=[{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number} for answer in hr_interview_assessment.request_id.user_input_line_ids]
             return {'id':hr_interview_assessment.id,'comment':hr_interview_assessment.evaluation_id.note_summary,
-                    'vote':hr_interview_assessment.evaluation_id.rating,'groupList':groupList,'questionList':questionList,'answerList':answerList}
+                    'vote':hr_interview_assessment.evaluation_id.rating,'answerList':answerList}
         return False
+
 
 
 
     @api.model
-    def getOtherAssessment(self,assignmentId,applicantId):
+    def getOtherAssessment(self,assessmentId,applicantId):
         cr, uid, context = self.env.args
-        assignment = self.env['hr.job'].browse(assignmentId)
-        employees = self.env['hr.employee'].search([('user_id','=',uid)])
-        if employees and assignment:
-            assessment_form = self.env.ref('career.assessment_form')
-            groupList=[]
-            questionList = []
-            for page in assessment_form.page_ids:
-                groupList.append({'id':page.id,'name':page.title,'order':page.sequence} )
-                for question in page.question_ids:
-                    questionList.append({'id':question.id,'content':question.question,'groupId':question.page_id.id,
-                                     'minVal':question.validation_min_float_value,'maxVal':question.validation_max_float_value} )
-            assessmentList = []
-            for hr_interview_assessment in self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','!=',uid)]):
-                assessmentList.append({'ansertList': [{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number}
-                                                     for answer in hr_interview_assessment.request_id.user_input_line_ids ],
-                                       'id':hr_interview_assessment.id,'comment':hr_interview_assessment.evaluation_id.note_summary,
-                                        'vote':hr_interview_assessment.evaluation_id.rating})
-            return {'groupList':groupList,'questionList':questionList,'assessmentList':assessmentList}
-        return False
+        assessmentResultList = []
+        for hr_interview_assessment in self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','!=',uid)]):
+            assessmentResultList.append({'answertList': [{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number}
+                                                 for answer in hr_interview_assessment.request_id.user_input_line_ids ],
+                                   'id':hr_interview_assessment.id,'comment':hr_interview_assessment.evaluation_id.note_summary,
+                                    'vote':hr_interview_assessment.evaluation_id.rating})
+        return {'assessmentResultList':assessmentResultList}
+
+
+    @api.model
+    def getAssessment(self):
+        assessment_form = self.env.ref('career.assessment_form')
+        groupList=[]
+        questionList = []
+        for page in assessment_form.page_ids:
+            groupList.append({'id':page.id,'name':page.title,'order':page.sequence} )
+            for question in page.question_ids:
+                questionList.append({'id':question.id,'content':question.question,'groupId':question.page_id.id,
+                                 'minVal':question.validation_min_float_value,'maxVal':question.validation_max_float_value} )
+        return {'id':assessment_form.id,'groupList':groupList,'questionList':questionList}
 
 class CandidateService(osv.AbstractModel):
     _name = 'career.guest_service'
@@ -537,7 +522,7 @@ class MailService(osv.AbstractModel):
     @api.model
     def appendInvitationLink(self,template,invite_code):
         body = template.body_html
-        body  = body + '<a href="https://vietinterview.com/interview?code=%s">Interview link</a>' % invite_code
+        body  = body + '<a href="https://vietinterview.com/#/interview?code=%s">Interview link</a>' % invite_code
         template.write({'body_html':body})
 
 

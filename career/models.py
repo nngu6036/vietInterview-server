@@ -127,6 +127,7 @@ class InterviewQuestion(models.Model):
 
     response = fields.Integer(string="Response time limit for one question")
     retry = fields.Integer(string="Number of attempts for one question, -1 means unlimited")
+    prepare = fields.Integer(string="Prepare time for one question, -1 means unlimited",default=1)
     source = fields.Selection([('manual', 'User-defined'), ('system', 'System question')], default='system')
     mode = fields.Selection([('text', 'Reading'), ('video', 'Watching')], default='video')
     videoUrl = fields.Text(string="Question Video URL")

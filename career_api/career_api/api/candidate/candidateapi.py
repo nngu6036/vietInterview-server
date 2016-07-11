@@ -57,7 +57,7 @@ def finishInterview():
     try:
          inviteCode  = request.values['code']
          if request.method == 'POST':
-            result  = guest_service.finishInterview(inviteCode)
+            result  = guest_service.stopInterview(inviteCode)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
