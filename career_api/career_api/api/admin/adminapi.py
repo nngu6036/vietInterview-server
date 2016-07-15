@@ -40,31 +40,34 @@ def license():
         return jsonify(result=False)
 
 
-@app.route('/admin/employer', methods=['GET','PUT','POST'],endpoint='admin-employer')
-def employer():
+@app.route('/admin/company', methods=['GET','PUT','POST'],endpoint='admin-company')
+def company():
     try:
          token  = request.values['token']
          erpInstance = ErpInstance.fromToken(token,['admin'])
          admin_service = erpInstance.service('career.admin_service')
          if request.method == 'GET':
-            employerList = admin_service.getEmployer()
-            return jsonify(result=True,employerList=employerList)
+            companyList = admin_service.getCompany()
+            return jsonify(result=True,companyList=companyList)
          if request.method == 'PUT':
-            employer  = json.loads(request.values['employer'])
-            admin_service.updateEmployer(int(employer['id']),employer)
+            company  = json.loads(request.values['company'])
+            admin_service.updateCompany(int(company['id']),company)
             return jsonify(result=True)
          if request.method == 'POST':
-            employer  = json.loads(request.values['employer'])
-            employerId = admin_service.createEmployer(employer)
-            if employerId:
-                return jsonify(result=True,employerId=employerId)
+            company  = json.loads(request.values['company'])
+            companyId = admin_service.createCompany(company)
+            if companyId:
+                return jsonify(result=True,employerId=companyId)
             else:
                 return jsonify(result=False)
     except Exception as exc:
         print(exc)
-        print 'Employer  error '
+        print 'Company  error '
         print request.values
         return jsonify(result=False)
+
+
+
 
 
 @app.route('/admin/account/logout', methods=['POST'],endpoint='admin-logout')

@@ -96,49 +96,52 @@ class AdminService(osv.AbstractModel):
 
 
     @api.model
-    def createEmployer(self,vals):
-        user = self.env['res.users'].search([('login', '=', vals['email'])])
-        if user:
-            print ("Emplyer login %s already exist" % vals['email'])
-            return False
+    def createCompany(self,vals):
         license_instance = self.env['career.license_instance'].create({'license_id':int(vals['licenseId']),
                                                                        'expire_date':vals['licenseExpire']})
-        company = self.env['res.company'].create({'name':vals['name']})
-        employer_group = self.env.ref('career.employer_group')
-        hr_group = self.env.ref('base.group_hr_manager')
-        survey_group = self.env.ref('base.group_survey_manager')
-        admin_group = self.env.ref('base.group_erp_manager')
-        user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],
-                                             'partner_id':company.partner_id.id,'email':vals['email'],})
-        user.write({'company_ids':[(4,company.id)]})
-        user.write({'company_id':company.id, 'groups_id':[(6,0,[employer_group.id,hr_group.id,survey_group.id,admin_group.id])]})
-        self.env['hr.employee'].create({'address_id':company.partner_id.id,'work_email':vals['email'],'name':vals['name'].id,
-                                       'user_id':user.id,'company_id':company.id})
+        company = self.env['res.company'].create({'name':vals['name'],'image':vals['logo'],'license_instance_id':license_instance.id})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name':'Assessment','company_id':company.id})
         assessment_form = self.env.ref('career.assessment_form')
         self.env['hr_evaluation.plan.phase'].create({'name':'Assessment','company_id':company.id,'plan_id':hr_eval_plan.id,
                                                          'action':'final','survey_id':assessment_form.id})
-        employer = self.env['career.employer'].create({ 'license_instance_id':license_instance.id,'user_id':user.id})
-        return employer.id
+        return company.id
 
     @api.model
-    def updateEmployer(self,id,vals):
-        employer = self.env['career.employer'].browse(id)
-        if employer:
-            license = self.env['career.license_instance'].browse(int(vals['licenseId']))
-            if license:
-                employer.license_instance_id.write({'license_id':license.id,'expire_date':vals['licenseExpire']})
-            employer.user_id.write({'login':vals['email'],'password':vals['password'],'name':vals['name']})
-            employer.user_id.company_id.write({'name':vals['name']})
+    def updateCompany(self,id,vals):
+        company = self.env['res.company'].browse(id)
+        if company:
+            company.write({'name':vals['name'],'image':vals['logo'],'license_instance_id':vals['licenseId']})
             return True
         return False
 
     @api.model
-    def getEmployer(self):
-        employers = self.env['career.employer'].search([])
-        employerList = [{'id':e.id,'name':e.name,'email':e.login,'password':e.password,'licenseId':e.license_instance_id.license_id.id,
-                         'licenseExpire':e.expire_date} for e in employers]
-        return employerList
+    def getCompany(self):
+        companys = self.env['res.company'].search([])
+        companyList = [{'id':c.id,'name':c.name,'logo':c.image,'licenseId':c.license_instance_id.license_id.id,
+                         'licenseExpire':c.expire_date} for c in companys]
+        return companyList
+
+
+    @api.model
+    def createEmployerUser(self,companyId,vals):
+            user = self.env['res.users'].search([('login', '=', vals['email'])])
+            if user:
+                print ("Emplyer login %s already exist" % vals['email'])
+                return False
+            employer_group = self.env.ref('career.employer_group')
+            hr_group = self.env.ref('base.group_hr_manager')
+            survey_group = self.env.ref('base.group_survey_manager')
+            admin_group = self.env.ref('base.group_erp_manager')
+            company = self.env['res.company'].browse(companyId)
+            user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],
+                                                 'partner_id':company.partner_id.id,'email':vals['email'],})
+            user.write({'company_ids':[(4,company.id)]})
+            user.write({'company_id':company.id, 'groups_id':[(6,0,[employer_group.id,hr_group.id,survey_group.id,admin_group.id])]})
+            self.env['hr.employee'].create({'address_id':company.partner_id.id,'work_email':vals['email'],'name':vals['name'],
+                                           'user_id':user.id,'company_id':company.id})
+            new_employer = self.env['career.employer'].create({ 'user_id':user.id,'is_admin':False})
+            return new_employer.id
+
 
 
     @api.model
@@ -174,31 +177,7 @@ class EmployerService(osv.AbstractModel):
 
 
     @api.model
-    def createUser(self,vals):
-        cr, uid, context = self.env.args
-        employers = self.env['career.employer'].search([('user_id','=',uid)])
-        for employer in employers:
-            user = self.env['res.users'].search([('login', '=', vals['email'])])
-            if user:
-                print ("Emplyer login %s already exist" % vals['email'])
-                return False
-            employer_group = self.env.ref('career.employer_group')
-            hr_group = self.env.ref('base.group_hr_manager')
-            survey_group = self.env.ref('base.group_survey_manager')
-            admin_group = self.env.ref('base.group_erp_manager')
-            company = employer.user_id.company_id
-            user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],
-                                                 'partner_id':company.partner_id.id,'email':vals['email'],})
-            user.write({'company_ids':[(4,company.id)]})
-            user.write({'company_id':company.id, 'groups_id':[(6,0,[employer_group.id,hr_group.id,survey_group.id,admin_group.id])]})
-            self.env['hr.employee'].create({'address_id':company.partner_id.id,'work_email':vals['email'],'name':vals['name'].id,
-                                           'user_id':user.id,'company_id':company.id})
-            new_employer = self.env['career.employer'].create({ 'license_instance_id':employer.license_instance_id.id,'user_id':user.id})
-            return new_employer.id
-
-
-    @api.model
-    def getUserCompany(self):
+    def getCompany(self):
         cr, uid, context = self.env.args
         users = self.env['res.users'].browse(uid)
         if users:
@@ -216,7 +195,7 @@ class EmployerService(osv.AbstractModel):
 
     @api.model
     def createAssignment(self,vals):
-        company = self.getUserCompany()
+        company = self.getCompany()
         if company:
             assignment = self.env['hr.job'].create({'name':vals['name'],'description':vals['description'],
                                                     'deadline':vals['deadline'], 'company_id':company['id'],
@@ -241,7 +220,7 @@ class EmployerService(osv.AbstractModel):
 
     @api.model
     def getAssignment(self):
-        company = self.getUserCompany()
+        company = self.getCompany()
         assignments = self.env['hr.job'].search([('company_id','=',company['id'])])
         assignmentList = [{'id':a.id,'name':a.name,'description':a.description,'deadline':a.deadline,'status':a.status,
                            'requirements':a.requirements,
@@ -353,32 +332,32 @@ class EmployerService(osv.AbstractModel):
 
     @api.model
     def submitAssessment(self,assessmentResult):
-        hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',int(assessmentResult['candidateId']))])
+        cr, uid, context = self.env.args
+        company = self.getCompany()
+        employees = self.env['hr.employee'].search([('user_id','=',uid)])
+        hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('user_id','=',uid),('applicant_id','=',int(assessmentResult['candidateId']))])
+        if not hr_interview_assessment:
+          hr_eval_phase = self.env['hr_evaluation.plan.phase'].search([('company_id','=',company['id'])])
+          hr_eval = self.env['hr_evaluation.evaluation'].create({'employee_id':employees[0].id,
+                                                                       'plan_id':hr_eval_phase.plan_id.id,'state':'progress'})
+          hr_interview_assessment = self.env['hr.evaluation.interview'].create({'evaluation_id':hr_eval.id,'phase_id':hr_eval_phase.id,
+                                                            'applicant_id':int(assessmentResult['candidateId']),'state':'done','user_id':uid})
         hr_interview_assessment.write({'rating':int(assessmentResult['vote']),'note_summary':assessmentResult['comment']})
         for jAns in assessmentResult['answerList']:
-                self.env['survey.user_input_line'].create({'user_input_id':hr_interview_assessment[0].request_id.id,
-                                                                        'question_id':int(jAns['questionId']),
-                                                                        'answer_type':'number',
-                                                                        'value_number':int(jAns['answer'])})
+          if not self.env['survey.user_input_line'].search([('user_input_id','=',hr_interview_assessment[0].request_id.id),('question_id','=',int(jAns['questionId']))]):
+            self.env['survey.user_input_line'].create({'user_input_id':hr_interview_assessment[0].request_id.id,
+                                                                    'question_id':int(jAns['questionId']),
+                                                                    'answer_type':'number',
+                                                                    'value_number':int(jAns['answer'])})
         return True
 
     @api.model
     def getSelfAssessment(self,assessmentId,applicantId):
         cr, uid, context = self.env.args
-        employees = self.env['hr.employee'].search([('user_id','=',uid)])
-        if employees:
-            company = self.getUserCompany()
-            hr_eval_phase = self.env['hr_evaluation.plan.phase'].search([('company_id','=',company['id'])])
-            hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','=',uid)])
-            if not hr_interview_assessment:
-                hr_eval = self.env['hr_evaluation.evaluation'].create({'employee_id':employees[0].id,
-                                                                       'plan_id':hr_eval_phase.plan_id.id,'state':'progress'})
-                hr_interview_assessment = self.env['hr.evaluation.interview'].create({'evaluation_id':hr_eval.id,'phase_id':hr_eval_phase.id,
-                                                            'applicant_id':applicantId,'state':'waiting_answer','user_id':uid})
-            answerList=[{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number} for answer in hr_interview_assessment.request_id.user_input_line_ids]
-            return {'id':hr_interview_assessment.id,'comment':hr_interview_assessment.evaluation_id.note_summary,
-                    'vote':hr_interview_assessment.evaluation_id.rating,'answerList':answerList}
-        return False
+        hr_interview_assessment =  self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','=',uid)])
+        answerList=[{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number} for answer in hr_interview_assessment.request_id.user_input_line_ids]
+        return {'id':hr_interview_assessment.id,'comment':hr_interview_assessment.note_summary,
+                'vote':hr_interview_assessment.rating,'answerList':answerList}
 
 
 
@@ -390,9 +369,10 @@ class EmployerService(osv.AbstractModel):
         for hr_interview_assessment in self.env['hr.evaluation.interview'].search([('applicant_id','=',applicantId),('user_id','!=',uid)]):
             assessmentResultList.append({'answertList': [{'id':answer.id,'questionId':answer.question_id.id,'answer':answer.value_number}
                                                  for answer in hr_interview_assessment.request_id.user_input_line_ids ],
-                                   'id':hr_interview_assessment.id,'comment':hr_interview_assessment.evaluation_id.note_summary,
-                                    'vote':hr_interview_assessment.evaluation_id.rating})
-        return {'assessmentResultList':assessmentResultList}
+                                   'id':hr_interview_assessment.id,'comment':hr_interview_assessment.note_summary,
+                                    'vote':hr_interview_assessment.rating,
+                                    'user':hr_interview_assessment.user_id.name})
+        return assessmentResultList
 
 
     @api.model
@@ -451,6 +431,7 @@ class CandidateService(osv.AbstractModel):
     def startInterview(self,invite_code):
         user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
         if user_input and user_input[0].state=='new':
+            user_input.write({'state':'skip'})
             return True
         return False
 
@@ -465,7 +446,7 @@ class CandidateService(osv.AbstractModel):
     @api.model
     def submitInterviewAnswer(self,invite_code,questionId,videoUrl):
         user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
-        if user_input and (user_input[0].state=='new' or user_input[0].state=='skip'):
+        if user_input[0].state=='skip':
             user_input.write({'state':'skip'})
             input_line = self.env['survey.user_input_line'].create({'user_input_id':user_input[0].id,'question_id':questionId,
                                                                     'skipped':False,

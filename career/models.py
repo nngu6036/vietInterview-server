@@ -28,17 +28,21 @@ class Session(models.Model):
         ('token_unique', 'unique (token)', 'The token must be unique within an application!')
     ]
 
+class Conpany(models.Model):
+    _name = 'res.company'
+    _inherit = 'res.company'
+
+    license_instance_id = fields.Many2one('career.license_instance',string='License')
+    expire_date = fields.Date(string='License expire date',related='license_instance_id.expire_date')
+
 class EmployerUser(models.Model):
     _name = 'career.employer'
     _inherits = {'res.users':'user_id'}
 
     user_id = fields.Many2one('res.users',string='User',required=True)
-    license_instance_id = fields.Many2one('career.license_instance',string='License',required=True)
     login = fields.Char(string='Login name',related='user_id.login')
     password = fields.Char(string='Password',related='user_id.password')
     name = fields.Char(string='Name',related='user_id.name')
-    expire_date = fields.Date(string='License expire date',related='license_instance_id.expire_date')
-
 
 class License(models.Model):
     _name = 'career.license'
@@ -147,6 +151,8 @@ class InterviewAssessment(models.Model):
     _inherit = 'hr.evaluation.interview'
 
     applicant_id = fields.Many2one('hr.applicant',tring='Applicant ')
+    rating =  fields.Integer(string="Rating")
+    note_summary =  fields.Text(string="Comment")
 
 class InterviewHistory(models.Model):
     _name = 'survey.user_input'

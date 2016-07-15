@@ -38,7 +38,7 @@ def company():
          erpInstance = ErpInstance.fromToken(token,['employer'])
          employer_service = erpInstance.service('career.employer_service')
          if request.method == 'GET':
-            company = employer_service.getUserCompany()
+            company = employer_service.getCompany()
             return jsonify(result=True,company=company)
          if request.method == 'PUT':
             company  = json.loads(request.values['company'])
@@ -47,6 +47,26 @@ def company():
     except Exception as exc:
         print(exc)
         print 'Company error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/company/user', methods=['POST'],endpoint='employer-company-user')
+def user():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         employer_service = erpInstance.service('career.employer_service')
+         if request.method == 'POST':
+            user  = json.loads(request.values['user'])
+            userId = employer_service.createUser(user)
+            if  userId:
+              return jsonify(result=True,userId=userId)
+            else:
+              return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'User error '
         print request.values
         return jsonify(result=False)
 
@@ -215,6 +235,9 @@ def candidateAssessment():
             applicantId  = int(request.values['candidateId'])
             assessmentId  = int(request.values['assessmentId'])
             selfAssessmentResult  = employer_service.getSelfAssessment(assessmentId,applicantId)
+            print applicantId
+            print assessmentId
+            print selfAssessmentResult
             otherAssessmentResultList  = employer_service.getOtherAssessment(assessmentId,applicantId)
             return jsonify(result=True,selfAssessmentResult=selfAssessmentResult,otherAssessmentResultList=otherAssessmentResultList)
          if request.method == 'POST':

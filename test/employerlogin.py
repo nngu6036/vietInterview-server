@@ -5,7 +5,7 @@ from data import *
 
 url = URL + 'employer/account/login'
 print url
-values = dict(email='man@gmail.com', password='123456')
+values = dict(email='nem@gmail.com', password='123456')
 data = urllib.urlencode(values)
 req = urllib2.Request(url, data)
 rsp = urllib2.urlopen(req)
