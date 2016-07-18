@@ -3,12 +3,12 @@ from data import *
 import json
 
 # do POST
-url = URL + 'employer/company/user'
+url = URL + 'admin/company/user'
 print url
-user = dict(name='User1',email='nem1@gmail.com',
+user = dict(name='User3',email='nem3@gmail.com',
                password='123456')
 user = json.dumps(user)
-values = dict(user=user, token=EMPLOYER_TOKEN)
+values = dict(user=user, companyId=24,token=TOKEN)
 data = urllib.urlencode(values)
 req = urllib2.Request(url, data)
 rsp = urllib2.urlopen(req)

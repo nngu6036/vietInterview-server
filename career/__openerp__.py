@@ -31,6 +31,9 @@
         'data/install.xml',
         'data/mail.xml',
         'data/location.xml',
+        'report/career_report.xml',
+        'report/html_template.xml',
+        'report/report_assessment_summary.xml',
          'security/ir.model.access.csv'
 
     ],

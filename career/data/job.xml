@@ -1,230 +1,1132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-        <record model='career.job_category' id='career.job_category_1'>
-            <field name='title'>Accounting</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_2'>
-            <field name='title'>Administrative/Clerical</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_3'>
-            <field name='title'>Advertising/Promotion/PR</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_4'>
-            <field name='title'>Agriculture/Forestry</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_5'>
-            <field name='title'>Airlines/Tourism</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_6'>
-            <field name='title'>Architecture/Interior Design</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_7'>
-            <field name='title'>Arts/Design</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_8'>
-            <field name='title'>Auditing</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_9'>
-            <field name='title'>Auto/Automotive</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_10'>
-            <field name='title'>Banking</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_11'>
-            <field name='title'>Chemical/Biochemical</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_12'>
-            <field name='title'>Civil/Construction</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_13'>
-            <field name='title'>Consulting</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_14'>
-            <field name='title'>Customer Service</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_15'>
-            <field name='title'>Doctors</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_16'>
-            <field name='title'>Doctors/nurses</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_17'>
-            <field name='title'>Education/Training</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_18'>
-            <field name='title'>Electrical/Electronics</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_19'>
-            <field name='title'>Entry level</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_20'>
-            <field name='title'>Environment/Waste Services</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_21'>
-            <field name='title'>Executive management</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_22'>
-            <field name='title'>Expatriate Jobs in Vietnam</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_23'>
-            <field name='title'>Export-Import</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_24'>
-            <field name='title'>Fashion/Lifestyle</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_25'>
-            <field name='title'>Finance/Investment</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_26'>
-            <field name='title'>FMCG</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_27'>
-            <field name='title'>Food &amp; Beverage</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_28'>
-            <field name='title'>Freight/Logistics</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_29'>
-            <field name='title'>Geology/Mineral</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_30'>
-            <field name='title'>Health/Medical Care</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_31'>
-            <field name='title'>High Technology</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_32'>
-            <field name='title'>Household</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_33'>
-            <field name='title'>HSE</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_34'>
-            <field name='title'>Human Resources</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_35'>
-            <field name='title'>HVAC</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_36'>
-            <field name='title'>Industrial Products</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_37'>
-            <field name='title'>Insurance</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_38'>
-            <field name='title'>Internet/Online Media</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_39'>
-            <field name='title'>Interpreter/Translator</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_40'>
-            <field name='title'>IT - Hardware/Networking</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_41'>
-            <field name='title'>IT - Software</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_42'>
-            <field name='title'>Legal/Contracts</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_43'>
-            <field name='title'>Luxury Goods</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_44'>
-            <field name='title'>Maintenance</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_45'>
-            <field name='title'>Marine</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_46'>
-            <field name='title'>Marketing</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_47'>
-            <field name='title'>Mechanical</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_48'>
-            <field name='title'>Merchandising/Purchasing/Supply Chain</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_49'>
-            <field name='title'>NGO/Non-Profit</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_50'>
-            <field name='title'>Oil/Gas</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_51'>
-            <field name='title'>Overseas Jobs</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_52'>
-            <field name='title'>Pharmaceutical representatives</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_53'>
-            <field name='title'>Pharmaceutical/Biotech</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_54'>
-            <field name='title'>Pharmacist</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_55'>
-            <field name='title'>Planning/Projects</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_56'>
-            <field name='title'>Printing</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_57'>
-            <field name='title'>Production/Process</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_58'>
-            <field name='title'>QA/QC</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_59'>
-            <field name='title'>Real Estate</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_60'>
-            <field name='title'>Restaurant/Hotel</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_61'>
-            <field name='title'>Retail/Wholesale</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_62'>
-            <field name='title'>Sales</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_63'>
-            <field name='title'>Sales Technical</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_64'>
-            <field name='title'>Securities &amp; Trading</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_65'>
-            <field name='title'>Telecommunications</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_66'>
-            <field name='title'>Temporary/Contract</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_67'>
-            <field name='title'>Textiles/Garments/Footwear</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_68'>
-            <field name='title'>TV/Media/Newspaper</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_69'>
-            <field name='title'>Warehouse</field>
-        </record>
-        <record model='career.job_category' id='career.job_category_70'>
-            <field name='title'>Other</field>
-        </record>
+  <data>
+    <record model='career.job_category' id='career.job_category_1'>
+      <field name='title'>Accounting</field>
+    </record>
 
-        <record model='career.job_position' id='career.job_position_1'>
-            <field name='title'>Entry level</field>
-        </record>
-        <record model='career.job_position' id='career.job_position_2'>
-            <field name='title'>Experienced (non-manager)</field>
-        </record>
-        <record model='career.job_position' id='career.job_position_3'>
-            <field name='title'>Manager</field>
-        </record>
-        <record model='career.job_position' id='career.job_position_4'>
-            <field name='title'>Director and above</field>
-        </record>
+    <record model='career.job_category' id='career.job_category_2'>
+      <field name='title'>Administrative/Clerical</field>
+    </record>
 
-    </data>
+    <record model='career.job_category' id='career.job_category_3'>
+      <field name='title'>Advertising/Promotion/PR</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_4'>
+      <field name='title'>Agriculture/Forestry</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_37'>
+      <field name='title'>Airlines/Tourism</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_5'>
+      <field name='title'>Architecture/Interior Design</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_10'>
+      <field name='title'>Arts/Design</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_58'>
+      <field name='title'>Auditing</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_67'>
+      <field name='title'>Auto/Automotive</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_42'>
+      <field name='title'>Banking</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_43'>
+      <field name='title'>Chemical/Biochemical</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_7'>
+      <field name='title'>Civil/Construction</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_8'>
+      <field name='title'>Consulting</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_11'>
+      <field name='title'>Customer Service</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_78'>
+      <field name='title'>Doctors</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_79'>
+      <field name='title'>Doctors/nurses</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_12'>
+      <field name='title'>Education/Training</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_64'>
+      <field name='title'>Electrical/Electronics</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_15'>
+      <field name='title'>Entry level</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_16'>
+      <field name='title'>Environment/Waste Services</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_17'>
+      <field name='title'>Executive management</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_18'>
+      <field name='title'>Expatriate Jobs in Vietnam</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_19'>
+      <field name='title'>Export-Import</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_63'>
+      <field name='title'>Fashion/Lifestyle</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_59'>
+      <field name='title'>Finance/Investment</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_74'>
+      <field name='title'>FMCG</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_54'>
+      <field name='title'>Food &amp; Beverage</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_36'>
+      <field name='title'>Freight/Logistics</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_77'>
+      <field name='title'>Geology/Mineral</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_22'>
+      <field name='title'>Health/Medical Care</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_66'>
+      <field name='title'>High Technology</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_75'>
+      <field name='title'>Household</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_83'>
+      <field name='title'>HSE</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_23'>
+      <field name='title'>Human Resources</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_76'>
+      <field name='title'>HVAC</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_68'>
+      <field name='title'>Industrial Products</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_24'>
+      <field name='title'>Insurance</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_57'>
+      <field name='title'>Internet/Online Media</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_47'>
+      <field name='title'>Interpreter/Translator</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_55'>
+      <field name='title'>IT - Hardware/Networking</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_35'>
+      <field name='title'>IT - Software</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_25'>
+      <field name='title'>Legal/Contracts</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_62'>
+      <field name='title'>Luxury Goods</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_84'>
+      <field name='title'>Maintenance</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_82'>
+      <field name='title'>Marine</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_27'>
+      <field name='title'>Marketing</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_65'>
+      <field name='title'>Mechanical</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_49'>
+      <field name='title'>Merchandising/Purchasing/Supply Chain</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_21'>
+      <field name='title'>NGO/Non-Profit</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_28'>
+      <field name='title'>Oil/Gas</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_71'>
+      <field name='title'>Overseas Jobs</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_81'>
+      <field name='title'>Pharmaceutical representatives</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_6'>
+      <field name='title'>Pharmaceutical/Biotech</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_80'>
+      <field name='title'>Pharmacist</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_69'>
+      <field name='title'>Planning/Projects</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_72'>
+      <field name='title'>Printing</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_26'>
+      <field name='title'>Production/Process</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_70'>
+      <field name='title'>QA/QC</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_30'>
+      <field name='title'>Real Estate</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_73'>
+      <field name='title'>Restaurant/Hotel</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_32'>
+      <field name='title'>Retail/Wholesale</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_33'>
+      <field name='title'>Sales</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_34'>
+      <field name='title'>Sales Technical</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_56'>
+      <field name='title'>Securities &amp; Trading</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_41'>
+      <field name='title'>Telecommunications</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_51'>
+      <field name='title'>Temporary/Contract</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_52'>
+      <field name='title'>Textiles/Garments/Footwear</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_48'>
+      <field name='title'>TV/Media/Newspaper</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_53'>
+      <field name='title'>Warehouse</field>
+    </record>
+
+    <record model='career.job_category' id='career.job_category_39'>
+      <field name='title'>Other</field>
+    </record>
+
+
+    <record model='ir.translation' id='career.job_category_83_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_83'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>HSE</field>
+      <field name='value'>An toàn lao động</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_78_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_78'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Doctors</field>
+      <field name='value'>Bác sĩ</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_33_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_33'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Sales</field>
+      <field name='value'>Bán hàng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_34_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_34'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Sales Technical</field>
+      <field name='value'>Bán hàng kỹ thuật</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_32_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_32'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Retail/Wholesale</field>
+      <field name='value'>Bán lẻ/Bán sỉ</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_24_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_24'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Insurance</field>
+      <field name='value'>Bảo hiểm</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_84_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_84'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Maintenance</field>
+      <field name='value'>Bảo trì;/Sửa chữa</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_30_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_30'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Real Estate</field>
+      <field name='value'>Bất động sản</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_47_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_47'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Interpreter/Translator</field>
+      <field name='value'>Biên phiên dịch</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_17_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_17'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Executive management</field>
+      <field name='value'>Cấp quản lý; điều hành</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_56_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_56'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Securities &amp; Trading</field>
+      <field name='value'>Chứng khoán</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_65_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_65'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Mechanical</field>
+      <field name='value'>Cơ khí</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_66_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_66'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>High Technology</field>
+      <field name='value'>Công nghệ cao</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_28_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_28'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Oil/Gas</field>
+      <field name='value'>Dầu khí</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_52_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_52'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Textiles/Garments/Footwear</field>
+      <field name='value'>Dệt may/Da giày</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_11_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_11'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Customer Service</field>
+      <field name='value'>Dịch vụ khách hàng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_6_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_6'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Pharmaceutical/Biotech</field>
+      <field name='value'>Dược Phẩm/Công nghệ sinh học</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_80_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_80'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Pharmacist</field>
+      <field name='value'>Dược sĩ</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_12_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_12'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Education/Training</field>
+      <field name='value'>Giáo dục/Đào tạo</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_62_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_62'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Luxury Goods</field>
+      <field name='value'>Hàng cao cấp</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_75_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_75'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Household</field>
+      <field name='value'>Hàng gia dụng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_82_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_82'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Marine</field>
+      <field name='value'>Hàng hải</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_37_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_37'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Airlines/Tourism</field>
+      <field name='value'>Hàng không/Du lịch</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_74_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_74'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>FMCG</field>
+      <field name='value'>Hàng tiêu dùng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_2_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_2'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Administrative/Clerical</field>
+      <field name='value'>Hành chính/Thư ký;</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_43_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_43'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Chemical/Biochemical</field>
+      <field name='value'>Hóa học/Hóa sinh</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_69_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_69'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Planning/Projects</field>
+      <field name='value'>Hoạch định/Dự án</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_72_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_72'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Printing</field>
+      <field name='value'>In ấn/ Xuất bản</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_57_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_57'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Internet/Online Media</field>
+      <field name='value'>Internet/Online Media</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_35_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_35'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>IT - Software</field>
+      <field name='value'>IT - Phần mềm</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_55_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_55'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>IT - Hardware/Networking</field>
+      <field name='value'>IT-Phần cứng/Mạng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_1_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_1'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Accounting</field>
+      <field name='value'>Kế toán</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_53_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_53'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Warehouse</field>
+      <field name='value'>Kho vận</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_58_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_58'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Auditing</field>
+      <field name='value'>Kiểm tóan</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_5_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_5'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Architecture/Interior Design</field>
+      <field name='value'>Kiến trúc/Thiết kế nội thất</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_27_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_27'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Marketing</field>
+      <field name='value'>Marketing</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_15_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_15'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Entry level</field>
+      <field name='value'>Mới tốt nghiệp</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_16_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_16'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Environment/Waste Services</field>
+      <field name='value'>Môi trường/Xử lý; chất thải</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_10_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_10'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Arts/Design</field>
+      <field name='value'>Mỹ Thuật/Nghệ Thuật/Thiết Kế</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_42_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_42'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Banking</field>
+      <field name='value'>Ngân hàng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_18_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_18'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Expatriate Jobs in Vietnam</field>
+      <field name='value'>Người nước ngoài/Việt Kiều</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_73_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_73'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Restaurant/Hotel</field>
+      <field name='value'>Nhà; hàng/Khách sạn</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_23_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_23'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Human Resources</field>
+      <field name='value'>Nhân sự</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_4_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_4'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Agriculture/Forestry</field>
+      <field name='value'>Nông nghiệp/Lâm nghiệp</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_71_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_71'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Overseas Jobs</field>
+      <field name='value'>Overseas Jobs</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_25_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_25'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Legal/Contracts</field>
+      <field name='value'>Pháp lý</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_21_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_21'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>NGO/Non-Profit</field>
+      <field name='value'>Phi chính phủ/Phi lợi nhuận</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_70_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_70'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>QA/QC</field>
+      <field name='value'>QA/QC</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_3_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_3'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Advertising/Promotion/PR</field>
+      <field name='value'>Quảng cáo/Khuyến mại/Đối ngoại</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_68_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_68'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Industrial Products</field>
+      <field name='value'>Sản phẩm công nghiệp</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_26_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_26'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Production/Process</field>
+      <field name='value'>Sản Xuất</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_59_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_59'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Finance/Investment</field>
+      <field name='value'>Tài chính/Đầu tư</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_63_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_63'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Fashion/Lifestyle</field>
+      <field name='value'>Thời trang</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_51_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_51'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Temporary/Contract</field>
+      <field name='value'>Thời vụ/Hợp đồng ngắn hạn</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_49_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_49'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Merchandising/Purchasing/Supply Chain</field>
+      <field name='value'>Thu Mua/Vật Tư/Cung Vận</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_54_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_54'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Food &amp; Beverage</field>
+      <field name='value'>Thực phẩm &amp; Đồ uống</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_81_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_81'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Pharmaceutical representatives</field>
+      <field name='value'>Trình dược viên</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_48_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_48'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>TV/Media/Newspaper</field>
+      <field name='value'>Truyền hình/Truyền thông/Báo chí</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_8_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_8'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Consulting</field>
+      <field name='value'>Tư vấn</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_67_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_67'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Auto/Automotive</field>
+      <field name='value'>Tự động hóa/Ô tô</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_36_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_36'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Freight/Logistics</field>
+      <field name='value'>Vận chuyển/Giao nhận</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_41_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_41'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Telecommunications</field>
+      <field name='value'>Viễn Thông</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_7_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_7'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Civil/Construction</field>
+      <field name='value'>Xây dựng</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_19_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_19'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Export-Import</field>
+      <field name='value'>Xuất nhập khẩu</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_79_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_79'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Doctors/nurses</field>
+      <field name='value'>Y sĩ/Hộ lý</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_22_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_22'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Health/Medical Care</field>
+      <field name='value'>Y tế/Chăm sóc sức khỏe</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_77_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_77'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Geology/Mineral</field>
+      <field name='value'>Địa chất/Khoáng sản</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_76_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_76'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>HVAC</field>
+      <field name='value'>Điện lạnh/Nhiệt lạnh</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_64_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_64'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Electrical/Electronics</field>
+      <field name='value'>Điện/Điện tử</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_category_39_vi'>
+      <field name='name'>career.job_category,title</field>
+      <field name='res_id' ref='career.job_category_39'/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Other</field>
+      <field name='value'>Khác</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='career.job_position' id='career.job_position_1'>
+      <field name='title'>Entry level</field>
+    </record>
+
+    <record model='career.job_position' id='career.job_position_2'>
+      <field name='title'>Experienced (non-manager)</field>
+    </record>
+
+    <record model='career.job_position' id='career.job_position_3'>
+      <field name='title'>Manager</field>
+    </record>
+
+    <record model='career.job_position' id='career.job_position_4'>
+      <field name='title'>Director and above</field>
+    </record>
+
+    <record model='career.job_position' id='career.job_position_5'>
+      <field name='title'>Internship</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_position_1_vi'>
+      <field name='name'>career.job_position,title</field>
+      <field name='res_id' ref="career.job_position_1"/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Entry level</field>
+      <field name='value'>Mới ra trường</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_position_2_vi'>
+      <field name='name'>career.job_position,title</field>
+      <field name='res_id' ref="career.job_position_2"/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Experienced (non-manager)</field>
+      <field name='value'>Có kinh nghiệm</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_position_3_vi'>
+      <field name='name'>career.job_position,title</field>
+      <field name='res_id' ref="career.job_position_3"/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Manager</field>
+      <field name='value'>Quản lý</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_position_4_vi'>
+      <field name='name'>career.job_position,title</field>
+      <field name='res_id' ref="career.job_position_4"/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Director and above</field>
+      <field name='value'>Giám đốc</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+    <record model='ir.translation' id='career.job_position_5_vi'>
+      <field name='name'>career.job_position,title</field>
+      <field name='res_id' ref="career.job_position_5"/>
+      <field name='lang'>vi_VN</field>
+      <field name='src'>Internship</field>
+      <field name='value'>Thực tập</field>
+      <field name='module'>career</field>
+      <field name='state'>translated</field>
+      <field name='type'>model</field>
+    </record>
+
+  </data>
 
 </openerp>

@@ -16,7 +16,7 @@ class ErpInstance(object):
     @classmethod
     def fromToken(self,token,roles):
          erpInstance = ErpInstance()
-         sessionInfo = session_service.validate(token,roles)
+         sessionInfo = session_service.validateToken(token,roles)
          if not sessionInfo:
              return False
          erpInstance.client = erppeek.Client(app.config['ERP_SERVER_URL'], sessionInfo['db'], sessionInfo['user'], sessionInfo['password'])

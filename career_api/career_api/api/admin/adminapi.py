@@ -9,7 +9,7 @@ def login():
     try:
         login = request.values['login']
         password = request.values['password']
-        token = session_service.login(app.config['ERP_DB'], login, password)
+        token = session_service.login(app.config['ERP_DB'], login, password,'admin')
         if token:
             return jsonify(result=True,token=token)
         raise Exception('Invalid account %s or password %s' % (login, password))
@@ -69,6 +69,34 @@ def company():
 
 
 
+@app.route('/admin/company/user', methods=['GET','PUT','POST'],endpoint='admin-company-user')
+def companyUser():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'GET':
+            companyId  = int(request.values['companyId'])
+            userList = admin_service.getCompanyUser(companyId)
+            return jsonify(result=True,userList=userList)
+         if request.method == 'PUT':
+            user  = json.loads(request.values['user'])
+            admin_service.updateCompanyUser(int(user['id']),user)
+            return jsonify(result=True)
+         if request.method == 'POST':
+            user  = json.loads(request.values['user'])
+            companyId  = int(request.values['companyId'])
+            userId = admin_service.createCompanyUser(companyId,user)
+            if userId:
+                return jsonify(result=True,userId=userId)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Company  error '
+        print request.values
+        return jsonify(result=False)
+
 
 @app.route('/admin/account/logout', methods=['POST'],endpoint='admin-logout')
 def logout():
@@ -87,10 +115,11 @@ def logout():
 def question():
     try:
          token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin','employer'])
-         admin_service = erpInstance.service('career.admin_service')
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
-            questionList = admin_service.getQuestion()
+            lang = request.values['lang'] if 'lang' in request.values else False
+            questionList = content_service.getQuestion(lang)
             return jsonify(result=True,questionList=questionList)
          return jsonify(result=False)
     except Exception as exc:
@@ -103,10 +132,11 @@ def question():
 def questionCategory():
     try:
          token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin','employer'])
-         admin_service = erpInstance.service('career.admin_service')
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
-            categoryList = admin_service.getQuestionCategory()
+            lang = request.values['lang'] if 'lang' in request.values else False
+            categoryList = content_service.getQuestionCategory(lang)
             return jsonify(result=True,categoryList=categoryList)
          return jsonify(result=False)
     except Exception as exc:
@@ -114,3 +144,4 @@ def questionCategory():
         print 'Question category error '
         print request.values
         return jsonify(result=False)
+

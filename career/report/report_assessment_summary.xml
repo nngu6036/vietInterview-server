@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <template id="career.assessment_summary">
+            <t t-call="career.html_container">
+              <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                <table style="width:100.0%;background:#2E3B4E">
+                        <tr>
+                            <td style="padding:15.0pt 15.0pt 15.0pt 15.0pt">
+                                <div style="text-align:center;">
+                                    <table style="border:0px;margin-left:auto; margin-right:auto; ">
+                                        <tr>
+                                            <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+                                                <span style="font-size:1.0pt">
+                                                    <a href="https://vietinterview.com">
+                                                        <span style="text-decoration:none">
+                                                            <img style="height:50px" src="https://vietinterview.com/images/logo.png" align="center">
+
+                                                            </img>
+                                                        </span>
+                                                    </a>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                <table style="border:0px;width:100.0%;background:white">
+                    <tr>
+                        <td style="padding:23.25pt 15.0pt 25.5pt 15.0pt">
+                            <div style="text-align:center;">
+                                <table style="border:0px;margin-left:auto; margin-right:auto;">
+                                    <tr>
+                                        <td style="width:380px;width:285.0pt;padding:0in 0in 0in 0in">
+                                            <table style="border:0px;'width:100.0%">
+                                                <tr>
+                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                        <b>
+                                                            <span style="font-size:13.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                BÁO CÁO ĐÁNH GIÁ TỔNG HỢP
+                                                            </span>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                            Công ty <span t-esc="o.company_id.name"/>
+
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                              <tr>
+                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                            Vị trí <span t-esc="o.job_id.name"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                              <tr>
+                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                            Ứng viên<span t-esc="o.name"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+              </div>
+            </t>
+
+          </t>
+
+        </template>
+    </data>
+</openerp>

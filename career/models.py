@@ -73,23 +73,23 @@ class LicenseInstance(models.Model):
 
 class QuestionCategory(models.Model):
     _name = 'career.question_category'
-    title = fields.Text(string="Title")
+    title = fields.Text(string="Title",translate=True)
 
 class Question(models.Model):
     _name = 'career.question'
-    title = fields.Text(string="Title")
-    content = fields.Text(string="Content")
+    title = fields.Text(string="Title",translate=True)
+    content = fields.Text(string="Content",translate=True)
     videoUrl = fields.Text(string="VIdeo")
     category_id = fields.Many2one('career.question_category', string="Category")
 
 
 class JobCategory(models.Model):
     _name = 'career.job_category'
-    title = fields.Text(string="Title")
+    title = fields.Text(string="Title",translate=True)
 
 class JobPosition(models.Model):
     _name = 'career.job_position'
-    title = fields.Text(string="Title")
+    title = fields.Text(string="Title",translate=True)
 
 
 class Assignment(models.Model):
@@ -124,6 +124,7 @@ class Interview(models.Model):
     introUrl = fields.Text(string="Introduction Video URL")
     exitUrl = fields.Text(string="Thank you Video URL")
     aboutUsUrl = fields.Text(string="About Us Video URL")
+    language = fields.Char(string="Language",default="en")
 
 class InterviewQuestion(models.Model):
     _name = 'survey.question'

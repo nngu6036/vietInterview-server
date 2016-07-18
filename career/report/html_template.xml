@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="career.layout" inherit_id="report.layout" primary="True">
+
+            <!-- Add report style -->
+            <!-- Add report style -->
+            <xpath expr="//head" position="inside">
+                <link href="https://vietinterview.com/odoo/web/static/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+                <link href="https://vietinterview.com/odoo/website/static/src/css/website.css" rel="stylesheet"/>
+                <link href="https://vietinterview.com/odoo/web/static/lib/fontawesome/css/font-awesome.css" rel="stylesheet"/>
+                <style type="text/css">
+                    <t t-call="report.style"/>
+                </style>
+            </xpath>
+        </template>
+
+        <template id="career.html_container">
+            <t t-set="body_classname" t-value="'container'"/>
+            <t t-call="career.layout">
+                <t t-raw="0"/>
+            </t>
+        </template>
+    </data>
+</openerp>

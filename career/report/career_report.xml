@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+                id="career_assessment_summary"
+                string="Interview Assessment Summary"
+                model="hr.applicant"
+                report_type="qweb-pdf"
+                name="career.assessment_summary"
+        />
+
+    </data>
+</openerp>

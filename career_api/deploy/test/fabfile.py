@@ -4,17 +4,17 @@ from fabric.api import *
 from fabric.contrib import *
 
 # the user to use for the remote commands
-env.user = 'ema'
-env.password = 'ema123'
+env.user = 'root'
+env.password = 'dev123456'
 # the servers where the commands are executed
-env.hosts = ['192.168.2.4']
+env.hosts = ['192.168.1.200']
 project = 'career_api'
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.abspath(os.path.join(cur_dir, os.pardir))
 project_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 
 package_dir = "%s/%s" % (project_dir, project)
-install_dir = '/home/%s/%s/v3' % (env.user, project)
+install_dir = '/home/data/%s/' % (project)
 bin_dir = '%s/bin/' % install_dir
 conf_dir = '%s/conf/' % install_dir
 
@@ -36,7 +36,7 @@ def deploy():
     # upload the source tarball to the temporary folder on the server
     put('%s/dist/%s.tar.gz' % (project_dir, dist), '%s/%s.tar.gz' % (install_dir, project), use_sudo=True)
     put('%s/run.wsgi' % (cur_dir), install_dir, use_sudo=True)
-    # that directory and unzip it    
+    # that directory and unzip it
     with cd('%s' % (install_dir)):
         sudo('tar xzf %s/%s.tar.gz' % (install_dir, project))
     with cd('%s/%s' % (install_dir, dist)):

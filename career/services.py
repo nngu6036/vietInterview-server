@@ -3,8 +3,9 @@
 from openerp import models, fields, api,tools
 from openerp.osv import osv
 from openerp.service import common
+import base64
 import os
-import json
+import util
 
 # monkey patching to allow scr not to be remove in html clean
 # see openerp.tools.mail.py
@@ -36,17 +37,21 @@ class Career(osv.AbstractModel):
         root_user = self.env.ref("base.user_root")
         admin_group = self.env.ref('career.admin_group')
         root_user.write({'groups_id':[(4,admin_group.id)]})
+        company = self.env.ref('base.main_company')
+        company.write({'name':'Administrator'})
 
 class SessionService(osv.AbstractModel):
     _name = 'career.session_service'
 
     @api.model
-    def login(self,db, account,password):
+    def login(self,db, account,password,role):
         uid = common.exp_authenticate(db,account,password,{})
         if not uid:
             print ("Invalid username %s or password %s" % (account, password))
             return False
         user = self.env['res.users'].browse(uid)
+        if not self.validateUser(user,role):
+            return False
         session = self.env['career.session'].create({'uid':user.id,'db':db,'user':account,'password':password})
         return session.token
 
@@ -59,22 +64,28 @@ class SessionService(osv.AbstractModel):
 
 
     @api.model
-    def validate(self,token,roles):
+    def validateUser(self,user,role):
+          if role == 'admin':
+              admin_group = self.env.ref('career.admin_group')
+              if admin_group.id in user.groups_id.ids:
+                  return True
+          if role == 'employer':
+              employer_group = self.env.ref('career.employer_group')
+              if employer_group.id in user.groups_id.ids:
+                  return True
+          if role == 'employee':
+              employee_group = self.env.ref('career.employee_group')
+              if employee_group.id in user.groups_id.ids:
+                  return True
+          return False
+
+    @api.model
+    def validateToken(self,token,roles):
         for session in self.env['career.session'].search([('token','=',token)]):
             user = self.env['res.users'].browse(session.uid)
             for role in roles:
-                if role == 'admin':
-                    admin_group = self.env.ref('career.admin_group')
-                    if admin_group.id in user.groups_id.ids:
-                        return {'uid':session.uid,'user':session.user,'password':session.password,'db':session.db}
-                if role == 'employer':
-                    employer_group = self.env.ref('career.employer_group')
-                    if employer_group.id in user.groups_id.ids:
-                        return {'uid':session.uid,'user':session.user,'password':session.password,'db':session.db}
-                if role == 'employee':
-                    employee_group = self.env.ref('career.employee_group')
-                    if employee_group.id in user.groups_id.ids:
-                        return {'uid':session.uid,'user':session.user,'password':session.password,'db':session.db}
+                if self.validateUser(user,role):
+                  return {'uid':session.uid,'user':session.user,'password':session.password,'db':session.db}
         return False
 
 class AdminService(osv.AbstractModel):
@@ -99,7 +110,7 @@ class AdminService(osv.AbstractModel):
     def createCompany(self,vals):
         license_instance = self.env['career.license_instance'].create({'license_id':int(vals['licenseId']),
                                                                        'expire_date':vals['licenseExpire']})
-        company = self.env['res.company'].create({'name':vals['name'],'image':vals['logo'],'license_instance_id':license_instance.id})
+        company = self.env['res.company'].create({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False,'license_instance_id':license_instance.id})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name':'Assessment','company_id':company.id})
         assessment_form = self.env.ref('career.assessment_form')
         self.env['hr_evaluation.plan.phase'].create({'name':'Assessment','company_id':company.id,'plan_id':hr_eval_plan.id,
@@ -110,20 +121,20 @@ class AdminService(osv.AbstractModel):
     def updateCompany(self,id,vals):
         company = self.env['res.company'].browse(id)
         if company:
-            company.write({'name':vals['name'],'image':vals['logo'],'license_instance_id':vals['licenseId']})
+            company.write({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False,'license_instance_id':vals['licenseId']})
             return True
         return False
 
     @api.model
     def getCompany(self):
         companys = self.env['res.company'].search([])
-        companyList = [{'id':c.id,'name':c.name,'logo':c.image,'licenseId':c.license_instance_id.license_id.id,
-                         'licenseExpire':c.expire_date} for c in companys]
+        companyList = [{'id':c.id,'name':c.name,'image':c.logo or False,'licenseId':  c.license_instance_id.license_id.id if c.license_instance_id else False,
+                         'licenseExpire': c.expire_date if c.license_instance_id else False} for c in companys]
         return companyList
 
 
     @api.model
-    def createEmployerUser(self,companyId,vals):
+    def createCompanyUser(self,companyId,vals):
             user = self.env['res.users'].search([('login', '=', vals['email'])])
             if user:
                 print ("Emplyer login %s already exist" % vals['email'])
@@ -134,13 +145,31 @@ class AdminService(osv.AbstractModel):
             admin_group = self.env.ref('base.group_erp_manager')
             company = self.env['res.company'].browse(companyId)
             user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],
-                                                 'partner_id':company.partner_id.id,'email':vals['email'],})
+                                                 'email':vals['email']})
             user.write({'company_ids':[(4,company.id)]})
             user.write({'company_id':company.id, 'groups_id':[(6,0,[employer_group.id,hr_group.id,survey_group.id,admin_group.id])]})
             self.env['hr.employee'].create({'address_id':company.partner_id.id,'work_email':vals['email'],'name':vals['name'],
                                            'user_id':user.id,'company_id':company.id})
             new_employer = self.env['career.employer'].create({ 'user_id':user.id,'is_admin':False})
             return new_employer.id
+
+
+    @api.model
+    def updateCompanyUser(self,id,vals):
+        employer = self.env['career.employer'].browse(id)
+        if employer:
+            employer.user_id.write({'name':vals['name']})
+            return True
+        return False
+
+    @api.model
+    def getCompanyUser(self,companyId):
+        userList=[]
+        for company in  self.env['res.company'].browse(companyId):
+          for user in company.user_ids:
+            if user.company_id.id == companyId:
+              userList.append({'id':user.id,'name':user.name,'login':user.login})
+        return userList
 
 
 
@@ -158,23 +187,44 @@ class AdminService(osv.AbstractModel):
         licenseList = [{'id':l.id,'name':l.name,'email':l.email,'assignment':l.assignment} for l in licenses]
         return licenseList
 
+
+class ContentService(osv.AbstractModel):
+    _name = 'career.content_service'
+
     @api.model
-    def getQuestionCategory(self):
-        categories = self.env['career.question_category'].search([])
+    def getQuestionCategory(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        categories = self.env['career.question_category'].with_context(context).search([])
         categoryList = [{'id':c.id,'title':c.title} for c in categories]
         return categoryList
 
     @api.model
-    def getQuestion(self):
-        questions = self.env['career.question'].search([])
+    def getQuestion(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        questions = self.env['career.question'].with_context(context).search([])
         questionList = [{'id':q.id,'title':q.title,'content':q.content,'videoUrl':q.videoUrl,'categoryId':q.category_id.id,
                          } for q in questions]
         return questionList
 
+    @api.model
+    def getAssessment(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        assessment_form = self.env.ref('career.assessment_form')
+        groupList=[]
+        questionList = []
+        for page in assessment_form.page_ids:
+            groupList.append({'id':page.id,'name':page.title,'order':page.sequence} )
+            for question in page.question_ids:
+                questionList.append({'id':question.id,'content':question.question,'groupId':question.page_id.id,
+                                 'minVal':question.validation_min_float_value,'maxVal':question.validation_max_float_value} )
+        return {'id':assessment_form.id,'groupList':groupList,'questionList':questionList}
+
 
 class EmployerService(osv.AbstractModel):
     _name = 'career.employer_service'
-
 
     @api.model
     def getCompany(self):
@@ -188,7 +238,7 @@ class EmployerService(osv.AbstractModel):
     def updateCompany(self,id,vals):
         company = self.env['res.company'].browse(id)
         if company:
-            company.write({'name':vals['name'],'logo':vals['image']})
+            company.write({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False})
             return True
         return False
 
@@ -257,7 +307,8 @@ class EmployerService(osv.AbstractModel):
         assignment = self.env['hr.job'].browse(assignmentId)
         interview = self.env['survey.survey'].create({'title':vals['name'],'response':int(vals['response']),
                                                              'retry':int(vals['retry']), 'introUrl':vals['introUrl'],
-                                                             'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl']})
+                                                             'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl'],
+                                                             'language':vals['language'] if 'language' in vals else False })
         assignment.write({'survey_id':interview.id})
         return interview.id
 
@@ -267,7 +318,8 @@ class EmployerService(osv.AbstractModel):
         if interview:
             interview.write({ 'title':vals['name'],'response':int(vals['response']),
                                 'retry':int(vals['retry']), 'introUrl':vals['introUrl'],
-                               'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl']})
+                               'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl'],
+                              'language':vals['language'] if 'language' in vals else False})
             return True
         return False
 
@@ -277,7 +329,7 @@ class EmployerService(osv.AbstractModel):
         if assignment.survey_id:
             interview = {'id':assignment.survey_id.id,'name':assignment.survey_id.title,'response':assignment.survey_id.response,
                           'retry':assignment.survey_id.retry,'introUrl':assignment.survey_id.introUrl,'exitUrl':assignment.survey_id.exitUrl,
-                         'aboutUsUrl':assignment.survey_id.aboutUsUrl}
+                         'aboutUsUrl':assignment.survey_id.aboutUsUrl,'language':assignment.survey_id.language}
             return interview
         return False
 
@@ -321,7 +373,7 @@ class EmployerService(osv.AbstractModel):
     def getInterviewResponse(self,interviewId):
         responseList = []
         for input in self.env['survey.user_input'].search([('survey_id','=',interviewId)]):
-            applicant = self.env['hr.applicant'].search([('email_from','=',input.email)])
+            applicant = self.env['hr.applicant'].search([('email_from','=',input.email),('response_id','=',input.id)])
             response = {'name':input.email,'email':input.email,'candidateId':applicant[0].id}
             response['answerList'] = [{'id':line.id,'questionId':line.question_id.id,'videoUrl':line.value_video_url} for line in input.user_input_line_ids]
             documents = self.env['ir.attachment'].search([('res_model','=','hr.applicant'),('res_id','=',applicant[0].id)])
@@ -375,17 +427,7 @@ class EmployerService(osv.AbstractModel):
         return assessmentResultList
 
 
-    @api.model
-    def getAssessment(self):
-        assessment_form = self.env.ref('career.assessment_form')
-        groupList=[]
-        questionList = []
-        for page in assessment_form.page_ids:
-            groupList.append({'id':page.id,'name':page.title,'order':page.sequence} )
-            for question in page.question_ids:
-                questionList.append({'id':question.id,'content':question.question,'groupId':question.page_id.id,
-                                 'minVal':question.validation_min_float_value,'maxVal':question.validation_max_float_value} )
-        return {'id':assessment_form.id,'groupList':groupList,'questionList':questionList}
+
 
 class CandidateService(osv.AbstractModel):
     _name = 'career.guest_service'
@@ -440,6 +482,7 @@ class CandidateService(osv.AbstractModel):
         user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
         if user_input and (user_input[0].state=='new' or user_input[0].state=='skip'):
             user_input.write({'state':'done'})
+            self.env['career.mail_service'].sendInterviewThankyou(user_input.survey_id.id,user_input[0].email)
             return True
         return False
 
@@ -475,16 +518,23 @@ class MailService(osv.AbstractModel):
     _name = 'career.mail_service'
 
     @api.model
-    def sendInterviewInvitation(self,inteviewId,emails,subject, body):
+    def sendInterviewInvitation(self,inteviewId,emails,subject):
         cr, uid, context = self.env.args
         assignments = self.env['hr.job'].search([('survey_id','=',inteviewId)])
         if not assignments or assignments[0].status !='published':
             return False
         assignment =  assignments[0]
-        email_template = self.env.ref('career.invitation_email_template')
+        interview = self.env['survey.survey'].browse(inteviewId)
+        if not interview:
+          return False
+        lang = util.lang_resolver(interview[0].language)
+        email_template = self.env['ir.model.data'].with_context({'lang':lang}).xmlid_to_object('career.invitation_email_template')
+        tmpl = self.env['email.template'].with_context({'lang':lang}).browse(email_template.id)
+        for job in tmpl:
+          print job.body_html
         if not email_template:
             return False
-        email_template.write({'body_html':body,'subject':subject})
+        email_template.write({'subject':subject})
         for email in emails:
             user_input = self.env['survey.user_input'].search([('email','=',email),('survey_id','=',inteviewId)])
             if not user_input:
@@ -494,18 +544,24 @@ class MailService(osv.AbstractModel):
             if not candidate:
                 candidate = self.env['hr.applicant'].create({'name':email,'email_from':email,'job_id':assignment.id,
                                                              'company_id':assignment.company_id.id,'response_id':user_input.id})
-
-            self.appendInvitationLink(email_template,user_input.token)
             self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True)
 
         return True
 
-    @api.model
-    def appendInvitationLink(self,template,invite_code):
-        body = template.body_html
-        body  = body + '<a href="https://vietinterview.com/#/interview?code=%s">Interview link</a>' % invite_code
-        template.write({'body_html':body})
 
+    @api.model
+    def sendInterviewThankyou(self,inteviewId,email):
+        cr, uid, context = self.env.args
+        assignments = self.env['hr.job'].search([('survey_id','=',inteviewId)])
+        assignment =  assignments[0]
+        email_template = self.env.ref('career.thankyou_email_template')
+        if not email_template:
+            return False
+        candidate = self.env['hr.applicant'].search([('email_from','=',email),('job_id','=',assignment.id)])
+        if not candidate:
+            return False
+        self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True)
+        return True
 
 class CommonService(osv.AbstractModel):
     _name = 'career.common_service'
@@ -530,20 +586,26 @@ class CommonService(osv.AbstractModel):
         return provinceList
 
     @api.model
-    def getJobCategory(self):
-        categories = self.env['career.job_category'].search([])
+    def getJobCategory(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        categories = self.env['career.job_category'].with_context(context).search([])
         categoryList = [{'id':c.id,'title':c.title} for c in categories]
         return categoryList
 
     @api.model
-    def getJobPosition(self):
-        positions = self.env['career.job_position'].search([])
+    def getJobPosition(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        positions = self.env['career.job_position'].with_context(context).search([])
         positionList = [{'id':p.id,'title':p.title} for p in positions]
         return positionList
 
     @api.model
-    def getEducationLevel(self):
-        levels = self.env['hr.recruitment.degree'].search([])
+    def getEducationLevel(self,lang):
+        lang = util.lang_resolver(lang)
+        context = {'lang':lang}
+        levels = self.env['hr.recruitment.degree'].with_context(context).search([])
         levelList = [{'id':l.id,'title':l.name} for l in levels]
         return levelList
 
@@ -633,6 +695,7 @@ class EmployeeService(osv.AbstractModel):
         for employee in employees:
             exp = self.env['career.work_experience'].create({'title':vals['title'],'employer':vals['employer'],
                                                              'start_date':'startDate' in vals and vals['startDate'],
+                                                             'description':vals['description'],
                                                             'end_date':'endDate' in vals and vals['endDate'],'current':vals['current'],'leave_reason':vals['leaveReason'],
                                                              'country_id':'countryId' in vals and int(vals['countryId']),
                                                              'province_id':'provinceId' in vals and int(vals['provinceId']),
@@ -648,7 +711,7 @@ class EmployeeService(osv.AbstractModel):
             self.env['career.work_experience'].browse(int(vals['id'])).write({'title':vals['title'],'employer':vals['employer'],'start_date':vals['startDate'],
                                                             'end_date':vals['endDate'],'current':vals['current'],'leave_reason':vals['leaveReason'],
                                                              'country_id':int(vals['countryId']),'province_id':int(vals['provinceId']),
-                                                             'employee_id':employee.id})
+                                                             'employee_id':employee.id,'description':vals['description']})
             return True
         return False
 
@@ -658,6 +721,7 @@ class EmployeeService(osv.AbstractModel):
         employees = self.env['career.employee'].search([('user_id','=',uid)])
         for employee in employees:
             self.env['career.work_experience'].browse(ids).unlink()
+        return True
 
 
 
@@ -700,7 +764,7 @@ class EmployeeService(osv.AbstractModel):
         employees = self.env['career.employee'].search([('user_id','=',uid)])
         for employee in employees:
             self.env['career.education_history'].browse(ids).unlink()
-
+        return True
 
     @api.model
     def getCertificate(self):
@@ -738,6 +802,7 @@ class EmployeeService(osv.AbstractModel):
         employees = self.env['career.employee'].search([('user_id','=',uid)])
         for employee in employees:
             self.env['career.certificate'].browse(ids).unlink()
+        return True
 
     @api.model
     def getDocument(self):
@@ -784,4 +849,12 @@ class EmployeeService(osv.AbstractModel):
         return applicationList
 
 
+class ReportService(osv.AbstractModel):
+    _name = 'career.report_service'
 
+    @api.model
+    def getAssessmentSummaryReport(self,candidateId):
+      applicant = self.env['hr.applicant'].browse(candidateId)
+      content = self.env['report'].get_pdf(applicant, 'career.assessment_summary')
+      encoded_content = base64.b64encode(content)
+      return encoded_content

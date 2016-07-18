@@ -1,343 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data >
-       <record model='res.country.state' id='career.country_state_1'>
-<field name='name'>Ha Noi</field>
-<field name='code'>HA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_2'>
-<field name='name'>Mekong Delta</field>
-<field name='code'>MEK</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_3'>
-<field name='name'>An Giang</field>
-<field name='code'>AN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_4'>
-<field name='name'>Ba Ria - Vung Tau</field>
-<field name='code'>BA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_5'>
-<field name='name'>Bac Can</field>
-<field name='code'>BAC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_6'>
-<field name='name'>Bac Giang</field>
-<field name='code'>BAC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_7'>
-<field name='name'>Bac Lieu</field>
-<field name='code'>BAC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_8'>
-<field name='name'>Bac Ninh</field>
-<field name='code'>BAC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_9'>
-<field name='name'>Ben Tre</field>
-<field name='code'>BEN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_10'>
-<field name='name'>Bien Hoa</field>
-<field name='code'>BIE</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_11'>
-<field name='name'>Binh Dinh</field>
-<field name='code'>BIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_12'>
-<field name='name'>Binh Duong</field>
-<field name='code'>BIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_13'>
-<field name='name'>Binh Phuoc</field>
-<field name='code'>BIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_14'>
-<field name='name'>Binh Thuan</field>
-<field name='code'>BIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_15'>
-<field name='name'>Ca Mau</field>
-<field name='code'>CA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_16'>
-<field name='name'>Can Tho</field>
-<field name='code'>CAN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_17'>
-<field name='name'>Cao Bang</field>
-<field name='code'>CAO</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_18'>
-<field name='name'>Da Nang</field>
-<field name='code'>DA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_19'>
-<field name='name'>Dac Lac</field>
-<field name='code'>DAC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_20'>
-<field name='name'>Dien Bien</field>
-<field name='code'>DIE</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_21'>
-<field name='name'>Dong Nai</field>
-<field name='code'>DON</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_22'>
-<field name='name'>Dong Thap</field>
-<field name='code'>DON</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_23'>
-<field name='name'>Gia Lai</field>
-<field name='code'>GIA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_24'>
-<field name='name'>Ha Giang</field>
-<field name='code'>HA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_25'>
-<field name='name'>Ha Nam</field>
-<field name='code'>HA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_26'>
-<field name='name'>Ha Tay</field>
-<field name='code'>HA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_27'>
-<field name='name'>Ha Tinh</field>
-<field name='code'>HA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_28'>
-<field name='name'>Hai Duong</field>
-<field name='code'>HAI</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_29'>
-<field name='name'>Hai Phong</field>
-<field name='code'>HAI</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_30'>
-<field name='name'>Hoa Binh</field>
-<field name='code'>HOA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_31'>
-<field name='name'>Hue</field>
-<field name='code'>HUE</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_32'>
-<field name='name'>Hung Yen</field>
-<field name='code'>HUN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_33'>
-<field name='name'>Khanh Hoa</field>
-<field name='code'>KHA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_34'>
-<field name='name'>Kon Tum</field>
-<field name='code'>KON</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_35'>
-<field name='name'>Lai Chau</field>
-<field name='code'>LAI</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_36'>
-<field name='name'>Lam Dong</field>
-<field name='code'>LAM</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_37'>
-<field name='name'>Lang Son</field>
-<field name='code'>LAN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_38'>
-<field name='name'>Lao Cai</field>
-<field name='code'>LAO</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_39'>
-<field name='name'>Nam Dinh</field>
-<field name='code'>NAM</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_40'>
-<field name='name'>Nghe An</field>
-<field name='code'>NGH</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_41'>
-<field name='name'>Ninh Binh</field>
-<field name='code'>NIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_42'>
-<field name='name'>Ninh Thuan</field>
-<field name='code'>NIN</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_43'>
-<field name='name'>Phu Tho</field>
-<field name='code'>PHU</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_44'>
-<field name='name'>Phu Yen</field>
-<field name='code'>PHU</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_45'>
-<field name='name'>Quang Binh</field>
-<field name='code'>QUA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_46'>
-<field name='name'>Quang Nam</field>
-<field name='code'>QUA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_47'>
-<field name='name'>Quang Ngai</field>
-<field name='code'>QUA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_48'>
-<field name='name'>Quang Ninh</field>
-<field name='code'>QUA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_49'>
-<field name='name'>Quang Tri</field>
-<field name='code'>QUA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_50'>
-<field name='name'>Soc Trang</field>
-<field name='code'>SOC</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_51'>
-<field name='name'>Son La</field>
-<field name='code'>SON</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_52'>
-<field name='name'>Tay Ninh</field>
-<field name='code'>TAY</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_53'>
-<field name='name'>Thai Binh</field>
-<field name='code'>THA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-<record model='res.country.state' id='career.country_state_54'>
-<field name='name'>Thai Nguyen</field>
-<field name='code'>THA</field>
-<field name='country_id' ref='base.vn'/>
-</record>
-        <record model='res.country.state' id='career.country_state_55'>
-            <field name='name'>Thanh Hoa</field>
-            <field name='code'>THA</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_56'>
-            <field name='name'>Thua Thien-Hue</field>
-            <field name='code'>THU</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_57'>
-            <field name='name'>Tien Giang</field>
-            <field name='code'>TIE</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_58'>
-            <field name='name'>Tra Vinh</field>
-            <field name='code'>TRA</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_59'>
-            <field name='name'>Tuyen Quang</field>
-            <field name='code'>TUY</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_60'>
-            <field name='name'>Kien Giang</field>
-            <field name='code'>KIE</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_61'>
-            <field name='name'>Vinh Long</field>
-            <field name='code'>VIN</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_62'>
-            <field name='name'>Vinh Phuc</field>
-            <field name='code'>VIN</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_63'>
-            <field name='name'>Yen Bai</field>
-            <field name='code'>YEN</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_64'>
-            <field name='name'>Other</field>
-            <field name='code'>OTH</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_65'>
-            <field name='name'>International</field>
-            <field name='code'>INT</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_66'>
-            <field name='name'>Hau Giang</field>
-            <field name='code'>HAU</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
-        <record model='res.country.state' id='career.country_state_67'>
-            <field name='name'>Long An</field>
-            <field name='code'>LON</field>
-            <field name='country_id' ref='base.vn'/>
-        </record>
+  <data>
+    <record model='res.country.state' id='career.country_state_1'>
+      <field name='name'>Ha Noi</field>
+      <field name='code'>HA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_2'>
+      <field name='name'>Mekong Delta</field>
+      <field name='code'>MEK</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_3'>
+      <field name='name'>An Giang</field>
+      <field name='code'>AN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_4'>
+      <field name='name'>Ba Ria - Vung Tau</field>
+      <field name='code'>BA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_5'>
+      <field name='name'>Bac Can</field>
+      <field name='code'>BAC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_6'>
+      <field name='name'>Bac Giang</field>
+      <field name='code'>BAC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_7'>
+      <field name='name'>Bac Lieu</field>
+      <field name='code'>BAC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_8'>
+      <field name='name'>Bac Ninh</field>
+      <field name='code'>BAC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_9'>
+      <field name='name'>Ben Tre</field>
+      <field name='code'>BEN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_10'>
+      <field name='name'>Bien Hoa</field>
+      <field name='code'>BIE</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_11'>
+      <field name='name'>Binh Dinh</field>
+      <field name='code'>BIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_12'>
+      <field name='name'>Binh Duong</field>
+      <field name='code'>BIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_13'>
+      <field name='name'>Binh Phuoc</field>
+      <field name='code'>BIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_14'>
+      <field name='name'>Binh Thuan</field>
+      <field name='code'>BIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_15'>
+      <field name='name'>Ca Mau</field>
+      <field name='code'>CA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_16'>
+      <field name='name'>Can Tho</field>
+      <field name='code'>CAN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_17'>
+      <field name='name'>Cao Bang</field>
+      <field name='code'>CAO</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_18'>
+      <field name='name'>Da Nang</field>
+      <field name='code'>DA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_19'>
+      <field name='name'>Dac Lac</field>
+      <field name='code'>DAC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_20'>
+      <field name='name'>Dien Bien</field>
+      <field name='code'>DIE</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_21'>
+      <field name='name'>Dong Nai</field>
+      <field name='code'>DON</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_22'>
+      <field name='name'>Dong Thap</field>
+      <field name='code'>DON</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_23'>
+      <field name='name'>Gia Lai</field>
+      <field name='code'>GIA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_24'>
+      <field name='name'>Ha Giang</field>
+      <field name='code'>HA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_25'>
+      <field name='name'>Ha Nam</field>
+      <field name='code'>HA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_26'>
+      <field name='name'>Ha Tay</field>
+      <field name='code'>HA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_27'>
+      <field name='name'>Ha Tinh</field>
+      <field name='code'>HA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_28'>
+      <field name='name'>Hai Duong</field>
+      <field name='code'>HAI</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_29'>
+      <field name='name'>Hai Phong</field>
+      <field name='code'>HAI</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_30'>
+      <field name='name'>Hoa Binh</field>
+      <field name='code'>HOA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_31'>
+      <field name='name'>Hue</field>
+      <field name='code'>HUE</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_32'>
+      <field name='name'>Hung Yen</field>
+      <field name='code'>HUN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_33'>
+      <field name='name'>Khanh Hoa</field>
+      <field name='code'>KHA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_34'>
+      <field name='name'>Kon Tum</field>
+      <field name='code'>KON</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_35'>
+      <field name='name'>Lai Chau</field>
+      <field name='code'>LAI</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_36'>
+      <field name='name'>Lam Dong</field>
+      <field name='code'>LAM</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_37'>
+      <field name='name'>Lang Son</field>
+      <field name='code'>LAN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_38'>
+      <field name='name'>Lao Cai</field>
+      <field name='code'>LAO</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_39'>
+      <field name='name'>Nam Dinh</field>
+      <field name='code'>NAM</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_40'>
+      <field name='name'>Nghe An</field>
+      <field name='code'>NGH</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_41'>
+      <field name='name'>Ninh Binh</field>
+      <field name='code'>NIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_42'>
+      <field name='name'>Ninh Thuan</field>
+      <field name='code'>NIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_43'>
+      <field name='name'>Phu Tho</field>
+      <field name='code'>PHU</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_44'>
+      <field name='name'>Phu Yen</field>
+      <field name='code'>PHU</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_45'>
+      <field name='name'>Quang Binh</field>
+      <field name='code'>QUA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_46'>
+      <field name='name'>Quang Nam</field>
+      <field name='code'>QUA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_47'>
+      <field name='name'>Quang Ngai</field>
+      <field name='code'>QUA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_48'>
+      <field name='name'>Quang Ninh</field>
+      <field name='code'>QUA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_49'>
+      <field name='name'>Quang Tri</field>
+      <field name='code'>QUA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_50'>
+      <field name='name'>Soc Trang</field>
+      <field name='code'>SOC</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_51'>
+      <field name='name'>Son La</field>
+      <field name='code'>SON</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_52'>
+      <field name='name'>Tay Ninh</field>
+      <field name='code'>TAY</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_53'>
+      <field name='name'>Thai Binh</field>
+      <field name='code'>THA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_54'>
+      <field name='name'>Thai Nguyen</field>
+      <field name='code'>THA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_55'>
+      <field name='name'>Thanh Hoa</field>
+      <field name='code'>THA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_56'>
+      <field name='name'>Thua Thien-Hue</field>
+      <field name='code'>THU</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_57'>
+      <field name='name'>Tien Giang</field>
+      <field name='code'>TIE</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_58'>
+      <field name='name'>Tra Vinh</field>
+      <field name='code'>TRA</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_59'>
+      <field name='name'>Tuyen Quang</field>
+      <field name='code'>TUY</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_60'>
+      <field name='name'>Kien Giang</field>
+      <field name='code'>KIE</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_61'>
+      <field name='name'>Vinh Long</field>
+      <field name='code'>VIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_62'>
+      <field name='name'>Vinh Phuc</field>
+      <field name='code'>VIN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_63'>
+      <field name='name'>Yen Bai</field>
+      <field name='code'>YEN</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_64'>
+      <field name='name'>Other</field>
+      <field name='code'>OTH</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_65'>
+      <field name='name'>International</field>
+      <field name='code'>INT</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_66'>
+      <field name='name'>Hau Giang</field>
+      <field name='code'>HAU</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_67'>
+      <field name='name'>Long An</field>
+      <field name='code'>LON</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
+    <record model='res.country.state' id='career.country_state_68'>
+      <field name='name'>TP Ho Chi Minh</field>
+      <field name='code'>HCM</field>
+      <field name='country_id' ref='base.vn'/>
+    </record>
 
 
-    </data>
+  </data>
 
 </openerp>

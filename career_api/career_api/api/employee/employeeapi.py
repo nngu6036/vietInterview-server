@@ -22,7 +22,7 @@ def login():
     try:
         login = request.values['email']
         password = request.values['password']
-        token = session_service.login(app.config['ERP_DB'], login, password)
+        token = session_service.login(app.config['ERP_DB'], login, password,'employee')
         if token:
             return jsonify(result=True,token=token)
         raise Exception('Invalid account %s or password %s' % (login, password))

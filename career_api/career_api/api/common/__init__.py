@@ -44,7 +44,8 @@ def upload_file():
 def jobCategory():
   try:
     if request.method == 'GET':
-      categoryList = common_service.getJobCategory()
+      lang = request.values['lang'] if 'lang' in request.values else False
+      categoryList = common_service.getJobCategory(lang)
       return jsonify(categoryList=categoryList)
   except Exception as exc:
     print(exc)
@@ -57,7 +58,8 @@ def jobCategory():
 def jobPosition():
   try:
     if request.method == 'GET':
-      positionList = common_service.getJobPosition()
+      lang = request.values['lang'] if 'lang' in request.values else False
+      positionList = common_service.getJobPosition(lang)
       return jsonify(positionList=positionList)
   except Exception as exc:
     print(exc)
@@ -67,7 +69,7 @@ def jobPosition():
 
 
 @app.route('/common/assignment/location', methods=['GET'], endpoint='common-assignment-location')
-def jobPosition():
+def jobLocation():
   try:
     if request.method == 'GET':
       countryList = common_service.getCountry()
@@ -84,7 +86,8 @@ def jobPosition():
 def eduLevel():
   try:
     if request.method == 'GET':
-      levelList = common_service.getProvince()
+      lang = request.values['lang'] if 'lang' in request.values else False
+      levelList = common_service.getProvince(lang)
       return jsonify(levelList=levelList)
   except Exception as exc:
     print(exc)

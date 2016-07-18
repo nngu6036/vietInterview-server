@@ -9,7 +9,7 @@ def login():
     try:
         login = request.values['email']
         password = request.values['password']
-        token = session_service.login(app.config['ERP_DB'], login, password)
+        token = session_service.login(app.config['ERP_DB'], login, password,'employer')
         if token:
             return jsonify(result=True,token=token)
         raise Exception('Invalid account %s or password %s' % (login, password))
@@ -51,24 +51,6 @@ def company():
         return jsonify(result=False)
 
 
-@app.route('/employer/company/user', methods=['POST'],endpoint='employer-company-user')
-def user():
-    try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
-         if request.method == 'POST':
-            user  = json.loads(request.values['user'])
-            userId = employer_service.createUser(user)
-            if  userId:
-              return jsonify(result=True,userId=userId)
-            else:
-              return jsonify(result=False)
-    except Exception as exc:
-        print(exc)
-        print 'User error '
-        print request.values
-        return jsonify(result=False)
 
 
 @app.route('/employer/assignment', methods=['GET','PUT','POST'],endpoint='employer-assignment')
@@ -199,8 +181,7 @@ def invitation():
             emails  = json.loads(request.values['candidates'])
             interviewId  = int(request.values['interviewId'])
             subject  = request.values['subject']
-            body  = request.values['body']
-            result  = email_service.sendInterviewInvitation(interviewId,emails,subject,body)
+            result  = email_service.sendInterviewInvitation(interviewId,emails,subject)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -235,9 +216,6 @@ def candidateAssessment():
             applicantId  = int(request.values['candidateId'])
             assessmentId  = int(request.values['assessmentId'])
             selfAssessmentResult  = employer_service.getSelfAssessment(assessmentId,applicantId)
-            print applicantId
-            print assessmentId
-            print selfAssessmentResult
             otherAssessmentResultList  = employer_service.getOtherAssessment(assessmentId,applicantId)
             return jsonify(result=True,selfAssessmentResult=selfAssessmentResult,otherAssessmentResultList=otherAssessmentResultList)
          if request.method == 'POST':
@@ -251,14 +229,50 @@ def candidateAssessment():
         return jsonify(result=False)
 
 
+@app.route('/employer/question', methods=['GET'],endpoint='employer-question')
+def question():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         content_service = erpInstance.service('career.content_service')
+         if request.method == 'GET':
+            lang = request.values['lang'] if 'lang' in request.values else False
+            questionList = content_service.getQuestion(lang)
+            return jsonify(result=True,questionList=questionList)
+         return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Question error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employer/question/category', methods=['GET'],endpoint='admin-question-employer')
+def questionCategory():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         content_service = erpInstance.service('career.content_service')
+         if request.method == 'GET':
+            lang = request.values['lang'] if 'lang' in request.values else False
+            categoryList = content_service.getQuestionCategory(lang)
+            return jsonify(result=True,categoryList=categoryList)
+         return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Question category error '
+        print request.values
+        return jsonify(result=False)
+
+
 @app.route('/employer/assessment', methods=['GET'],endpoint='employer-assessment')
 def assessment():
     try:
          token  = request.values['token']
          erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
-            assessment  = employer_service.getAssessment()
+            lang = request.values['lang'] if 'lang' in request.values else False
+            assessment  = content_service.getAssessment(lang)
             return jsonify(result=True,assessment=assessment)
     except Exception as exc:
         print(exc)
@@ -278,6 +292,23 @@ def candidate():
          if request.method == 'GET':
             candidateList  = employer_service.getAssignmentCandidate(assignmentId)
             return jsonify(result=True,candidateList=candidateList)
+    except Exception as exc:
+        print(exc)
+        print 'Candidate error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/report/assessment', methods=['GET'],endpoint='employer-report-assessment')
+def assessmentReport():
+    try:
+         token  = request.values['token']
+         candidateId  = int(request.values['candidateId'])
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         employer_service = erpInstance.service('career.report_service')
+         if request.method == 'GET':
+            content  = employer_service.getAssessmentSummaryReport(candidateId)
+            return jsonify(result=True,content=content)
     except Exception as exc:
         print(exc)
         print 'Candidate error '
