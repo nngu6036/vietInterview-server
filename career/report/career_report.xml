@@ -3,11 +3,12 @@
     <data>
 
         <report
-                id="career_assessment_summary"
+                id="career_assessment_summary_report"
                 string="Interview Assessment Summary"
                 model="hr.applicant"
                 report_type="qweb-pdf"
-                name="career.assessment_summary"
+                name="career.report_assessment_summary"
+                file="career.report_assessment_summary"
         />
 
     </data>

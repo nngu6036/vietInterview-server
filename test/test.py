@@ -1,9 +1,9 @@
 import  erppeek
 from data import  *
 
+#lient = erppeek.Client('http://192.168.1.200:8069', 'career', 'admin', '123456')
 client = erppeek.Client('http://vietinterview.com:8069', 'career', 'admin', '123456')
-company = client.model('res.company').get(3)
-print company.user_ids
-user  = client.model('res.users').get(5)
-print user.company_id
-print user.company_ids
+q =  client.model('career.question').browse([('lang','=','vi')])
+q.unlink()
+c =  client.model('career.question_category').browse([('lang','=','vi')])
+c.unlink()

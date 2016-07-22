@@ -60,6 +60,7 @@ class LicenseInstance(models.Model):
     effect_date = fields.Date(string="Effective date ")
     state = fields.Selection([('initial', 'Initial state'), ('suspend', 'Suspended state'), ('active', 'Active state'),
                               ('closed', 'Closed state')], default='initial')
+    email_history_ids = fields.One2many('career.email.history','license_instance_id','Email history')
 
     @api.one
     def isEnabled(self):
@@ -74,6 +75,7 @@ class LicenseInstance(models.Model):
 class QuestionCategory(models.Model):
     _name = 'career.question_category'
     title = fields.Text(string="Title",translate=True)
+    lang = fields.Char(string="Language",default="en")
 
 class Question(models.Model):
     _name = 'career.question'
@@ -81,6 +83,7 @@ class Question(models.Model):
     content = fields.Text(string="Content",translate=True)
     videoUrl = fields.Text(string="VIdeo")
     category_id = fields.Many2one('career.question_category', string="Category")
+    lang = fields.Char(string="Language",default="en")
 
 
 class JobCategory(models.Model):
@@ -161,6 +164,16 @@ class InterviewHistory(models.Model):
 
     wrap_up = fields.Boolean(string="Wrap-up completed")
 
+class LicenseEmailHistory(models.Model):
+    _name = 'career.email.history'
+
+    applicant_id = fields.Many2one('hr.applicant',string='Applicant ')
+    company_id = fields.Many2one('res.company',related='employer_id.user_id.company_id')
+    email = fields.Char(string='email',related='applicant_id.email_from')
+    assignment_id = fields.Many2one(string='Job',related='applicant_id.job_id')
+    date_send = fields.Date(string="Send date")
+    employer_id = fields.Many2one('career.employer',string='Employer user')
+    license_instance_id = fields.Many2one('career.license_instance',string='Applied license')
 
 class EmployeeUser(models.Model):
     _name = 'career.employee'

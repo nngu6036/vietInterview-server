@@ -1,9 +1,9 @@
 import urllib, urllib2
 from data import *
 
-token = TOKEN
+token = EMPLOYER_TOKEN
 # do POST
-url = URL + 'common/assignment/position?lang=vi'
+url = URL + 'admin/assessment?token=%s&lang=vi'%TOKEN
 print url
 rsp = urllib2.urlopen(url)
 content = rsp.read()

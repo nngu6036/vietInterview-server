@@ -32,7 +32,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">${object.company_id.name} would like you to complete a video interview </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.company_id.name} would like you to complete a video interview </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -86,7 +86,7 @@
 
 
       <record model='ir.translation' id='career.invitation_email_template_vi'>
-      <field name='name'>email_template.email_template,body_html</field>
+      <field name='name'>email.template,body_html</field>
       <field name='res_id' ref="career.invitation_email_template"/>
       <field name='lang'>vi_VN</field>
       <field name='value'>
@@ -104,7 +104,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">${object.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn video </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn video </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -119,14 +119,14 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com">VietInterview Website</a><br>
-            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Bạn cần hoàn thành cuộc phỏng vấn ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
+            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
         <a href="https://vietinterview.com/#/interview?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
-            Start Interview
+            Bắt đầu phỏng vấn
         </a><br><br>
     </center>
   </td>
@@ -184,7 +184,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">${object.company_id.name} Video interview reminder</td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.company_id.name} Video interview reminder</td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -232,7 +232,7 @@
 
 
       <record model='ir.translation' id='career.reminder_email_template_vi'>
-      <field name='name'>email_template.email_template,body_html</field>
+      <field name='name'>email.template,body_html</field>
       <field name='res_id' ref="career.reminder_email_template"/>
       <field name='lang'>vi_VN</field>
       <field name='value'>
@@ -251,7 +251,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">Nhắc nhở cuộc phỏng vấn video ${object.company_id.name}</td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Nhắc nhở cuộc phỏng vấn video ${object.company_id.name}</td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -301,7 +301,7 @@
     </record>
 
       <record model='ir.translation' id='career.reminder_email_template_subject_vi'>
-      <field name='name'>email_template.email_template,subject</field>
+      <field name='name'>email.template,subject</field>
       <field name='res_id' ref="career.reminder_email_template"/>
       <field name='lang'>vi_VN</field>
       <field name='value'>Nhắc nhở cuộc phỏng vấn video ${object.company_id.name} </field>
@@ -333,7 +333,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">Thank you for completing your ${object.company_id.name} video interview </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Thank you for completing your ${object.company_id.name} video interview </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -380,7 +380,7 @@
 
 
       <record model='ir.translation' id='career.thankyou_email_template_vi'>
-      <field name='name'>email_template.email_template,body_html</field>
+      <field name='name'>email.template,body_html</field>
       <field name='res_id' ref="career.thankyou_email_template"/>
       <field name='lang'>vi_VN</field>
       <field name='value'>
@@ -399,7 +399,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:18px;text-align:left">Cảm ơn bạn đã hoàn thành cuộc phỏng vấn của ${object.company_id.name} </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Cảm ơn bạn đã hoàn thành cuộc phỏng vấn của ${object.company_id.name} </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -449,7 +449,7 @@
 
 
        <record model='ir.translation' id='career.thankyou_email_template_subject_vi'>
-      <field name='name'>email_template.email_template,subject</field>
+      <field name='name'>email.template,subject</field>
       <field name='res_id' ref="career.thankyou_email_template"/>
       <field name='lang'>vi_VN</field>
       <field name='value'>Thư cảm ơn </field>

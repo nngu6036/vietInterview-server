@@ -87,7 +87,7 @@ def eduLevel():
   try:
     if request.method == 'GET':
       lang = request.values['lang'] if 'lang' in request.values else False
-      levelList = common_service.getProvince(lang)
+      levelList = common_service.getEducationLevel(lang)
       return jsonify(levelList=levelList)
   except Exception as exc:
     print(exc)

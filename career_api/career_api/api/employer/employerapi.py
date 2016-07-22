@@ -53,7 +53,24 @@ def company():
 
 
 
-@app.route('/employer/assignment', methods=['GET','PUT','POST'],endpoint='employer-assignment')
+@app.route('/employer/company/license', methods=['GET'],endpoint='employer-company-license')
+def companyLicense():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         license_service = erpInstance.service('career.license_service')
+         if request.method == 'GET':
+            companyId = int(request.values['companyId'])
+            licenseInfo = license_service.getLicenseStatistic(companyId)
+            return jsonify(result=True, licenseInfo=licenseInfo)
+    except Exception as exc:
+        print(exc)
+        print 'Company license error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/assignment', methods=['GET','PUT','POST','DELETE'],endpoint='employer-assignment')
 def assignment():
     try:
          token  = request.values['token']
@@ -73,6 +90,10 @@ def assignment():
                 return jsonify(result=True,assignmentId=assignmentId)
             else:
                 return jsonify(result=False)
+         if request.method == 'DELETE':
+            assignmentId  = int(request.values['assignmentId'])
+            result = employer_service.deleteAssignment(assignmentId)
+            return jsonify(result=result)
     except Exception as exc:
         print(exc)
         print 'Assignment error '
@@ -93,6 +114,26 @@ def assignmentOpen():
     except Exception as exc:
         print(exc)
         print 'Open Assignment error '
+        print request.values
+        return jsonify(result=False)
+
+
+
+
+@app.route('/employer/assignment/stats', methods=['GET'],endpoint='employer-assignment-stats')
+def assignmentStatistics():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['employer'])
+         employer_service = erpInstance.service('career.employer_service')
+         if request.method == 'GET':
+            assignmentId  = int(request.values['assignmentId'])
+            stats = employer_service.getAassignmentStatistic(assignmentId)
+            return jsonify(result=True,stats=stats)
+
+    except Exception as exc:
+        print(exc)
+        print 'Assignment stats error '
         print request.values
         return jsonify(result=False)
 
@@ -140,7 +181,7 @@ def interview():
 
 
 @app.route('/employer/assignment/interview/question', methods=['GET','PUT','POST','DELETE'],endpoint='employer-assignment-interview-question')
-def question():
+def interviewQuestion():
     try:
          token  = request.values['token']
          erpInstance = ErpInstance.fromToken(token,['employer'])

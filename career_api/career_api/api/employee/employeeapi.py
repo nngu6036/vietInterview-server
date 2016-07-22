@@ -3,6 +3,7 @@ from flask import jsonify, request, abort
 from career_api import app
 from career_api.proxy import session_service,ErpInstance,common_service,admin_service
 import json, base64, os, datetime
+from werkzeug.utils import secure_filename
 
 @app.route('/employee/account/register', methods=['POST'],endpoint='employee-account-register')
 def register():

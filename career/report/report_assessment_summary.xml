@@ -1,90 +1,144 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <template id="career.assessment_summary">
+        <template id="career.report_assessment_summary">
             <t t-call="career.html_container">
-              <t t-foreach="docs" t-as="o">
+                <t t-foreach="docs" t-as="o">
                     <div class="page">
-                <table style="width:100.0%;background:#2E3B4E">
-                        <tr>
-                            <td style="padding:15.0pt 15.0pt 15.0pt 15.0pt">
-                                <div style="text-align:center;">
-                                    <table style="border:0px;margin-left:auto; margin-right:auto; ">
-                                        <tr>
-                                            <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-                                                <span style="font-size:1.0pt">
+                        <table style="width:100.0%;background-color:#1cb2fb">
+                            <tr>
+                                <td style="padding:15.0pt 15.0pt 15.0pt 15.0pt">
+                                    <div style="text-align:center;">
+                                        <table style="border:0px;margin-left:auto; margin-right:auto; ">
+                                            <tr>
+                                                <td style="padding:5px ;text-align:center">
                                                     <a href="https://vietinterview.com">
-                                                        <span style="text-decoration:none">
-                                                            <img style="height:50px" src="https://vietinterview.com/images/logo.png" align="center">
-
-                                                            </img>
-                                                        </span>
+                                                        <img style="height:50px"
+                                                             src="https://vietinterview.com/images/logo.png"
+                                                             align="center">
+                                                        </img>
                                                     </a>
-                                                </span>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                        <table style="border:0px;width:100.0%;background:white">
+                            <tr>
+                                <td style="padding:23.25pt 15.0pt 25.5pt 15.0pt">
+                                    <div style="text-align:center;">
+                                        <table style="border:0px;margin-left:auto; margin-right:auto;">
+                                            <tr>
+                                                <td style="width:380px;width:285.0pt;padding:0in 0in 0in 0in">
+                                                    <table style="border:0px;'width:100.0%">
+                                                        <tr>
+                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                                <b>
+                                                                    <span style="font-size:13.5pt;font-family:'Helvetica',sans-serif;color:#2D394F">
+                                                                        BÁO CÁO ĐÁNH GIÁ TỔNG HỢP
+                                                                    </span>
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                                <span style="font-size:10.5pt;font-family:'Helvetica',sans-serif;color:#2D394F">
+                                                                    Công ty:
+                                                                    <span t-esc="o.company_id.name"/>
 
-                <table style="border:0px;width:100.0%;background:white">
-                    <tr>
-                        <td style="padding:23.25pt 15.0pt 25.5pt 15.0pt">
-                            <div style="text-align:center;">
-                                <table style="border:0px;margin-left:auto; margin-right:auto;">
-                                    <tr>
-                                        <td style="width:380px;width:285.0pt;padding:0in 0in 0in 0in">
-                                            <table style="border:0px;'width:100.0%">
-                                                <tr>
-                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
-                                                        <b>
-                                                            <span style="font-size:13.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                                BÁO CÁO ĐÁNH GIÁ TỔNG HỢP
-                                                            </span>
-                                                        </b>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
-                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                            Công ty <span t-esc="o.company_id.name"/>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                                <span style="font-size:10.5pt;font-family:'Helvetica',sans-serif;color:#2D394F">
+                                                                    Vị trí:
+                                                                    <span t-esc="o.job_id.name"/>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:center">
+                                                                <span style="font-size:10.5pt;font-family:'Helvetica',sans-serif;color:#2D394F">
+                                                                    Ứng viên:
+                                                                    <span t-esc="o.name"/>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <t t-foreach="assessmentResult(o.id)" t-as="assessment">
+                                                        <table style="border:0px;'width:100.0%">
+                                                            <tr>
+                                                                <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                    <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                        Người đánh giá:
+                                                                        <span t-esc="assessment['general'].user_id.name"/>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                    <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                        Điểm bình chọn:
+                                                                        <span t-esc="assessment['general'].rating"/>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                    <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                        Nhận xét:
+                                                                        <span t-esc="assessment['general'].note_summary"/>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                 <t t-foreach="assessment['details']" t-as="category">
+                                                                    <table style="border:0px;'width:100.0%">
+                                                                        <tr>
+                                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                                <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                                    <span t-esc="category"/>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <t t-foreach="assessment['details'][category]" t-as="answer">
+                                                                                    <table style="border:0px;'width:100.0%">
+                                                                                        <tr>
+                                                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                                                <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                                                    <span t-esc="answer.question_id.question"/>
+                                                                                                    :
+                                                                                                    <span t-esc="answer.value_number"/>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                            </t>
+                                                                        </tr>
 
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                              <tr>
-                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
-                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                            Vị trí <span t-esc="o.job_id.name"/>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                              <tr>
-                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:center">
-                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                            Ứng viên<span t-esc="o.name"/>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                                                    </table>
+                                                                </t>
+                                                            </tr>
+                                                        </table>
+
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
 
-
-              </div>
+                    </div>
+                </t>
             </t>
-
-          </t>
-
         </template>
     </data>
 </openerp>

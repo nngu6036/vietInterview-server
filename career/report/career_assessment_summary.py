@@ -29,25 +29,29 @@ class career_assessment_summary(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
         super(career_assessment_summary, self).__init__(cr, uid, name, context=context)
-        self.total = 0.0
-        self.netTotal = 0.0
-        self.grossTotal = 0.0
-        self.qty = 0.0
-        self.total_invoiced = 0.0
-        self.discount = 0.0
-        self.total_discount = 0.0
-        self.total_payment = 0.0
-        self.net_payment = 0.0
-        self.payments = []
-        self.taxes = []
-        self.sale_details = []
+        self.localcontext.update({
+            'assessmentResult': self._assessmentResult
+        })
 
+    def _assessmentResult(self,candidateId):
+        assessmentResultList = []
+        assessment_obj = self.pool.get('hr.evaluation.interview')
+        for assessmentId in assessment_obj.search(self.cr,  self.uid,[('applicant_id','=',candidateId)]):
+            hr_interview_assessment =  assessment_obj.browse(self.cr,  self.uid,assessmentId)
+            pages = {}
+            for answer in hr_interview_assessment.request_id.user_input_line_ids:
+                if not answer.question_id.page_id.title in pages:
+                    pages[answer.question_id.page_id.title] = []
+                pages[answer.question_id.page_id.title].append(answer)
+            print pages
+            assessmentResultList.append({'details':pages,'general':hr_interview_assessment})
+        return assessmentResultList
 
 
 class report_assessment_summary(osv.AbstractModel):
     _name = 'report.career.report_assessment_summary'
     _inherit = 'report.abstract_report'
-    _template = 'career.assessment_summary'
+    _template = 'career.report_assessment_summary'
     _wrapped_report_class = career_assessment_summary
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
