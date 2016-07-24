@@ -20,7 +20,6 @@
 ##############################################################################
 
 import time
-
 from openerp.osv import osv
 from openerp.report import report_sxw
 from datetime import  datetime
@@ -33,17 +32,16 @@ class career_assessment_summary(report_sxw.rml_parse):
             'assessmentResult': self._assessmentResult
         })
 
-    def _assessmentResult(self,candidateId):
+    def _assessmentResult(self,candidateId,lang='vi_VN'):
         assessmentResultList = []
         assessment_obj = self.pool.get('hr.evaluation.interview')
         for assessmentId in assessment_obj.search(self.cr,  self.uid,[('applicant_id','=',candidateId)]):
-            hr_interview_assessment =  assessment_obj.browse(self.cr,  self.uid,assessmentId)
+            hr_interview_assessment =  assessment_obj.browse(self.cr,  self.uid,assessmentId,{'lang':lang})
             pages = {}
             for answer in hr_interview_assessment.request_id.user_input_line_ids:
                 if not answer.question_id.page_id.title in pages:
                     pages[answer.question_id.page_id.title] = []
                 pages[answer.question_id.page_id.title].append(answer)
-            print pages
             assessmentResultList.append({'details':pages,'general':hr_interview_assessment})
         return assessmentResultList
 

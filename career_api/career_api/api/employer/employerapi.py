@@ -31,6 +31,21 @@ def logout():
         return jsonify(result=True)
 
 
+@app.route('/employer/account/changePass', methods=['POST'],endpoint='employer-account-changepass')
+def changePass():
+    try:
+        oldpass = request.values['oldpass']
+        newpass = request.values['newpass']
+        token  = request.values['token']
+        sessionInfo = session_service.validateToken(token,['employer'])
+        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
+        return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Change pass error '
+        print request.values
+        return jsonify(result=False)
+
 @app.route('/employer/company', methods=['GET','PUT'],endpoint='employer-company')
 def company():
     try:
@@ -137,7 +152,7 @@ def assignmentStatistics():
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/assignment/open', methods=['POST'],endpoint='employer-assignment-close')
+@app.route('/employer/assignment/close', methods=['POST'],endpoint='employer-assignment-close')
 def assignmentClose():
     try:
          token  = request.values['token']
@@ -149,7 +164,7 @@ def assignmentClose():
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Open Assignment error '
+        print 'Close Assignment error '
         print request.values
         return jsonify(result=False)
 
@@ -261,8 +276,8 @@ def candidateAssessment():
             return jsonify(result=True,selfAssessmentResult=selfAssessmentResult,otherAssessmentResultList=otherAssessmentResultList)
          if request.method == 'POST':
             assessmentResult  = json.loads(request.values['assessmentResult'])
-            result  = employer_service.submitAssessment(assessmentResult)
-            return jsonify(result=result)
+            assessmentId  = employer_service.submitAssessment(assessmentResult)
+            return jsonify(result=True,assessmentId=assessmentId)
     except Exception as exc:
         print(exc)
         print 'Candidate Assessment error '

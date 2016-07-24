@@ -93,7 +93,7 @@ def companyUser():
         return jsonify(result=False)
   except Exception as exc:
     print(exc)
-    print 'Company  error '
+    print 'Company user  error '
     print request.values
     return jsonify(result=False)
 

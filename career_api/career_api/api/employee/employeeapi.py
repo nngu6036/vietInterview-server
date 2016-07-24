@@ -203,7 +203,7 @@ def applyJob():
     try:
          token  = request.values['token']
          if request.method == 'POST':
-            sessionInfo = session_service.validate(token,['employee'])
+            sessionInfo = session_service.validateToken(token,['employee'])
             assignmentId = int( request.values['assignmentId'])
             result = common_service.applyJob(sessionInfo['uid'],assignmentId)
             return jsonify(result=result)

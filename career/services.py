@@ -28,17 +28,8 @@ mako_template_env = SandboxedEnvironment(
     lstrip_blocks =True,
     autoescape=True,                # XML/HTML automatic escaping
 )
+from datetime import date, timedelta
 
-class Career(osv.AbstractModel):
-    _name = 'career.career'
-
-    @api.model
-    def install(self):
-        root_user = self.env.ref("base.user_root")
-        admin_group = self.env.ref('career.admin_group')
-        root_user.write({'groups_id':[(4,admin_group.id)]})
-        company = self.env.ref('base.main_company')
-        company.write({'name':'Administrator'})
 
 class SessionService(osv.AbstractModel):
     _name = 'career.session_service'
@@ -92,6 +83,13 @@ class SessionService(osv.AbstractModel):
                   return {'uid':session.uid,'user':session.user,'password':session.password,'db':session.db}
         return False
 
+    @api.model
+    def changePass(self,login,oldpass,newpass):
+        user = self.env['res.users'].search([('login','=',login)])
+        if user.write({'password':newpass}):
+            return True
+        return False
+
 class AdminService(osv.AbstractModel):
     _name = 'career.admin_service'
 
@@ -104,7 +102,7 @@ class AdminService(osv.AbstractModel):
         employee_group = self.env.ref('career.employee_group')
         hr_group = self.env.ref('base.group_hr_user')
         survey_group = self.env.ref('base.group_survey_user')
-        user = self.env['res.users'].create({'login':login,'password':password,'name':login,
+        user = self.env['res.users'].create({'login':login,'password':password,'name':login,'notify_email':'none',
                                              'email':login, 'groups_id':[(6,0,[employee_group.id,hr_group.id,survey_group.id])]})
         employee = self.env['career.employee'].create({'user_id':user.id})
         return employee.id
@@ -112,8 +110,12 @@ class AdminService(osv.AbstractModel):
 
     @api.model
     def createCompany(self,vals):
-        license_instance = self.env['career.license_instance'].create({'license_id':int(vals['licenseId']),
-                                                                       'expire_date':vals['licenseExpire']})
+        license = self.env['career.license'].browse(int(vals['licenseId']))
+        expiryDdate = d = date.today() + timedelta(days=license.validity)
+
+        license_instance = self.env['career.license_instance'].create({'license_id':license.id,
+                                                                       'expire_date':'%d-%d-%d %d:%d:%d' % (
+        expiryDdate.year, expiryDdate.month, expiryDdate.day, expiryDdate.hour, expiryDdate.minute, expiryDdate.second)})
         company = self.env['res.company'].create({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False,'license_instance_id':license_instance.id})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name':'Assessment','company_id':company.id})
         assessment_form = self.env.ref('career.assessment_form')
@@ -149,7 +151,7 @@ class AdminService(osv.AbstractModel):
             survey_group = self.env.ref('base.group_survey_manager')
             admin_group = self.env.ref('base.group_erp_manager')
             company = self.env['res.company'].browse(companyId)
-            user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],
+            user = self.env['res.users'].create({'login':vals['email'],'password':vals['password'],'name':vals['name'],'notify_email':'none',
                                                  'email':vals['email']})
             user.write({'company_ids':[(4,company.id)]})
             user.write({'company_id':company.id, 'groups_id':[(6,0,[employer_group.id,hr_group.id,survey_group.id,admin_group.id])]})
@@ -349,8 +351,10 @@ class EmployerService(osv.AbstractModel):
     def createInterview(self,assignmentId,vals):
         assignment = self.env['hr.job'].browse(assignmentId)
         interview = self.env['survey.survey'].create({'title':vals['name'],'response':int(vals['response']),
-                                                             'retry':int(vals['retry']), 'introUrl':vals['introUrl'],
+                                                              'retry':int(vals['retry']) if 'retry' in vals else False
+                                                         , 'introUrl':vals['introUrl'],
                                                              'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl'],
+                                                             'prepare':int(vals['prepare']) if 'prepare' in vals else False,
                                                              'language':vals['language'] if 'language' in vals else False })
         assignment.write({'survey_id':interview.id})
         return interview.id
@@ -360,8 +364,10 @@ class EmployerService(osv.AbstractModel):
         interview = self.env['survey.survey'].browse(id)
         if interview:
             interview.write({ 'title':vals['name'],'response':int(vals['response']),
-                                'retry':int(vals['retry']), 'introUrl':vals['introUrl'],
+                                'retry':int(vals['retry']) if 'retry' in vals else False,
+                              'introUrl':vals['introUrl'],
                                'exitUrl':vals['exitUrl'],'aboutUsUrl':vals['aboutUsUrl'],
+                              'prepare':int(vals['prepare']) if 'prepare' in vals else False,
                               'language':vals['language'] if 'language' in vals else False})
             return True
         return False
@@ -372,7 +378,7 @@ class EmployerService(osv.AbstractModel):
         if assignment.survey_id:
             interview = {'id':assignment.survey_id.id,'name':assignment.survey_id.title,'response':assignment.survey_id.response,
                           'retry':assignment.survey_id.retry,'introUrl':assignment.survey_id.introUrl,'exitUrl':assignment.survey_id.exitUrl,
-                         'aboutUsUrl':assignment.survey_id.aboutUsUrl,'language':assignment.survey_id.language}
+                         'aboutUsUrl':assignment.survey_id.aboutUsUrl,'language':assignment.survey_id.language,'prepare':assignment.survey_id.prepare}
             return interview
         return False
 
@@ -382,7 +388,9 @@ class EmployerService(osv.AbstractModel):
         for jQuestion in jQuestions:
             page = self.env['survey.page'].create({'title':'Single Page','survey_id':interviewId})
             question = self.env['survey.question'].create({'question':jQuestion['title'],'response':int(jQuestion['response']),
-                                                                 'retry':int(jQuestion['retry']), 'videoUrl':jQuestion['videoUrl'],
+                                                                  'retry':int(jQuestion['retry']) if 'retry' in jQuestions else False,
+                                                                'videoUrl':jQuestion['videoUrl'],
+                                                                'prepare':int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
                                                                  'source':jQuestion['source'],'mode':jQuestion['type'],'page_id':page.id,
                                                                 'sequence':int(jQuestion['order']),'survey_id':interviewId})
             questionIds.append(question.id)
@@ -392,7 +400,9 @@ class EmployerService(osv.AbstractModel):
     def updateInterviewQuestion(self,jQuestions):
         for jQuestion in jQuestions:
             self.env['survey.question'].browse(int(jQuestion['id'])).write({'question':jQuestion['title'],'response':int(jQuestion['response']),
-                                                                 'retry':int(jQuestion['retry']), 'videoUrl':jQuestion['videoUrl'],
+                                                                 'retry':int(jQuestion['retry']) if 'retry' in jQuestions else False,
+                                                                'videoUrl':jQuestion['videoUrl'],
+                                                                'prepare':int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
                                                                  'source':jQuestion['source'],'mode':jQuestion['type'],
                                                                 'sequence':int(jQuestion['order'])})
         return True
@@ -409,7 +419,7 @@ class EmployerService(osv.AbstractModel):
     def getInterviewQuestion(self,interviewId):
         questions = self.env['survey.question'].search([('survey_id','=',interviewId)])
         questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'videoUrl':q.videoUrl,
-                         'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]
+                         'source':q.source,'type':q.mode,'order':q.sequence,'prepare':q.prepare} for q in questions]
         return questionList
 
     @api.model
@@ -444,7 +454,7 @@ class EmployerService(osv.AbstractModel):
                                                                     'question_id':int(jAns['questionId']),
                                                                     'answer_type':'number',
                                                                     'value_number':int(jAns['answer'])})
-        return True
+        return hr_interview_assessment.id
 
     @api.model
     def getSelfAssessment(self,assessmentId,applicantId):
@@ -483,7 +493,7 @@ class CandidateService(osv.AbstractModel):
         user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
         if user_input:
             interview = user_input[0].survey_id
-            return {'id':interview.id,'name':interview.title,'response':interview.response,
+            return {'id':interview.id,'name':interview.title,'response':interview.response,'prepare':interview.prepare,
                               'retry':interview.retry,'introUrl':interview.introUrl,'exitUrl':interview.exitUrl,
                              'aboutUsUrl':interview.aboutUsUrl}
         return False
@@ -510,7 +520,7 @@ class CandidateService(osv.AbstractModel):
         if user_input:
             interview = user_input[0].survey_id
             questions = self.env['survey.question'].search([('survey_id','=',interview.id)])
-            questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'videoUrl':q.videoUrl,
+            questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'prepare':q.prepare,'videoUrl':q.videoUrl,
                              'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]
             return questionList
         return False
@@ -581,6 +591,7 @@ class MailService(osv.AbstractModel):
         license_service = self.env['career.license_service']
         for email in emails:
             if not license_service.validateLicense(assignment.company_id.id):
+              print "License error ", assignment.company_id.name
               return False
             user_input = self.env['survey.user_input'].search([('email','=',email),('survey_id','=',inteviewId)])
             if not user_input:
@@ -700,6 +711,8 @@ class CommonService(osv.AbstractModel):
                                                                      'company_id':assignment.company_id.id,'response_id':user_input.id})
                     return True
         return False
+
+
 
 class EmployeeService(osv.AbstractModel):
     _name = 'career.employee_service'
@@ -861,7 +874,7 @@ class EmployeeService(osv.AbstractModel):
         for employee in employees:
             documents = self.env['ir.attachment'].search([('res_model','=','career.employee'),('res_id','=',employee.id)])
             for doc in documents:
-                certList.append({'id':doc.id,'title':doc.name,'filename':doc.filename,'filedata':doc.datas})
+                certList.append({'id':doc.id,'title':doc.name,'filename':doc.datas_fname,'filedata':doc.datas})
         return certList
 
     @api.model
@@ -904,8 +917,8 @@ class ReportService(osv.AbstractModel):
     @api.model
     def getAssessmentSummaryReport(self,candidateId):
       applicant = self.env['hr.applicant'].browse(candidateId)
-      content = self.env['report'].get_pdf(applicant, 'career.report_assessment_summary')
-      encoded_content = base64.b64encode(content)
+      content_pdf = self.env['report'].get_pdf(applicant, 'career.report_assessment_summary')
+      encoded_content = base64.b64encode(content_pdf)
       return encoded_content
 
 class LicenseService(osv.AbstractModel):

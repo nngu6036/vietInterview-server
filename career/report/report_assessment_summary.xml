@@ -31,9 +31,7 @@
                                 <td style="padding:23.25pt 15.0pt 25.5pt 15.0pt">
                                     <div style="text-align:center;">
                                         <table style="border:0px;margin-left:auto; margin-right:auto;">
-                                            <tr>
-                                                <td style="width:380px;width:285.0pt;padding:0in 0in 0in 0in">
-                                                    <table style="border:0px;'width:100.0%">
+
                                                         <tr>
                                                             <td style="padding:0in 0in 1.5pt 0in;text-align:center">
                                                                 <b>
@@ -68,16 +66,18 @@
                                                                 </span>
                                                             </td>
                                                         </tr>
-                                                    </table>
-                                                    <t t-foreach="assessmentResult(o.id)" t-as="assessment">
-                                                        <table style="border:0px;'width:100.0%">
-                                                            <tr>
-                                                                <td style="padding:0in 0in 1.5pt 0in;text-align:left">
-                                                                    <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                                        Người đánh giá:
-                                                                        <span t-esc="assessment['general'].user_id.name"/>
-                                                                    </span>
+
+                                                        <t t-foreach="assessmentResult(o.id)" t-as="assessment">
+                                                            <tr style="margin-top:20px;background-color:'grey'">
+                                                                <td style="padding:0in 0in 1.5pt 0in;text-align:left;">
+                                                                    <b>
+                                                                        <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                            Người đánh giá:
+                                                                            <span t-esc="assessment['general'].user_id.name"/>
+                                                                        </span>
+                                                                    </b>
                                                                 </td>
+
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding:0in 0in 1.5pt 0in;text-align:left">
@@ -95,40 +95,37 @@
                                                                     </span>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                 <t t-foreach="assessment['details']" t-as="category">
-                                                                    <table style="border:0px;'width:100.0%">
-                                                                        <tr>
-                                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:left">
-                                                                                <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                                                    <span t-esc="category"/>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <t t-foreach="assessment['details'][category]" t-as="answer">
-                                                                                    <table style="border:0px;'width:100.0%">
-                                                                                        <tr>
-                                                                                            <td style="padding:0in 0in 1.5pt 0in;text-align:left">
-                                                                                                <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
-                                                                                                    <span t-esc="answer.question_id.question"/>
-                                                                                                    :
-                                                                                                    <span t-esc="answer.value_number"/>
-                                                                                                </span>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                            </t>
-                                                                        </tr>
 
-                                                                    </table>
+                                                            <t t-foreach="assessment['details']"
+                                                               t-as="category">
+                                                                <tr>
+                                                                    <td style="padding:0in 0in 1.5pt 0in;text-align:left">
+                                                                        <b>
+                                                                            <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                                <span t-esc="category"/>
+                                                                            </span>
+                                                                        </b>
+                                                                    </td>
+                                                                </tr>
+                                                                <t t-foreach="assessment['details'][category]"
+                                                                   t-as="answer">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <span style="font-size:10.5pt;font-family:&quot;Helvetica&quot;,sans-serif;color:#2D394F">
+                                                                                <span t-esc="answer.question_id.question"/>
+                                                                                :
+                                                                                <span t-esc="answer.value_number"/>
+                                                                            </span>
+                                                                        </td>
+
+                                                                    </tr>
                                                                 </t>
-                                                            </tr>
-                                                        </table>
 
-                                                    </t>
-                                                </td>
-                                            </tr>
+                                                            </t>
+
+
+                                                        </t>
+
                                         </table>
                                     </div>
                                 </td>

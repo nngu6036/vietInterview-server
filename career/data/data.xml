@@ -13,24 +13,33 @@
         <record model="career.license" id="career.bronze_license">
             <field name="name">Bronze</field>
             <field name="assignment">5</field>
-            <field name="email">100</field>
+            <field name="email">20</field>
+            <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.silver_license">
             <field name="name">Silver</field>
             <field name="assignment">10</field>
-            <field name="email">500</field>
+            <field name="email">40</field>
+            <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.gold_license">
             <field name="name">Gold</field>
             <field name="assignment">25</field>
-            <field name="email">5000</field>
+            <field name="email">80</field>
+            <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.platnium_license">
             <field name="name">Platnium</field>
             <field name="assignment">100</field>
             <field name="email">50000</field>
+            <field name="validity">360</field>
         </record>
-
+        <record model="career.license" id="career.trial_license">
+            <field name="name">Trial</field>
+            <field name="assignment">5</field>
+            <field name="email">50</field>
+            <field name="validity">7</field>
+        </record>
 
     </data>
 

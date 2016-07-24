@@ -50,7 +50,7 @@ class License(models.Model):
     name = fields.Char(string='Name', required=True)
     assignment = fields.Integer(string='Assignment limit')
     email = fields.Integer(string='Email limit')
-
+    validity = fields.Integer(string='Validity period')
 
 class LicenseInstance(models.Model):
     _name = 'career.license_instance'
@@ -122,7 +122,8 @@ class Interview(models.Model):
     _name = 'survey.survey'
     _inherit = 'survey.survey'
 
-    response = fields.Integer(string="Response time limit for one question")
+    response = fields.Integer(string="Response time  for one question")
+    prepare = fields.Integer(string="Prepare time  for one question")
     retry = fields.Integer(string="Number of attempts for one question, -1 means unlimited")
     introUrl = fields.Text(string="Introduction Video URL")
     exitUrl = fields.Text(string="Thank you Video URL")
