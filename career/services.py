@@ -429,7 +429,7 @@ class EmployerService(osv.AbstractModel):
               response = {'name':input.email,'email':input.email,'candidateId':applicant[0].id}
               response['answerList'] = [{'id':line.id,'questionId':line.question_id.id,'videoUrl':line.value_video_url} for line in input.user_input_line_ids]
               documents = self.env['ir.attachment'].search([('res_model','=','hr.applicant'),('res_id','=',applicant[0].id)])
-              response['documentList'] = [{'id':doc.id,'title':doc.name,'filename':doc.datas_fname,'filedata':doc.datas} for doc in documents]
+              response['documentList'] = [{'id':doc.id,'title':doc.name,'filename':doc.datas_fname,'filedata':doc.store_fname} for doc in documents]
               responseList.append(response)
         return responseList
 
@@ -562,7 +562,7 @@ class CandidateService(osv.AbstractModel):
                 applicant = applicants[0]
                 assignment = applicant.job_id
                 if assignment and assignment.status=='published' and  assignment.survey_id:
-                     self.env['ir.attachment'].create({'name':file_name,'description':comment,
+                     self.env['ir.attachment'].create({'name':comment,'description':comment,
                                                        'res_model':'hr.applicant','res_id':applicant[0].id,
                                                        'company_id':assignment.company_id.id,'type':'binary',
                                                        'store_fname':file_location,'datas_fname':file_name})
@@ -873,7 +873,7 @@ class EmployeeService(osv.AbstractModel):
         for employee in employees:
             documents = self.env['ir.attachment'].search([('res_model','=','career.employee'),('res_id','=',employee.id)])
             for doc in documents:
-                certList.append({'id':doc.id,'title':doc.name,'filename':doc.datas_fname,'filedata':doc.datas})
+                certList.append({'id':doc.id,'title':doc.name,'filename':doc.datas_fname,'filedata':doc.store_fname})
         return certList
 
     @api.model
@@ -892,7 +892,7 @@ class EmployeeService(osv.AbstractModel):
         employees = self.env['career.employee'].search([('user_id','=',uid)])
         for employee in employees:
             self.env['ir.attachment'].browse(ids).unlink()
-
+        return True
 
     @api.model
     def getApplicantHistory(self):

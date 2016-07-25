@@ -189,7 +189,7 @@ def application():
          erpInstance = ErpInstance.fromToken(token,['employee'])
          employee_service = erpInstance.service('career.employee_service')
          if request.method == 'GET':
-            applicationList  = employee_service.getApplicationHistory()
+            applicationList  = employee_service.getApplicantHistory()
             return jsonify(applicationList=applicationList)
     except Exception as exc:
         print(exc)
