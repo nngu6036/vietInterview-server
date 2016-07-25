@@ -114,8 +114,7 @@ class AdminService(osv.AbstractModel):
         expiryDdate = d = date.today() + timedelta(days=license.validity)
 
         license_instance = self.env['career.license_instance'].create({'license_id':license.id,
-                                                                       'expire_date':'%d-%d-%d %d:%d:%d' % (
-        expiryDdate.year, expiryDdate.month, expiryDdate.day, expiryDdate.hour, expiryDdate.minute, expiryDdate.second)})
+                                                                       'expire_date':'%d-%d-%d ' % (expiryDdate.year, expiryDdate.month, expiryDdate.day)})
         company = self.env['res.company'].create({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False,'license_instance_id':license_instance.id})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name':'Assessment','company_id':company.id})
         assessment_form = self.env.ref('career.assessment_form')
@@ -127,7 +126,7 @@ class AdminService(osv.AbstractModel):
     def updateCompany(self,id,vals):
         company = self.env['res.company'].browse(id)
         if company:
-            company.write({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False,'license_instance_id':vals['licenseId']})
+            company.write({'name':vals['name'],'logo':vals['image'] if 'image' in vals else False})
             return True
         return False
 
@@ -957,7 +956,7 @@ class LicenseService(osv.AbstractModel):
         if company.license_instance_id:
           stats['email'] = self.env['career.email.history'].search_count([('license_instance_id','=',company.license_instance_id.id)])
           stats['license'] = {'name':company.license_instance_id.license_id.name,'email':company.license_instance_id.license_id.email,
-                              'expire_date':company.license_instance_id.expire_date,'state':company.license_instance_id.state}
+                              'expireDate':company.license_instance_id.expire_date,'state':company.license_instance_id.state}
       return stats
 
     @api.model
