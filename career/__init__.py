@@ -12,3 +12,4 @@ import employer_service
 import report
 import session_service
 import mail_service
+import license_service
