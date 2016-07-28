@@ -22,7 +22,7 @@ def login():
     return jsonify(result=False)
 
 
-@app.route('/admin/license', methods=['GET', 'PUT'], endpoint='admin-license')
+@app.route('/admin/license', methods=['GET', 'POST'], endpoint='admin-license')
 def license():
   try:
     token = request.values['token']
@@ -31,10 +31,10 @@ def license():
     if request.method == 'GET':
       licenseList = admin_service.getLicense()
       return jsonify(result=True, licenseList=licenseList)
-    if request.method == 'PUT':
+    if request.method == 'POST':
       license = json.loads(request.values['license'])
-      admin_service.updateLicense(int(license['id']), license)
-      return jsonify(result=True)
+      licenseId = admin_service.createLicense(license)
+      return jsonify(result=True,licenseId=licenseId)
   except Exception as exc:
     print(exc)
     print 'License error '
@@ -125,7 +125,21 @@ def companyLicense():
     return jsonify(result=False)
 
 
-
+@app.route('/admin/assignment/approve', methods=['POST'],endpoint='admin-assignment-approve')
+def assignmentApprove():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'POST':
+            assignmentId  = int(request.values['assignmentId'])
+            result = admin_service.approveAssignment(assignmentId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Approve Assignment error '
+        print request.values
+        return jsonify(result=False)
 
 
 @app.route('/admin/account/logout', methods=['POST'], endpoint='admin-logout')
@@ -227,3 +241,18 @@ def assessment():
     print 'Assessment error '
     print request.values
     return jsonify(result=False)
+
+@app.route('/admin/assignment', methods=['GET'],endpoint='admin-assignment')
+def assignment():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'GET':
+            assignmentList = admin_service.getAssignment()
+            return jsonify(result=True,assignmentList=assignmentList)
+    except Exception as exc:
+        print(exc)
+        print 'Assignment error '
+        print request.values
+        return jsonify(result=False)

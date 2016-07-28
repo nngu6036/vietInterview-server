@@ -37,9 +37,10 @@
         <record model="career.license" id="career.trial_license">
             <field name="name">Trial</field>
             <field name="assignment">5</field>
-            <field name="email">50</field>
-            <field name="validity">7</field>
+            <field name="email">10</field>
+            <field name="validity">30</field>
         </record>
+
 
     </data>
 

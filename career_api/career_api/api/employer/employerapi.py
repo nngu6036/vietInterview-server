@@ -1,7 +1,7 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import session_service,ErpInstance
+from career_api.proxy import session_service,ErpInstance,common_service
 import json
 
 @app.route('/employer/account/login', methods=['POST'],endpoint='employer-account-login')
@@ -354,6 +354,19 @@ def candidate():
         print request.values
         return jsonify(result=False)
 
+@app.route('/employer/candidate', methods=['GET'],endpoint='employer-caandidate')
+def poentialCandidate():
+    try:
+         token  = request.values['token']
+         assignmentId  = int(request.values['assignmentId'])
+         if request.method == 'GET':
+            employeeList  = common_service.searchPotentialCandidate(assignmentId)
+            return jsonify(result=True,employeeList=employeeList)
+    except Exception as exc:
+        print(exc)
+        print 'Potential candidate error '
+        print request.values
+        return jsonify(result=False)
 
 @app.route('/employer/report/assessment', methods=['GET'],endpoint='employer-report-assessment')
 def assessmentReport():

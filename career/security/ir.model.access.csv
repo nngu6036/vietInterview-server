@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_career_employer,career.employer,model_career_employer,employer_group,1,1,1,1
+access_career_employee,career.employee,model_career_employee,employer_group,1,1,1,1
 access_career_license_instance,career.license_instance,model_career_license_instance,employer_group,1,1,1,1
 access_career_license,career.license,model_career_license,employer_group,1,1,1,1
 access_career_email_history,career.email.history,model_career_email_history,employer_group,1,1,1,1

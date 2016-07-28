@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data >
+    <data>
         <record model="ir.mail_server" id="career_smtp_host">
             <field name="name">Career Mail Server</field>
             <field name="smtp_host">vietinterview.com</field>
@@ -15,10 +15,10 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Interview invitation</field>
             <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
-            <field name="email_to" >${object.email_from}</field>
+            <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
-            <field name="body_html" >
-             <![CDATA[
+            <field name="body_html">
+                <![CDATA[
                <div>
     <center style="background-color:#f2f3f3">
       <table style="width:100%;border-spacing:0">
@@ -46,7 +46,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="https://vietinterview.com">VietInterview Website</a><br>
+            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
             The entire process takes about 30 minutes on average. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
@@ -81,16 +81,16 @@
 </div><br></div>
 
                 ]]>
-                </field>
+            </field>
         </record>
 
 
-      <record model='ir.translation' id='career.invitation_email_template_vi'>
-      <field name='name'>email.template,body_html</field>
-      <field name='res_id' ref="career.invitation_email_template"/>
-      <field name='lang'>vi_VN</field>
-      <field name='value'>
-          <![CDATA[
+        <record model='ir.translation' id='career.invitation_email_template_vi'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.invitation_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                <![CDATA[
                <div>
     <center style="background-color:#f2f3f3">
       <table style="width:100%;border-spacing:0">
@@ -118,7 +118,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com">VietInterview Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
@@ -153,21 +153,21 @@
 </div><br></div>
 
                 ]]>
-      </field>
-      <field name='module'>career</field>
-      <field name='state'>translated</field>
-      <field name='type'>model</field>
-    </record>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
         <record model="email.template" id="career.reminder_email_template">
             <field name="name">Interview reminder</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-            <field name="subject">${object.company_id.name} video interview reminder </field>
+            <field name="subject">${object.company_id.name} video interview reminder</field>
             <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
-            <field name="email_to" >${object.email_from}</field>
+            <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
-            <field name="body_html" >
-             <![CDATA[
+            <field name="body_html">
+                <![CDATA[
 
 
 
@@ -226,17 +226,16 @@
 
 
                 ]]>
-                </field>
+            </field>
         </record>
 
 
-
-      <record model='ir.translation' id='career.reminder_email_template_vi'>
-      <field name='name'>email.template,body_html</field>
-      <field name='res_id' ref="career.reminder_email_template"/>
-      <field name='lang'>vi_VN</field>
-      <field name='value'>
-            <![CDATA[
+        <record model='ir.translation' id='career.reminder_email_template_vi'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.reminder_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                <![CDATA[
 
 <div>
     <center style="background-color:#f2f3f3">
@@ -294,31 +293,31 @@
 
 
                 ]]>
-      </field>
-      <field name='module'>career</field>
-      <field name='state'>translated</field>
-      <field name='type'>model</field>
-    </record>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
-      <record model='ir.translation' id='career.reminder_email_template_subject_vi'>
-      <field name='name'>email.template,subject</field>
-      <field name='res_id' ref="career.reminder_email_template"/>
-      <field name='lang'>vi_VN</field>
-      <field name='value'>Nhắc nhở cuộc phỏng vấn video ${object.company_id.name} </field>
-      <field name='module'>career</field>
-      <field name='state'>translated</field>
-      <field name='type'>model</field>
-    </record>
+        <record model='ir.translation' id='career.reminder_email_template_subject_vi'>
+            <field name='name'>email.template,subject</field>
+            <field name='res_id' ref="career.reminder_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>Nhắc nhở cuộc phỏng vấn video ${object.company_id.name}</field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
-      <record model="email.template" id="career.thankyou_email_template">
+        <record model="email.template" id="career.thankyou_email_template">
             <field name="name">Interview thank you</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Thankyou letter</field>
             <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
-            <field name="email_to" >${object.email_from}</field>
+            <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
-            <field name="body_html" >
-             <![CDATA[
+            <field name="body_html">
+                <![CDATA[
 
 <div>
     <center style="background-color:#f2f3f3">
@@ -375,16 +374,16 @@
 
 
                 ]]>
-                </field>
+            </field>
         </record>
 
 
-      <record model='ir.translation' id='career.thankyou_email_template_vi'>
-      <field name='name'>email.template,body_html</field>
-      <field name='res_id' ref="career.thankyou_email_template"/>
-      <field name='lang'>vi_VN</field>
-      <field name='value'>
-               <![CDATA[
+        <record model='ir.translation' id='career.thankyou_email_template_vi'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.thankyou_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                <![CDATA[
 
 <div>
     <center style="background-color:#f2f3f3">
@@ -441,22 +440,101 @@
 
 
                 ]]>
-      </field>
-      <field name='module'>career</field>
-      <field name='state'>translated</field>
-      <field name='type'>model</field>
-    </record>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
 
-       <record model='ir.translation' id='career.thankyou_email_template_subject_vi'>
-      <field name='name'>email.template,subject</field>
-      <field name='res_id' ref="career.thankyou_email_template"/>
-      <field name='lang'>vi_VN</field>
-      <field name='value'>Thư cảm ơn </field>
-      <field name='module'>career</field>
-      <field name='state'>translated</field>
-      <field name='type'>model</field>
-    </record>
+        <record model='ir.translation' id='career.thankyou_email_template_subject_vi'>
+            <field name='name'>email.template,subject</field>
+            <field name='res_id' ref="career.thankyou_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>Thư cảm ơn</field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
+
+
+        <record model="email.template" id="career.new_job_notification_email_template">
+            <field name="name">New job notification</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_job"/>
+            <field name="subject">New job notification</field>
+            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_to" >VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="mail_server_id" ref="career.career_smtp_host"/>
+            <field name="body_html" >
+             <![CDATA[
+               <div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody><tr>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Job ${object.name} has been posted by ${object.company_id.name}. </td>
+                </tr>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+                ]]>
+                </field>
+        </record>
+
+
+        <record model="email.template" id="career.job_approval_notification_email_template">
+            <field name="name">Job approval notification</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_job"/>
+            <field name="subject">Job approval notification</field>
+            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_to" >${object.company_id.partner_id.email}</field>
+            <field name="mail_server_id" ref="career.career_smtp_host"/>
+            <field name="body_html" >
+             <![CDATA[
+               <div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody><tr>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Job ${object.name} has been approved. </td>
+                </tr>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+                ]]>
+                </field>
+        </record>
+
+
+
     </data>
 
 </openerp>

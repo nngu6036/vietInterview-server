@@ -64,10 +64,12 @@ class LicenseInstance(models.Model):
 
     @api.one
     def isEnabled(self):
+        if self.state != 'active' :
+            return False
         if not self.expire_date:
             return True
         expire_date = datetime.datetime.strptime(self.expire_date, "%Y-%m-%d")
-        if self.state != 'active' and expire_date < datetime.datetime.now():
+        if  expire_date < datetime.datetime.now():
             return False
         return True
 
@@ -108,7 +110,7 @@ class Assignment(models.Model):
 
     @api.one
     def isEnabled(self):
-        if self.status =='closed':
+        if self.state !='recruit':
             return False
         if not self.deadline:
             return True
@@ -195,7 +197,7 @@ class WorkExperience(models.Model):
     employer = fields.Text(string="Employer")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
-    leave_reason = fields.Text(string="Reason to leave")
+    cat_id = fields.Many2one('career.job_category',string="Reason to leave")
     description = fields.Text(string="Description")
     current = fields.Boolean(string='Is current')
     country_id = fields.Many2one('res.country', string="Country ")
