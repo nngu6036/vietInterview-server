@@ -144,6 +144,7 @@ class InterviewQuestion(models.Model):
     videoUrl = fields.Text(string="Question Video URL")
 
 
+
 class InterviewAnswer(models.Model):
     _name = 'survey.user_input_line'
     _inherit = 'survey.user_input_line'
