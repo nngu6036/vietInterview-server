@@ -30,7 +30,7 @@ class LicenseService(osv.AbstractModel):
       for company in self.env['res.company'].browse(companyId):
         if company.license_instance_id and company.license_instance_id.expire_date:
           expire_date = datetime.datetime.strptime(company.license_instance_id.expire_date, "%Y-%m-%d")
-          if company.license_instance_id.status != 'active' and expire_date > datetime.datetime.now():
+          if company.license_instance_id.state != 'active' and expire_date < datetime.datetime.now():
             return False
           company.license_instance_id.write({'state':'active'})
           return True

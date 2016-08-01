@@ -14,8 +14,8 @@ from datetime import date, timedelta
 
 
 
-class CandidateService(osv.AbstractModel):
-    _name = 'career.guest_service'
+class InterviewService(osv.AbstractModel):
+    _name = 'career.interview_service'
 
     @api.model
     def getInterview(self,invite_code):

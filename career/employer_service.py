@@ -79,7 +79,7 @@ class EmployerService(osv.AbstractModel):
     @api.model
     def openAssignment(self,id):
         assignment = self.env['hr.job'].browse(id)
-        if assignment and assignment.state=='recruit':
+        if assignment:
             assignment.write({'status':'published'})
             return True
         return False
@@ -87,7 +87,7 @@ class EmployerService(osv.AbstractModel):
     @api.model
     def closeAssignment(self,id):
         assignment = self.env['hr.job'].browse(id)
-        if assignment and assignment.state=='recruit':
+        if assignment:
             assignment.write({'status':'closed'})
             return True
         return False

@@ -27,6 +27,6 @@ class ErpInstance(object):
 
 mainInstance =  erppeek.Client(app.config['ERP_SERVER_URL'], app.config['ERP_DB'], app.config['ERP_DB_USER'], app.config['ERP_DB_PASS'])
 session_service = mainInstance.model('career.session_service')
-guest_service = mainInstance.model('career.guest_service')
+interview_service = mainInstance.model('career.interview_service')
 common_service = mainInstance.model('career.common_service')
 admin_service = mainInstance.model('career.admin_service')
