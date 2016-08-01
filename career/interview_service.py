@@ -56,19 +56,19 @@ class InterviewService(osv.AbstractModel):
 
     @api.model
     def startInterview(self,invite_code):
-        user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
-        if user_input and user_input[0].state=='new':
-            user_input.write({'state':'skip'})
-            return True
+        for user_input in self.env['survey.user_input'].search([('token','=',invite_code)]):
+            if user_input.state=='new':
+                user_input.write({'state':'skip'})
+                return True
         return False
 
     @api.model
     def stopInterview(self,invite_code):
-        user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
-        if user_input and (user_input[0].state=='new' or user_input[0].state=='skip'):
-            user_input.write({'state':'done'})
-            self.env['career.mail_service'].sendInterviewThankyou(user_input.survey_id.id,user_input[0].email)
-            return True
+        for user_input in self.env['survey.user_input'].search([('token','=',invite_code)]):
+            if user_input.state=='new' or user_input.state=='skip':
+                user_input.write({'state':'done'})
+                self.env['career.mail_service'].sendInterviewThankyou(user_input.survey_id.id,user_input[0].email)
+                return True
         return False
 
     @api.model
