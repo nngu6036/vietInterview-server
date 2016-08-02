@@ -225,7 +225,7 @@ def questionCategory():
     print request.values
     return jsonify(result=False)
 
-
+'''
 @app.route('/admin/assessment', methods=['GET'], endpoint='admin-assessment')
 def assessment():
   try:
@@ -241,8 +241,10 @@ def assessment():
     print 'Assessment error '
     print request.values
     return jsonify(result=False)
+'''
 
-@app.route('/admin/assignment', methods=['GET'],endpoint='admin-assignment')
+
+@app.route('/admin/assignment', methods=['GET','PUT','POST','DELETE'],endpoint='admin-assignment')
 def assignment():
     try:
          token  = request.values['token']
@@ -251,8 +253,75 @@ def assignment():
          if request.method == 'GET':
             assignmentList = admin_service.getAssignment()
             return jsonify(result=True,assignmentList=assignmentList)
+         if request.method == 'PUT':
+            assignment  = json.loads(request.values['assignment'])
+            admin_service.updateAssignment(int(assignment['id']),assignment)
+            return jsonify(result=True)
+         if request.method == 'POST':
+            assignment  = json.loads(request.values['assignment'])
+            assignmentId = admin_service.createAssignment(assignment)
+            if assignmentId:
+                return jsonify(result=True,assignmentId=assignmentId)
+            else:
+                return jsonify(result=False)
+         if request.method == 'DELETE':
+            assignmentId  = int(request.values['assignmentId'])
+            result = admin_service.deleteAssignment(assignmentId)
+            return jsonify(result=result)
     except Exception as exc:
         print(exc)
         print 'Assignment error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/assignment/open', methods=['POST'],endpoint='admin-assignment-open')
+def assignmentOpen():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'POST':
+            assignmentId  = int(request.values['assignmentId'])
+            result = admin_service.openAssignment(assignmentId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Open Assignment error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/assignment/stats', methods=['GET'],endpoint='admin-assignment-stats')
+def assignmentStatistics():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'GET':
+            assignmentId  = int(request.values['assignmentId'])
+            stats = admin_service.getAassignmentStatistic(assignmentId)
+            return jsonify(result=True,stats=stats)
+
+    except Exception as exc:
+        print(exc)
+        print 'Assignment stats error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/assignment/close', methods=['POST'],endpoint='admin-assignment-close')
+def assignmentClose():
+    try:
+         token  = request.values['token']
+         erpInstance = ErpInstance.fromToken(token,['admin'])
+         admin_service = erpInstance.service('career.admin_service')
+         if request.method == 'POST':
+            assignmentId  = int(request.values['assignmentId'])
+            result = admin_service.closeAssignment(assignmentId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Close Assignment error '
         print request.values
         return jsonify(result=False)

@@ -138,3 +138,56 @@ class AdminService(osv.AbstractModel):
                            'createDate':a.create_date,
                            'categoryId':a.category_id.id, 'positionId':a.position_id.id} for a in assignments]
         return assignmentList
+
+    @api.model
+    def createAssignment(self, vals):
+            address = self.env['res.partner'].create({'name': vals['name'], 'type': 'contact',
+                                                      'country_id': 'countryId' in vals and int(vals['countryId']),
+                                                      'state_id': 'provinceId' in vals and int(vals['provinceId']),
+                                                      'company_id': vals['companyId']})
+            assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
+                                                    'deadline': vals['deadline'], 'company_id': vals['companyId'],
+                                                    'requirements': vals['requirements'] or False,
+                                                    'category_id': 'categoryId' in vals and int(vals['categoryId']),
+                                                    'position_id': 'positionId' in vals and int(vals['positionId']),
+                                                    'address_id': address.id, 'state': 'open'})
+            '''self.env['career.mail_service'].sendNewJobNotification(assignment.id)'''
+            return assignment.id
+
+    @api.model
+    def updateAssignment(self, id, vals):
+        assignment = self.env['hr.job'].browse(id)
+        if assignment:
+            assignment.write({'deadline': vals['deadline'], 'description': vals['description'], 'name': vals['name'],
+                              'requirements': vals['requirements'],
+                              'category_id': int(vals['categoryId']) or False,
+                              'position_id': int(vals['positionId']) or False})
+            assignment.address_id.write(
+                {'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
+            return True
+        return False
+
+
+    @api.model
+    def openAssignment(self, id):
+        assignment = self.env['hr.job'].browse(id)
+        if assignment:
+            assignment.write({'status': 'published'})
+            return True
+        return False
+
+    @api.model
+    def closeAssignment(self, id):
+        assignment = self.env['hr.job'].browse(id)
+        if assignment:
+            assignment.write({'status': 'closed'})
+            return True
+        return False
+
+    @api.model
+    def deleteAssignment(self, id):
+        for assignment in self.env['hr.job'].browse(id):
+            if assignment.status == 'initial':
+                assignment.unlink()
+                return True
+        return False
