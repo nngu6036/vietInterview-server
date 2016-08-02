@@ -1,7 +1,7 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import session_service,ErpInstance,common_service,admin_service
+from career_api.proxy import session_service,ErpInstance,common_service,admin_service,employee_service
 import json, base64, os, datetime
 from werkzeug.utils import secure_filename
 
@@ -47,30 +47,25 @@ def logout():
 @app.route('/employee/account/forgot', methods=['POST'],endpoint='employee-account-forgot')
 def forgotPass():
     try:
-        '''oldpass = request.values['oldpass']
-        newpass = request.values['newpass']
-        token  = request.values['token']
-        sessionInfo = session_service.validateToken(token,['employer'])
-        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
-        return jsonify(result=result)'''
+        email = request.values['email']
+        result = employee_service.forgotPassword(email)
+        return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Forgot pass error '
+        print 'Employee Forgot pass error '
         print request.values
         return jsonify(result=False)
 
-@app.route('/employee/account/changepass', methods=['PUT'],endpoint='employee-account-changepass')
+@app.route('/employee/account/resetpass', methods=['PUT'],endpoint='employee-account-changepass')
 def changePass():
     try:
-        '''oldpass = request.values['oldpass']
         newpass = request.values['newpass']
         token  = request.values['token']
-        sessionInfo = session_service.validateToken(token,['employer'])
-        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
-        return jsonify(result=result)'''
+        result = employee_service.resetPassword(token,newpass)
+        return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Change pass error '
+        print 'Employee reset pass error '
         print request.values
         return jsonify(result=False)
 
