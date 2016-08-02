@@ -371,12 +371,14 @@ def poentialCandidate():
 @app.route('/employer/report/assessment', methods=['GET'],endpoint='employer-report-assessment')
 def assessmentReport():
     try:
+         print 'Start'
          token  = request.values['token']
          candidateId  = int(request.values['candidateId'])
          erpInstance = ErpInstance.fromToken(token,['employer'])
          employer_service = erpInstance.service('career.report_service')
          if request.method == 'GET':
             content  = employer_service.getAssessmentSummaryReport(candidateId)
+            print 'end'
             return jsonify(result=True,content=content)
     except Exception as exc:
         print(exc)

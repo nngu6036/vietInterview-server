@@ -85,20 +85,22 @@ class CommonService(osv.AbstractModel):
 
     @api.model
     def applyJob(self,uid,assignmentId):
-        employees = self.env['career.employee'].search([('user_id','=',uid)])
-        assignments = self.env['hr.job'].browse(assignmentId)
-        for employee in employees:
-            for assignment in assignments:
+        for employee in self.env['career.employee'].search([('user_id','=',uid)]):
+            for assignment in  self.env['hr.job'].browse(assignmentId):
                 if assignment.isEnabled():
-                    user_input = self.env['survey.user_input'].search([('email','=',employee.login),('survey_id','=',assignment.survey_id.id)])
-                    if not user_input:
-                        user_input = self.env['survey.user_input'].create({'survey_id':assignment.survey_id.id,'deadline':assignment.deadline,
-                                                                           'type':'link','state':'new','email':employee.login})
-                    candidate = self.env['hr.applicant'].search([('email_from','=',employee.login),('job_id','=',assignment.id)])
-                    if not candidate:
-                        self.env['hr.applicant'].create({'name':employee.name,'email_from':employee.login,'job_id':assignment.id,
-                                                                     'company_id':assignment.company_id.id,'response_id':user_input.id})
-                    return True
+                    for survey in assignment.survey_ids:
+                        if survey.status =='published':
+                            user_input = self.env['survey.user_input'].search([('email','=',employee.login),('survey_id','=',survey.id)])
+                            if not user_input:
+                                user_input = self.env['survey.user_input'].create({'survey_id':survey.id,'deadline':assignment.deadline,
+                                                                                   'type':'link','state':'new','email':employee.login})
+                            candidate = self.env['hr.applicant'].search([('email_from','=',employee.login),('job_id','=',assignment.id),
+                                                                         ('join_survey_id','=',survey.id)])
+                            if not candidate:
+                                self.env['hr.applicant'].create({'name':employee.name,'email_from':employee.login,'job_id':assignment.id,
+                                                                             'company_id':assignment.company_id.id,'response_id':user_input.id,
+                                                                            'join_survey_id':survey.id})
+                            return True
         return False
 
 
@@ -113,6 +115,7 @@ class CommonService(osv.AbstractModel):
                 if applicant.response_id:
                     interview_link = "https://vietinterview.com/interview?code=%s&" % applicant.response_id.token
                 applicationList.append({'id':applicant.id,'title':applicant.job_id.name,'company':applicant.company_id.name,
+                                        'interview':applicant.join_survey_id.name,'round':applicant.join_survey_id.round,
                                        'deadline':applicant.job_id.deadline,'applyDate':applicant.create_date,'interview_link':interview_link})
         return applicationList
 

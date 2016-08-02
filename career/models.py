@@ -96,6 +96,12 @@ class JobPosition(models.Model):
     _name = 'career.job_position'
     title = fields.Text(string="Title",translate=True)
 
+class Applicant(models.Model):
+    _name = 'hr.applicant'
+    _inherit = 'hr.applicant'
+
+    shortlist = fields.Boolean(string="Short-listed")
+    join_survey_id = fields.Many2one('survey.survey', string="Interview to join")
 
 class Assignment(models.Model):
     _name = 'hr.job'
@@ -107,6 +113,7 @@ class Assignment(models.Model):
     position_id = fields.Many2one('career.job_position', string="Position")
     country_id = fields.Many2one(string='Country',related='address_id.country_id')
     province_id = fields.Many2one(string='Province ',related='address_id.state_id')
+    survey_ids = fields.One2many('survey.survey', 'job_id',string="Interview rounds")
 
     @api.one
     def isEnabled(self):
@@ -120,6 +127,10 @@ class Assignment(models.Model):
         return True
 
 
+
+class Conference(models.Model):
+    _name = 'career.conference'
+
 class Interview(models.Model):
     _name = 'survey.survey'
     _inherit = 'survey.survey'
@@ -131,6 +142,11 @@ class Interview(models.Model):
     exitUrl = fields.Text(string="Thank you Video URL")
     aboutUsUrl = fields.Text(string="About Us Video URL")
     language = fields.Char(string="Language",default="en")
+    job_id = fields.Many2one('hr.job', string="Job")
+    status = fields.Selection([('initial', 'Initial status'), ('published', 'Published status'),  ('closed', 'Closed status')], default='initial')
+    conference_id = fields.Many2one('career.conference', string="Conference")
+    mode = fields.Selection([('conference', 'Conference interview'), ('video', 'Video interview')], default='video')
+    round = fields.Integer(string="Interview round number")
 
 class InterviewQuestion(models.Model):
     _name = 'survey.question'
@@ -167,6 +183,9 @@ class InterviewHistory(models.Model):
     _inherit = 'survey.user_input'
 
     wrap_up = fields.Boolean(string="Wrap-up completed")
+
+
+
 
 class LicenseEmailHistory(models.Model):
     _name = 'career.email.history'
