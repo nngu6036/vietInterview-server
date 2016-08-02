@@ -178,6 +178,15 @@ class InterviewAssessment(models.Model):
     rating =  fields.Integer(string="Rating")
     note_summary =  fields.Text(string="Comment")
 
+
+
+class UserProfile(models.Model):
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+
+    gender =  fields.Char(string="Gender")
+
+
 class InterviewHistory(models.Model):
     _name = 'survey.user_input'
     _inherit = 'survey.user_input'

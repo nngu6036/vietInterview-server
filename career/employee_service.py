@@ -26,7 +26,8 @@ class EmployeeService(osv.AbstractModel):
             user = users[0]
             return {'id':user.partner_id.id, 'name':user.partner_id.name,'phone':user.partner_id.phone,'mobile':user.partner_id.mobile,
                     'email':user.partner_id.email,'address':user.partner_id.street, 'countryId':user.partner_id.country_id.id,
-                    'provinceId':user.partner_id.state_id.id,'birthdate':user.partner_id.birthdate}
+                    'provinceId':user.partner_id.state_id.id,'birthdate':user.partner_id.birthdate or False,'image':user.partner_id.image or False,
+                    'gender':user.partner_id.gender or False }
         return False
 
     @api.model
@@ -35,8 +36,11 @@ class EmployeeService(osv.AbstractModel):
         users = self.env['res.users'].browse(uid)
         if users:
             users.partner_id.write({'name':vals['name'],'phone':vals['phone'],'mobile':vals['mobile'],
-                    'email':vals['email'],'street':vals['address'], 'country_id':vals['countryId'],
-                     'state_id':vals['provinceId'],'birthdate':vals['birthdate'] if 'birthdate' in vals else None})
+                                    'email':vals['email'],'street':vals['address'], 'country_id':vals['countryId'],
+                                    'state_id':vals['provinceId'], 'birthdate':vals['birthdate'] if 'birthdate' in vals else None,
+                                    'image':vals['image']  if 'image' in vals else None,
+                                    'gender':vals['gender'] if 'gender' in vals else None
+                                    })
         return True
 
     @api.model

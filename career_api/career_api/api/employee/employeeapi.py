@@ -44,6 +44,35 @@ def logout():
         print request.values
         return jsonify(result=True)
 
+@app.route('/employee/account/forgot', methods=['POST'],endpoint='employee-account-forgot')
+def forgotPass():
+    try:
+        '''oldpass = request.values['oldpass']
+        newpass = request.values['newpass']
+        token  = request.values['token']
+        sessionInfo = session_service.validateToken(token,['employer'])
+        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
+        return jsonify(result=result)'''
+    except Exception as exc:
+        print(exc)
+        print 'Forgot pass error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employee/account/changepass', methods=['PUT'],endpoint='employee-account-changepass')
+def changePass():
+    try:
+        '''oldpass = request.values['oldpass']
+        newpass = request.values['newpass']
+        token  = request.values['token']
+        sessionInfo = session_service.validateToken(token,['employer'])
+        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
+        return jsonify(result=result)'''
+    except Exception as exc:
+        print(exc)
+        print 'Change pass error '
+        print request.values
+        return jsonify(result=False)
 
 @app.route('/employee/profile', methods=['GET','PUT'],endpoint='employee-profile')
 def userProfile():
