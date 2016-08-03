@@ -47,7 +47,7 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
             For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
-            The entire process takes about 30 minutes on average. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
+            The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
             <tr>
@@ -119,7 +119,7 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
-            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
+            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
             <tr>
@@ -533,7 +533,145 @@
                 </field>
         </record>
 
+        <record model="email.template" id="career.reset_pass_email_template">
+            <field name="name">Reset account password</field>
+            <field name="model_id" ref="career.model_career_otk"/>
+            <field name="subject">Reset password instruction</field>
+            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_to">${object.email}</field>
+            <field name="mail_server_id" ref="career.career_smtp_host"/>
+            <field name="body_html">
+                <![CDATA[
 
+<div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+<tr>
+  <td colspan="3" style="border-radius:3px;background-color:#ffffff">
+      <center style="padding:0 20px">
+          <table style="width:100%">
+              <tbody>
+
+
+            <tr><td>
+            <a href="https://vietinterview.com/#/api/account/resetPass?token=${object.token}">Reset password link</a>
+            </td></tr>
+
+
+       Please forgot this email if you haven't sent request for password recovery,<br><br>
+       VietInterview
+
+            </td></tr>
+          </tbody></table>
+      </center>
+    </td>
+</tr><tr>
+
+</tr>
+
+              </tbody></table>
+            </center>
+          </td>
+        </tr>
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+
+
+                ]]>
+            </field>
+        </record>
+
+
+        <record model='ir.translation' id='career.reset_pass_email_template'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.reset_pass_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                 <![CDATA[
+
+<div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+<tr>
+  <td colspan="3" style="border-radius:3px;background-color:#ffffff">
+      <center style="padding:0 20px">
+          <table style="width:100%">
+              <tbody>
+
+
+            <tr><td>
+            <a href="https://vietinterview.com/#/api/account/resetPass?token=${object.token}">Tạo mật khẩu mới</a>
+            </td></tr>
+
+
+       Vui lòng bỏ qua email nay nếu bạn không gửi yêu cầu phục hồi mật khẩu<br><br>
+       VietInterview
+
+            </td></tr>
+          </tbody></table>
+      </center>
+    </td>
+</tr><tr>
+
+</tr>
+
+              </tbody></table>
+            </center>
+          </td>
+        </tr>
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+
+
+                ]]>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
+
+
+        <record model='ir.translation' id='career.reset_pass_email_template'>
+            <field name='name'>email.template,subject</field>
+            <field name='res_id' ref="career.reset_pass_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>Phục hồi mật khẩu</field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
     </data>
 

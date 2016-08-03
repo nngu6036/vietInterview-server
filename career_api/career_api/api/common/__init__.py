@@ -2,10 +2,9 @@ import datetime
 import json
 import os
 
-from career_api.proxy import common_service
-from flask import request, jsonify
+from career_api.proxy import common_service, assignment_obj,account_obj,mail_service,job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj
+from flask import request, jsonify, abort
 from werkzeug.utils import secure_filename
-
 from career_api import app
 
 ALLOWED_EXTENSIONS = ['mkv', 'flv', 'vob', 'avi', 'mov', 'wmv', 'mp4', 'mpg', 'mpeg', 'webm']
@@ -45,7 +44,7 @@ def jobCategory():
   try:
     if request.method == 'GET':
       lang = request.values['lang'] if 'lang' in request.values else False
-      categoryList = common_service.getJobCategory(lang)
+      categoryList = job_cat_obj.getJobCategory(lang)
       return jsonify(categoryList=categoryList)
   except Exception as exc:
     print(exc)
@@ -59,7 +58,7 @@ def jobPosition():
   try:
     if request.method == 'GET':
       lang = request.values['lang'] if 'lang' in request.values else False
-      positionList = common_service.getJobPosition(lang)
+      positionList = job_pos_obj.getJobPosition(lang)
       return jsonify(positionList=positionList)
   except Exception as exc:
     print(exc)
@@ -72,8 +71,8 @@ def jobPosition():
 def jobLocation():
   try:
     if request.method == 'GET':
-      countryList = common_service.getCountry()
-      provinceList = common_service.getProvince()
+      countryList = country_obj.getCountry()
+      provinceList = province_obj.getProvince()
       return jsonify(countryList=countryList, provinceList=provinceList)
   except Exception as exc:
     print(exc)
@@ -82,12 +81,13 @@ def jobLocation():
     return jsonify(result=False)
 
 
+
 @app.route('/common/assignment/edulevel', methods=['GET'], endpoint='common-assignment-edulevel')
 def eduLevel():
   try:
     if request.method == 'GET':
       lang = request.values['lang'] if 'lang' in request.values else False
-      levelList = common_service.getEducationLevel(lang)
+      levelList = degree_obj.getEducationLevel(lang)
       return jsonify(levelList=levelList)
   except Exception as exc:
     print(exc)
@@ -109,3 +109,53 @@ def searchJob():
     print 'Search job error '
     print request.values
     return jsonify(result=False)
+
+
+
+
+@app.route('/common/account/resetPass', methods=['POST'],endpoint='common-account-resetpass')
+def resetPass():
+    try:
+        if request.method == 'POST':
+            email = request.values['email']
+            mail_service.sendResetPasswordInstructionMail(email,app.config['RESET_PASS_LINK'])
+            return ''
+        if request.method == 'GET':
+            token = request.values['token']
+            new_pass = account_obj.generateNewPass(token)
+            if new_pass:
+                return new_pass
+            return ''
+    except Exception as exc:
+        print(exc)
+        print 'Reset pass error '
+        print request.values
+        abort(400)
+
+
+@app.route('/common/candidate', methods=['GET'],endpoint='employer-caandidate')
+def findCandidate():
+    try:
+         assignmentId  = int(request.values['assignmentId'])
+         if request.method == 'GET':
+            employeeList  = common_service.searchPotentialCandidate(assignmentId)
+            return jsonify(result=True,employeeList=employeeList)
+    except Exception as exc:
+        print(exc)
+        print 'Potential candidate error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/common/company', methods=['GET'],endpoint='employee-company')
+def company():
+    try:
+         if request.method == 'GET':
+            assignmentId = int( request.values['assignmentId'])
+            company = assignment_obj.get(assignmentId).getCompanyInfo()
+            return jsonify(company=company)
+    except Exception as exc:
+        print(exc)
+        print 'Get company error '
+        print request.values
+        return jsonify(result=False)

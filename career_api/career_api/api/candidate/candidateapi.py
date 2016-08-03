@@ -1,7 +1,7 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import interview_service
+from career_api.proxy import interview_service, interview_session
 import json, os, datetime
 from werkzeug.utils import secure_filename
 import base64
@@ -9,9 +9,9 @@ import base64
 
 
 @app.route('/interview', methods=['GET'],endpoint='interview')
-def interview():
+@interview_session
+def interview(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'GET':
             interview = interview_service.getInterview(inviteCode)
             history = interview_service.getInterviewHistory(inviteCode)
@@ -25,9 +25,9 @@ def interview():
 
 
 @app.route('/interview/question', methods=['GET'],endpoint='interview-question')
-def question():
+@interview_session
+def question(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'GET':
             questionList = interview_service.getInterviewQuestion(inviteCode)
             return jsonify(result=True,questionList=questionList)
@@ -38,11 +38,10 @@ def question():
         return jsonify(result=False)
 
 
-
 @app.route('/interview/start', methods=['POST'],endpoint='interview-start')
-def startInterview():
+@interview_session
+def startInterview(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'POST':
             result  = interview_service.startInterview(inviteCode)
             return jsonify(result=result)
@@ -53,9 +52,9 @@ def startInterview():
         return jsonify(result=False)
 
 @app.route('/interview/finish', methods=['POST'],endpoint='interview-finish')
-def finishInterview():
+@interview_session
+def finishInterview(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'POST':
             result  = interview_service.stopInterview(inviteCode)
             return jsonify(result=result)
@@ -68,9 +67,9 @@ def finishInterview():
 
 
 @app.route('/interview/answer', methods=['POST'],endpoint='interview-answer')
-def submitAnswer():
+@interview_session
+def submitAnswer(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'POST':
             questionId  = int(request.values['questionId'])
             videoUrl = request.values['videoUrl']
@@ -83,9 +82,9 @@ def submitAnswer():
         return jsonify(result=False)
 
 @app.route('/interview/document', methods=['POST'],endpoint='interview-document')
-def attachDocument():
+@interview_session
+def attachDocument(inviteCode):
     try:
-         inviteCode  = request.values['code']
          if request.method == 'POST':
             base64FileData  = request.values['file']
             filename = request.values['filename']

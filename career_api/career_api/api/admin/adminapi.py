@@ -1,138 +1,141 @@
 import json
 
-from career_api.proxy import ErpInstance, session_service
+from career_api.proxy import Session,admin_service, license_obj, company_obj,company_user_obj,license_service,assignment_obj,user_obj
+from career_api.proxy import admin_session,work_exp_obj,edu_hist_obj,certificate_obj,document_obj
 from flask import jsonify, request
-
+import base64
 from career_api import app
-
+import os
+import datetime
 
 @app.route('/admin/account/login', methods=['POST'], endpoint='admin-account-login')
 def login():
-  try:
-    login = request.values['login']
-    password = request.values['password']
-    token = session_service.login(app.config['ERP_DB'], login, password, 'admin')
-    if token:
-      return jsonify(result=True, token=token)
-    raise Exception('Invalid account %s or password %s' % (login, password))
-  except Exception as exc:
-    print(exc)
-    print 'Login error '
-    print request.values
-    return jsonify(result=False)
+    try:
+        login = request.values['login']
+        password = request.values['password']
+        token = Session.start(login, password, 'admin')
+        if token:
+            return jsonify(result=True, token=token)
+        raise Exception('Invalid account %s or password %s' % (login, password))
+    except Exception as exc:
+        print(exc)
+        print 'Login error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/account/logout', methods=['POST'], endpoint='admin-logout')
+def logout():
+    try:
+        Session.stop(request.values['token'])
+        return jsonify(result=True)
+    except Exception as exc:
+        print(exc)
+        print 'Logout error '
+        print request.values
+        return jsonify(result=True)
 
 
 @app.route('/admin/license', methods=['GET', 'POST'], endpoint='admin-license')
-def license():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    admin_service = erpInstance.service('career.admin_service')
-    if request.method == 'GET':
-      licenseList = admin_service.getLicense()
-      return jsonify(result=True, licenseList=licenseList)
-    if request.method == 'POST':
-      license = json.loads(request.values['license'])
-      licenseId = admin_service.createLicense(license)
-      return jsonify(result=True,licenseId=licenseId)
-  except Exception as exc:
-    print(exc)
-    print 'License error '
-    print request.values
-    return jsonify(result=False)
+@admin_session
+def license(session):
+    try:
+        if request.method == 'GET':
+            licenseList = license_obj.getLicense()
+            return jsonify(result=True, licenseList=licenseList)
+        if request.method == 'POST':
+            license = json.loads(request.values['license'])
+            licenseId = license_obj.createLicense(license)
+            return jsonify(result=True, licenseId=licenseId)
+    except Exception as exc:
+        print(exc)
+        print 'License error '
+        print request.values
+        return jsonify(result=False)
 
 
 @app.route('/admin/company', methods=['GET', 'PUT', 'POST'], endpoint='admin-company')
-def company():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    admin_service = erpInstance.service('career.admin_service')
-    if request.method == 'GET':
-      companyList = admin_service.getCompany()
-      return jsonify(result=True, companyList=companyList)
-    if request.method == 'PUT':
-      company = json.loads(request.values['company'])
-      admin_service.updateCompany(int(company['id']), company)
-      return jsonify(result=True)
-    if request.method == 'POST':
-      company = json.loads(request.values['company'])
-      companyId = admin_service.createCompany(company)
-      if companyId:
-        return jsonify(result=True, employerId=companyId)
-      else:
+@admin_session
+def company(session):
+    try:
+        if request.method == 'GET':
+            companyList = company_obj.getCompany()
+            return jsonify(result=True, companyList=companyList)
+        if request.method == 'PUT':
+            company = json.loads(request.values['company'])
+            company_obj.updateCompany(int(company['id']), company)
+            return jsonify(result=True)
+        if request.method == 'POST':
+            company = json.loads(request.values['company'])
+            companyId = company_obj.createCompany(company)
+            if companyId:
+                return jsonify(result=True, employerId=companyId)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Company  error '
+        print request.values
         return jsonify(result=False)
-  except Exception as exc:
-    print(exc)
-    print 'Company  error '
-    print request.values
-    return jsonify(result=False)
 
 
 @app.route('/admin/company/user', methods=['GET', 'PUT', 'POST'], endpoint='admin-company-user')
-def companyUser():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    admin_service = erpInstance.service('career.admin_service')
-    if request.method == 'GET':
-      companyId = int(request.values['companyId'])
-      userList = admin_service.getCompanyUser(companyId)
-      return jsonify(result=True, userList=userList)
-    if request.method == 'PUT':
-      user = json.loads(request.values['user'])
-      admin_service.updateCompanyUser(int(user['id']), user)
-      return jsonify(result=True)
-    if request.method == 'POST':
-      user = json.loads(request.values['user'])
-      companyId = int(request.values['companyId'])
-      userId = admin_service.createCompanyUser(companyId, user)
-      if userId:
-        return jsonify(result=True, userId=userId)
-      else:
-        return jsonify(result=False)
-  except Exception as exc:
-    print(exc)
-    print 'Company user  error '
-    print request.values
-    return jsonify(result=False)
-
-
-
-@app.route('/admin/company/license', methods=['GET','POST'], endpoint='admin-company-license')
-def companyLicense():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    license_service = erpInstance.service('career.license_service')
-    if request.method == 'GET':
-      companyId = int(request.values['companyId'])
-      licenseInfo = license_service.getLicenseStatistic(companyId)
-      return jsonify(result=True, licenseInfo=licenseInfo)
-    if request.method == 'POST':
-      companyId = int(request.values['companyId'])
-      action = request.values['action']
-      result = False
-      if action=='activate':
-        result = license_service.activateLicense(companyId)
-      if action=='deactivate':
-        result = license_service.deactivateLicense(companyId)
-      return jsonify(result=result)
-  except Exception as exc:
-    print(exc)
-    print 'Company license  error '
-    print request.values
-    return jsonify(result=False)
-
-
-@app.route('/admin/assignment/approve', methods=['POST'],endpoint='admin-assignment-approve')
-def assignmentApprove():
+@admin_session
+def companyUser(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin'])
-         admin_service = erpInstance.service('career.admin_service')
-         if request.method == 'POST':
-            assignmentId  = int(request.values['assignmentId'])
+        if request.method == 'GET':
+            companyId = int(request.values['companyId'])
+            userList = company_obj.get(companyId).getCompanyUser()
+            return jsonify(result=True, userList=userList)
+        if request.method == 'PUT':
+            user = json.loads(request.values['user'])
+            company_user_obj.updateCompanyUser(int(user['id']), user)
+            return jsonify(result=True)
+        if request.method == 'POST':
+            user = json.loads(request.values['user'])
+            companyId = int(request.values['companyId'])
+            userId = company_obj.get(companyId).createCompanyUser(user)
+            if userId:
+                return jsonify(result=True, userId=userId)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Company user  error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/company/license', methods=['GET', 'POST'], endpoint='admin-company-license')
+@admin_session
+def companyLicense(session):
+    try:
+        if request.method == 'GET':
+            companyId = int(request.values['companyId'])
+            licenseInfo = company_obj.get(companyId).getLicenseStatistic()
+            return jsonify(result=True, licenseInfo=licenseInfo)
+        if request.method == 'POST':
+            companyId = int(request.values['companyId'])
+            action = request.values['action']
+            result = False
+            if action == 'activate':
+                result = license_service.activateLicense(companyId)
+            if action == 'deactivate':
+                result = license_service.deactivateLicense(companyId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Company license  error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/assignment/approve', methods=['POST'], endpoint='admin-assignment-approve')
+@admin_session
+def assignmentApprove(session):
+    try:
+        if request.method == 'POST':
+            assignmentId = int(request.values['assignmentId'])
             result = admin_service.approveAssignment(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
@@ -142,130 +145,27 @@ def assignmentApprove():
         return jsonify(result=False)
 
 
-@app.route('/admin/account/logout', methods=['POST'], endpoint='admin-logout')
-def logout():
-  try:
-    session_service.logout(request.values['token'])
-    return jsonify(result=True)
-  except Exception as exc:
-    print(exc)
-    print 'Logout error '
-    print request.values
-    return jsonify(result=True)
-
-
-@app.route('/admin/question', methods=['GET', 'POST', 'PUT'], endpoint='admin-question')
-def question():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    content_service = erpInstance.service('career.content_service')
-    if request.method == 'GET':
-      lang = request.values['lang'] if 'lang' in request.values else False
-      questionList = content_service.getQuestion(lang)
-      return jsonify(result=True, questionList=questionList)
-    if request.method == 'POST':
-      question = json.loads(request.values['question'])
-      lang = request.values['lang']
-      if lang:
-        result = content_service.createQuestionTranslation(question, lang)
-        return jsonify(result=result)
-      else:
-        questionId = content_service.createQuestion(question)
-        return jsonify(result=True, questionId=questionId)
-    if request.method == 'PUT':
-      question = json.loads(request.values['question'])
-      lang = request.values['lang']
-      if lang:
-        result = content_service.updateQuestionTranslation(question, lang)
-        return jsonify(result=result)
-      else:
-        result = content_service.updateQuestion(question)
-        return jsonify(result=result)
-    return jsonify(result=False)
-  except Exception as exc:
-    print(exc)
-    print 'Question error '
-    print request.values
-    return jsonify(result=False)
-
-
-@app.route('/admin/question/category', methods=['GET','POST','PUT'], endpoint='admin-question-category')
-def questionCategory():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    content_service = erpInstance.service('career.content_service')
-    if request.method == 'GET':
-      lang = request.values['lang'] if 'lang' in request.values else False
-      categoryList = content_service.getQuestionCategory(lang)
-      return jsonify(result=True, categoryList=categoryList)
-    if request.method == 'POST':
-      category = json.loads(request.values['category'])
-      lang = request.values['lang']
-      if lang:
-        result = content_service.createQuestionCategoryTranslation(category, lang)
-        return jsonify(result=result)
-      else:
-        categoryId = content_service.createQuestionCategory(category)
-        return jsonify(result=True, categoryId=categoryId)
-    if request.method == 'PUT':
-      category = json.loads(request.values['category'])
-      lang = request.values['lang']
-      if lang:
-        result = content_service.updateQuestionCategoryTranslation(category, lang)
-        return jsonify(result=result)
-      else:
-        result = content_service.updateQuestionCategory(category)
-        return jsonify(result=result)
-    return jsonify(result=False)
-  except Exception as exc:
-    print(exc)
-    print 'Question category error '
-    print request.values
-    return jsonify(result=False)
-
-'''
-@app.route('/admin/assessment', methods=['GET'], endpoint='admin-assessment')
-def assessment():
-  try:
-    token = request.values['token']
-    erpInstance = ErpInstance.fromToken(token, ['admin'])
-    content_service = erpInstance.service('career.content_service')
-    if request.method == 'GET':
-      lang = request.values['lang'] if 'lang' in request.values else False
-      assessment = content_service.getAssessment(lang)
-      return jsonify(result=True, assessment=assessment)
-  except Exception as exc:
-    print(exc)
-    print 'Assessment error '
-    print request.values
-    return jsonify(result=False)
-'''
-
-
-@app.route('/admin/assignment', methods=['GET','PUT','POST','DELETE'],endpoint='admin-assignment')
-def assignment():
+@app.route('/admin/assignment', methods=['GET', 'PUT', 'POST', 'DELETE'], endpoint='admin-assignment')
+@admin_session
+def assignment(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin'])
-         admin_service = erpInstance.service('career.admin_service')
-         if request.method == 'GET':
-            assignmentList = admin_service.getAssignment()
-            return jsonify(result=True,assignmentList=assignmentList)
-         if request.method == 'PUT':
-            assignment  = json.loads(request.values['assignment'])
-            admin_service.updateAssignment(int(assignment['id']),assignment)
+        if request.method == 'GET':
+            assignmentList = assignment_obj.getAssignment()
+            return jsonify(result=True, assignmentList=assignmentList)
+        if request.method == 'PUT':
+            assignment = json.loads(request.values['assignment'])
+            assignment_obj.updateAssignment(int(assignment['id']), assignment)
             return jsonify(result=True)
-         if request.method == 'POST':
-            assignment  = json.loads(request.values['assignment'])
-            assignmentId = admin_service.createAssignment(assignment)
+        if request.method == 'POST':
+            companyId = int(request.values['companyId'])
+            assignment = json.loads(request.values['assignment'])
+            assignmentId = admin_service.createAssignment(companyId, assignment)
             if assignmentId:
-                return jsonify(result=True,assignmentId=assignmentId)
+                return jsonify(result=True, assignmentId=assignmentId)
             else:
                 return jsonify(result=False)
-         if request.method == 'DELETE':
-            assignmentId  = int(request.values['assignmentId'])
+        if request.method == 'DELETE':
+            assignmentId = int(request.values['assignmentId'])
             result = admin_service.deleteAssignment(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
@@ -275,53 +175,155 @@ def assignment():
         return jsonify(result=False)
 
 
-@app.route('/admin/assignment/open', methods=['POST'],endpoint='admin-assignment-open')
-def assignmentOpen():
+@app.route('/admin/employee', methods=['GET', 'PUT', 'POST'], endpoint='admin-employee')
+@admin_session
+def employee(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin'])
-         admin_service = erpInstance.service('career.admin_service')
-         if request.method == 'POST':
-            assignmentId  = int(request.values['assignmentId'])
-            result = admin_service.openAssignment(assignmentId)
-            return jsonify(result=result)
+        if request.method == 'GET':
+            employeeList = user_obj.getEmployee()
+            return jsonify(result=True, companyList=employeeList)
+        if request.method == 'POST':
+            login = request.values['email']
+            password = request.values['password']
+            employeeId = user_obj.createEmployee(login,password)
+            if employeeId:
+                return jsonify(result=True, employeeId=employeeId)
+            else:
+                return jsonify(result=False)
     except Exception as exc:
         print(exc)
-        print 'Open Assignment error '
+        print 'Company  error '
         print request.values
         return jsonify(result=False)
 
 
-@app.route('/admin/assignment/stats', methods=['GET'],endpoint='admin-assignment-stats')
-def assignmentStatistics():
+@app.route('/admin/employee/profile', methods=['GET','PUT'],endpoint='admin-employee-profile')
+@admin_session
+def employeeProfile(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin'])
-         admin_service = erpInstance.service('career.admin_service')
+         user = user_obj.get([('user_id','=',int(request.values['employeeId']))])
          if request.method == 'GET':
-            assignmentId  = int(request.values['assignmentId'])
-            stats = admin_service.getAassignmentStatistic(assignmentId)
-            return jsonify(result=True,stats=stats)
-
+            employee  = user.getProfile()
+            return jsonify(employee=employee)
+         if request.method == 'PUT':
+            employee  = json.loads(request.values['employee'])
+            result = user.updateProfile(employee)
+            return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Assignment stats error '
+        print 'User profile error '
         print request.values
         return jsonify(result=False)
 
 
-@app.route('/admin/assignment/close', methods=['POST'],endpoint='admin-assignment-close')
-def assignmentClose():
+
+@app.route('/admin/employee/profile/experience', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-experience')
+@admin_session
+def workExperience(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['admin'])
-         admin_service = erpInstance.service('career.admin_service')
+         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         if request.method == 'GET':
+            expList  = user.getWorkExperience()
+            return jsonify(expList=expList)
          if request.method == 'POST':
-            assignmentId  = int(request.values['assignmentId'])
-            result = admin_service.closeAssignment(assignmentId)
+            exp  = json.loads(request.values['exp'])
+            expId = user.addWorkExperience(exp)
+            return jsonify(expId=expId)
+         if request.method == 'PUT':
+            exp  = json.loads(request.values['exp'])
+            result = work_exp_obj.updateWorkExperience(exp)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            expId  = int(request.values['expId'])
+            result = work_exp_obj.removeWorkExperience([expId])
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Close Assignment error '
+        print 'Work experience error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/employee/profile/certificate', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-certificate')
+@admin_session
+def certificate(session):
+    try:
+         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         if request.method == 'GET':
+            certList  = user.getCertificate()
+            return jsonify(certList=certList)
+         if request.method == 'POST':
+            cert  = json.loads(request.values['cert'])
+            certId = user.addCertificate(cert)
+            return jsonify(certId=certId)
+         if request.method == 'PUT':
+            cert  = json.loads(request.values['cert'])
+            result = certificate_obj.updateCertificate(cert)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            certId  = int(request.values['certId'])
+            result = certificate_obj.removeCertificate([certId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Certificate error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/admin/employee/profile/education', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-education')
+@admin_session
+def educationHistory(session):
+    try:
+         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         if request.method == 'GET':
+            eduList  = user.getEducationHistory()
+            return jsonify(eduList=eduList)
+         if request.method == 'POST':
+            edu  = json.loads(request.values['edu'])
+            eduId = user.addEducationHistory(edu)
+            return jsonify(eduId=eduId)
+         if request.method == 'PUT':
+            edu  = json.loads(request.values['edu'])
+            result = edu_hist_obj.updateEducationHistory(edu)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            eduId  = int(request.values['eduId'])
+            result = edu_hist_obj.removeEducationHistory([eduId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Education history error '
+        print request.values
+        return jsonify(result=False)
+
+
+
+@app.route('/admin/employee/profile/document', methods=['GET','POST','DELETE'],endpoint='admin-employee-profile-document')
+@admin_session
+def document(session):
+    try:
+         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         if request.method == 'GET':
+            docList  = user.getDocument()
+            return jsonify(docList=docList)
+         if request.method == 'POST':
+            doc  = json.loads(request.values['doc'])
+            base64FileData  = doc['filedata']
+            filename = doc['filename']
+            comment = doc['title']
+            fileData = base64.urlsafe_b64decode(base64FileData.encode('UTF-8'))
+            server_fname = os.path.join(app.config['FILE_UPLOAD_FOLDER'],  '%s%s' %( datetime.datetime.now().strftime('%S%M%H%m%d%Y') , secure_filename(filename)))
+            with open(server_fname, 'wb') as theFile:
+                theFile.write(fileData)
+            docId = user.addDocument(comment, filename, server_fname)
+            return jsonify(docId=docId)
+         if request.method == 'DELETE':
+            docId  = int(request.values['docId'])
+            result = document_obj.removeDocument([docId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Document error '
         print request.values
         return jsonify(result=False)

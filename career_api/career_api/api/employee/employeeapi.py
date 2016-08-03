@@ -1,7 +1,8 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import session_service,ErpInstance,common_service,admin_service
+from career_api.proxy import Session,common_service,user_obj,work_exp_obj,edu_hist_obj,certificate_obj,document_obj,applicant_obj,assignment_obj,account_obj
+from career_api.proxy import employee_session
 import json, base64, os, datetime
 from werkzeug.utils import secure_filename
 
@@ -10,7 +11,7 @@ def register():
     try:
         login = request.values['email']
         password = request.values['password']
-        result = admin_service.createEmployee(login,password)
+        result = user_obj.createEmployee(login,password)
         return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -23,7 +24,7 @@ def login():
     try:
         login = request.values['email']
         password = request.values['password']
-        token = session_service.login(app.config['ERP_DB'], login, password,'employee')
+        token = Session.start( login, password,'employee')
         if token:
             return jsonify(result=True,token=token)
         raise Exception('Invalid account %s or password %s' % (login, password))
@@ -36,7 +37,7 @@ def login():
 @app.route('/employee/account/logout', methods=['POST'],endpoint='employee-logout')
 def logout():
     try:
-        session_service.logout(request.values['token'])
+        Session.stop(request.values['token'])
         return jsonify(result=True)
     except Exception as exc:
         print(exc)
@@ -44,48 +45,18 @@ def logout():
         print request.values
         return jsonify(result=True)
 
-@app.route('/employee/account/forgot', methods=['POST'],endpoint='employee-account-forgot')
-def forgotPass():
-    try:
-        '''oldpass = request.values['oldpass']
-        newpass = request.values['newpass']
-        token  = request.values['token']
-        sessionInfo = session_service.validateToken(token,['employer'])
-        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
-        return jsonify(result=result)'''
-    except Exception as exc:
-        print(exc)
-        print 'Forgot pass error '
-        print request.values
-        return jsonify(result=False)
-
-@app.route('/employee/account/changepass', methods=['PUT'],endpoint='employee-account-changepass')
-def changePass():
-    try:
-        '''oldpass = request.values['oldpass']
-        newpass = request.values['newpass']
-        token  = request.values['token']
-        sessionInfo = session_service.validateToken(token,['employer'])
-        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
-        return jsonify(result=result)'''
-    except Exception as exc:
-        print(exc)
-        print 'Change pass error '
-        print request.values
-        return jsonify(result=False)
 
 @app.route('/employee/profile', methods=['GET','PUT'],endpoint='employee-profile')
-def userProfile():
+@employee_session
+def userProfile(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employee'])
-         employee_service = erpInstance.service('career.employee_service')
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            employee  = employee_service.getUserProfile()
+            employee  = user.getProfile()
             return jsonify(employee=employee)
          if request.method == 'PUT':
             employee  = json.loads(request.values['employee'])
-            result = employee_service.updateUserProfile(employee)
+            result = user.updateProfile(employee)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -96,25 +67,24 @@ def userProfile():
 
 
 @app.route('/employee/profile/experience', methods=['GET','PUT','POST','DELETE'],endpoint='employee-profile-experience')
-def workExperience():
+@employee_session
+def workExperience(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employee'])
-         employee_service = erpInstance.service('career.employee_service')
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            expList  = employee_service.getWorkExperience()
+            expList  = user.getWorkExperience()
             return jsonify(expList=expList)
          if request.method == 'POST':
             exp  = json.loads(request.values['exp'])
-            expId = employee_service.addWorkExperience(exp)
+            expId = user.addWorkExperience(exp)
             return jsonify(expId=expId)
          if request.method == 'PUT':
             exp  = json.loads(request.values['exp'])
-            result = employee_service.updateWorkExperience(exp)
+            result = work_exp_obj.updateWorkExperience(exp)
             return jsonify(result=result)
          if request.method == 'DELETE':
             expId  = int(request.values['expId'])
-            result = employee_service.removeWorkExperience([expId])
+            result = work_exp_obj.removeWorkExperience([expId])
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -124,25 +94,24 @@ def workExperience():
 
 
 @app.route('/employee/profile/certificate', methods=['GET','PUT','POST','DELETE'],endpoint='employee-profile-certificate')
-def certificate():
+@employee_session
+def certificate(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employee'])
-         employee_service = erpInstance.service('career.employee_service')
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            certList  = employee_service.getCertificate()
+            certList  = user.getCertificate()
             return jsonify(certList=certList)
          if request.method == 'POST':
             cert  = json.loads(request.values['cert'])
-            certId = employee_service.addCertificate(cert)
+            certId = user.addCertificate(cert)
             return jsonify(certId=certId)
          if request.method == 'PUT':
             cert  = json.loads(request.values['cert'])
-            result = employee_service.updateCertificate(cert)
+            result = certificate_obj.updateCertificate(cert)
             return jsonify(result=result)
          if request.method == 'DELETE':
             certId  = int(request.values['certId'])
-            result = employee_service.removeCertificate([certId])
+            result = certificate_obj.removeCertificate([certId])
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -152,25 +121,24 @@ def certificate():
 
 
 @app.route('/employee/profile/education', methods=['GET','PUT','POST','DELETE'],endpoint='employee-profile-education')
-def educationHistory():
+@employee_session
+def educationHistory(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employee'])
-         employee_service = erpInstance.service('career.employee_service')
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            eduList  = employee_service.getEducationHistory()
+            eduList  = user.getEducationHistory()
             return jsonify(eduList=eduList)
          if request.method == 'POST':
             edu  = json.loads(request.values['edu'])
-            eduId = employee_service.addEducationHistory(edu)
+            eduId = user.addEducationHistory(edu)
             return jsonify(eduId=eduId)
          if request.method == 'PUT':
             edu  = json.loads(request.values['edu'])
-            result = employee_service.updateEducationHistory(edu)
+            result = edu_hist_obj.updateEducationHistory(edu)
             return jsonify(result=result)
          if request.method == 'DELETE':
             eduId  = int(request.values['eduId'])
-            result = employee_service.removeEducationHistory([eduId])
+            result = edu_hist_obj.removeEducationHistory([eduId])
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -181,13 +149,12 @@ def educationHistory():
 
 
 @app.route('/employee/profile/document', methods=['GET','POST','DELETE'],endpoint='employee-profile-document')
-def document():
+@employee_session
+def document(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employee'])
-         employee_service = erpInstance.service('career.employee_service')
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            docList  = employee_service.getDocument()
+            docList  = user.getDocument()
             return jsonify(docList=docList)
          if request.method == 'POST':
             doc  = json.loads(request.values['doc'])
@@ -198,11 +165,11 @@ def document():
             server_fname = os.path.join(app.config['FILE_UPLOAD_FOLDER'],  '%s%s' %( datetime.datetime.now().strftime('%S%M%H%m%d%Y') , secure_filename(filename)))
             with open(server_fname, 'wb') as theFile:
                 theFile.write(fileData)
-            docId = employee_service.addDocument(comment, filename, server_fname)
+            docId = user.addDocument(comment, filename, server_fname)
             return jsonify(docId=docId)
          if request.method == 'DELETE':
             docId  = int(request.values['docId'])
-            result = employee_service.removeDocument([docId])
+            result = document_obj.removeDocument([docId])
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -212,12 +179,12 @@ def document():
 
 
 @app.route('/employee/profile/application', methods=['GET'],endpoint='employee-profile-application')
-def application():
+@employee_session
+def application(session):
     try:
-         token  = request.values['token']
+         user = user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            sessionInfo = session_service.validateToken(token,['employee'])
-            applicationList  = common_service.getApplicantHistory(sessionInfo['uid'])
+            applicationList  = user.getApplicantHistory()
             return jsonify(applicationList=applicationList)
     except Exception as exc:
         print(exc)
@@ -227,13 +194,13 @@ def application():
 
 
 @app.route('/employee/apply', methods=['POST'],endpoint='employee-apply')
-def applyJob():
+@employee_session
+def applyJob(session):
     try:
-         token  = request.values['token']
+         user = user_obj.get([('user_id','=',session['uid'])])
          if request.method == 'POST':
-            sessionInfo = session_service.validateToken(token,['employee'])
             assignmentId = int( request.values['assignmentId'])
-            result = common_service.applyJob(sessionInfo['uid'],assignmentId)
+            result = user.applyJob(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -242,15 +209,4 @@ def applyJob():
         return jsonify(result=False)
 
 
-@app.route('/employee/company', methods=['GET'],endpoint='employee-company')
-def company():
-    try:
-         if request.method == 'GET':
-            assignmentId = int( request.values['assignmentId'])
-            company = common_service.getCompanyInfo(assignmentId)
-            return jsonify(company=company)
-    except Exception as exc:
-        print(exc)
-        print 'Get company error '
-        print request.values
-        return jsonify(result=False)
+

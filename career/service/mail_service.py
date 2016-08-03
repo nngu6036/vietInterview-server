@@ -5,8 +5,7 @@ from openerp.osv import osv
 from openerp.service import common
 import base64
 import datetime
-import util
-
+from .. import util
 # monkey patching to allow scr not to be remove in html clean
 # see openerp.tools.mail.py
 import lxml.html.clean as clean

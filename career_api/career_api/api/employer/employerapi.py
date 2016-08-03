@@ -1,7 +1,8 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import session_service,ErpInstance,common_service
+from career_api.proxy import Session,company_obj,company_user_obj, assessment_obj,question_category_obj,interview_obj, interview_question_obj,interview_history_obj,interview_answer_obj,assignment_obj,question_obj,account_obj, common_service,mail_service,report_service
+from career_api.proxy import employer_session
 import json
 
 @app.route('/employer/account/login', methods=['POST'],endpoint='employer-account-login')
@@ -9,7 +10,7 @@ def login():
     try:
         login = request.values['email']
         password = request.values['password']
-        token = session_service.login(app.config['ERP_DB'], login, password,'employer')
+        token = Session.start( login, password,'employer')
         if token:
             return jsonify(result=True,token=token)
         raise Exception('Invalid account %s or password %s' % (login, password))
@@ -22,7 +23,7 @@ def login():
 @app.route('/employer/account/logout', methods=['POST'],endpoint='employer-logout')
 def logout():
     try:
-        session_service.logout(request.values['token'])
+        Session.stop(request.values['token'])
         return jsonify(result=True)
     except Exception as exc:
         print(exc)
@@ -31,33 +32,19 @@ def logout():
         return jsonify(result=True)
 
 
-@app.route('/employer/account/changePass', methods=['POST'],endpoint='employer-account-changepass')
-def changePass():
-    try:
-        oldpass = request.values['oldpass']
-        newpass = request.values['newpass']
-        token  = request.values['token']
-        sessionInfo = session_service.validateToken(token,['employer'])
-        result = session_service.changePass(sessionInfo['user'],oldpass,newpass)
-        return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Change pass error '
-        print request.values
-        return jsonify(result=False)
+
 
 @app.route('/employer/company', methods=['GET','PUT'],endpoint='employer-company')
-def company():
+@employer_session
+def company(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            company = employer_service.getCompany()
+            company = user.getCompanyInfo()
             return jsonify(result=True,company=company)
          if request.method == 'PUT':
             company  = json.loads(request.values['company'])
-            employer_service.updateCompany(int(company['id']),company)
+            company_obj.updateCompany(int(company['id']),company)
             return jsonify(result=True)
     except Exception as exc:
         print(exc)
@@ -66,17 +53,13 @@ def company():
         return jsonify(result=False)
 
 
-
-
 @app.route('/employer/company/license', methods=['GET'],endpoint='employer-company-license')
-def companyLicense():
+@employer_session
+def companyLicense(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         license_service = erpInstance.service('career.license_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            companyId = int(request.values['companyId'])
-            licenseInfo = license_service.getLicenseStatistic(companyId)
+            licenseInfo = user.user_id.company_id.getLicenseStatistic()
             return jsonify(result=True, licenseInfo=licenseInfo)
     except Exception as exc:
         print(exc)
@@ -86,28 +69,27 @@ def companyLicense():
 
 
 @app.route('/employer/assignment', methods=['GET','PUT','POST','DELETE'],endpoint='employer-assignment')
-def assignment():
+@employer_session
+def assignment(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            assignmentList = employer_service.getAssignment()
+            assignmentList = user.user_id.company_id.getAssignment()
             return jsonify(result=True,assignmentList=assignmentList)
          if request.method == 'PUT':
             assignment  = json.loads(request.values['assignment'])
-            employer_service.updateAssignment(int(assignment['id']),assignment)
+            assignment_obj.updateAssignment(int(assignment['id']),assignment)
             return jsonify(result=True)
          if request.method == 'POST':
             assignment  = json.loads(request.values['assignment'])
-            assignmentId = employer_service.createAssignment(assignment)
+            assignmentId = user.createAssignment(assignment)
             if assignmentId:
                 return jsonify(result=True,assignmentId=assignmentId)
             else:
                 return jsonify(result=False)
          if request.method == 'DELETE':
             assignmentId  = int(request.values['assignmentId'])
-            result = employer_service.deleteAssignment(assignmentId)
+            result = assignment_obj.deleteAssignment(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -117,14 +99,13 @@ def assignment():
 
 
 @app.route('/employer/assignment/open', methods=['POST'],endpoint='employer-assignment-open')
-def assignmentOpen():
+@employer_session
+def assignmentOpen(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             assignmentId  = int(request.values['assignmentId'])
-            result = employer_service.openAssignment(assignmentId)
+            result = user.openAssignment(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -133,19 +114,14 @@ def assignmentOpen():
         return jsonify(result=False)
 
 
-
-
 @app.route('/employer/assignment/stats', methods=['GET'],endpoint='employer-assignment-stats')
-def assignmentStatistics():
+@employer_session
+def assignmentStatistics(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
          if request.method == 'GET':
             assignmentId  = int(request.values['assignmentId'])
-            stats = employer_service.getAassignmentStatistic(assignmentId)
+            stats = assignment_obj.get(assignmentId).getAassignmentStatistic()
             return jsonify(result=True,stats=stats)
-
     except Exception as exc:
         print(exc)
         print 'Assignment stats error '
@@ -153,14 +129,13 @@ def assignmentStatistics():
         return jsonify(result=False)
 
 @app.route('/employer/assignment/close', methods=['POST'],endpoint='employer-assignment-close')
-def assignmentClose():
+@employer_session
+def assignmentClose(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             assignmentId  = int(request.values['assignmentId'])
-            result = employer_service.closeAssignment(assignmentId)
+            result = user.closeAssignment(assignmentId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -169,21 +144,21 @@ def assignmentClose():
         return jsonify(result=False)
 
 @app.route('/employer/assignment/interview', methods=['GET','PUT','POST'],endpoint='employer-assignment-interview')
-def interview():
+@employer_session
+def interview(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
-            interview = employer_service.getInterview(int(request.values['assignmentId']))
+            assignmentId = int(request.values['assignmentId'])
+            interview = assignment_obj.get(assignmentId).getInterview()
             return jsonify(result=True,interview=interview)
          if request.method == 'PUT':
             interview  = json.loads(request.values['interview'])
-            employer_service.updateInterview(int(interview['id']),interview)
+            interview_obj.updateInterview(int(interview['id']),interview)
             return jsonify(result=True)
          if request.method == 'POST':
             interview  = json.loads(request.values['interview'])
-            interviewId = employer_service.createInterview(int(request.values['assignmentId']),interview)
+            interviewId = user.createInterview(int(request.values['assignmentId']),interview)
             if interviewId:
                 return jsonify(result=True,interviewId=interviewId)
             else:
@@ -196,28 +171,26 @@ def interview():
 
 
 @app.route('/employer/assignment/interview/question', methods=['GET','PUT','POST','DELETE'],endpoint='employer-assignment-interview-question')
-def interviewQuestion():
+@employer_session
+def interviewQuestion(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
          if request.method == 'GET':
-            questionList = employer_service.getInterviewQuestion(int(request.values['interviewId']))
+            questionList = interview_obj.get(int(request.values['interviewId'])).getInterviewQuestion()
             return jsonify(result=True,questionList=questionList)
          if request.method == 'PUT':
             jQuestions  = json.loads(request.values['questionList'])
-            employer_service.updateInterviewQuestion(jQuestions)
+            interview_question_obj.updateInterviewQuestion(jQuestions)
             return jsonify(result=True)
          if request.method == 'POST':
             jQuestions  = json.loads(request.values['questionList'])
-            questionIds = employer_service.addInterviewQuestion(int(request.values['interviewId']),jQuestions)
+            questionIds = interview_obj.get(int(request.values['interviewId'])).addInterviewQuestion(jQuestions)
             if questionIds:
                 return jsonify(result=True,questionIds=questionIds)
             else:
                 return jsonify(result=False)
          if request.method == 'DELETE':
             jQuestionIds  = json.loads(request.values['questionIds'])
-            employer_service.removeInterviewQuestion(jQuestionIds)
+            interview_question_obj.removeInterviewQuestion(jQuestionIds)
             return jsonify(result=True)
     except Exception as exc:
         print(exc)
@@ -228,16 +201,14 @@ def interviewQuestion():
 
 
 @app.route('/employer/assignment/interview/invite', methods=['POST'],endpoint='employer-assignment-interview-invite')
-def invitation():
+@employer_session
+def invitation(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         email_service = erpInstance.service('career.mail_service')
          if request.method == 'POST':
             emails  = json.loads(request.values['candidates'])
             interviewId  = int(request.values['interviewId'])
             subject  = request.values['subject']
-            result  = email_service.sendInterviewInvitation(interviewId,emails,subject)
+            result  = mail_service.sendInterviewInvitation(interviewId,emails,subject)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -247,14 +218,12 @@ def invitation():
 
 
 @app.route('/employer/assignment/interview/answer', methods=['GET'],endpoint='employer-assignment-interview-answer')
-def candidateAnswer():
+@employer_session
+def candidateAnswer(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
          if request.method == 'GET':
             interviewId  = int(request.values['interviewId'])
-            responseList  = employer_service.getInterviewResponse(interviewId)
+            responseList  = interview_obj.get(interviewId).getInterviewResponse()
             return jsonify(responseList=responseList)
     except Exception as exc:
         print(exc)
@@ -263,20 +232,19 @@ def candidateAnswer():
         return jsonify(result=False)
 
 @app.route('/employer/assignment/interview/assessment', methods=['GET','POST'],endpoint='employer-assignment-interview-assessment')
-def candidateAssessment():
+@employer_session
+def candidateAssessment(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
             applicantId  = int(request.values['candidateId'])
             assessmentId  = int(request.values['assessmentId'])
-            selfAssessmentResult  = employer_service.getSelfAssessment(assessmentId,applicantId)
-            otherAssessmentResultList  = employer_service.getOtherAssessment(assessmentId,applicantId)
+            selfAssessmentResult  = user.getSelfAssessment(assessmentId,applicantId)
+            otherAssessmentResultList  = user.getOtherAssessment(assessmentId,applicantId)
             return jsonify(result=True,selfAssessmentResult=selfAssessmentResult,otherAssessmentResultList=otherAssessmentResultList)
          if request.method == 'POST':
             assessmentResult  = json.loads(request.values['assessmentResult'])
-            assessmentId  = employer_service.submitAssessment(assessmentResult)
+            assessmentId  = user.submitAssessment(assessmentResult)
             return jsonify(result=True,assessmentId=assessmentId)
     except Exception as exc:
         print(exc)
@@ -286,14 +254,12 @@ def candidateAssessment():
 
 
 @app.route('/employer/question', methods=['GET'],endpoint='employer-question')
-def question():
+@employer_session
+def question(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
             lang = request.values['lang'] if 'lang' in request.values else False
-            questionList = content_service.getQuestion(lang)
+            questionList = question_obj.getQuestion(lang)
             return jsonify(result=True,questionList=questionList)
          return jsonify(result=False)
     except Exception as exc:
@@ -303,14 +269,12 @@ def question():
         return jsonify(result=False)
 
 @app.route('/employer/question/category', methods=['GET'],endpoint='admin-question-employer')
-def questionCategory():
+@employer_session
+def questionCategory(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
             lang = request.values['lang'] if 'lang' in request.values else False
-            categoryList = content_service.getQuestionCategory(lang)
+            categoryList = question_category_obj.getQuestionCategory(lang)
             return jsonify(result=True,categoryList=categoryList)
          return jsonify(result=False)
     except Exception as exc:
@@ -321,14 +285,12 @@ def questionCategory():
 
 
 @app.route('/employer/assessment', methods=['GET'],endpoint='employer-assessment')
-def assessment():
+@employer_session
+def assessment(session):
     try:
-         token  = request.values['token']
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         content_service = erpInstance.service('career.content_service')
          if request.method == 'GET':
             lang = request.values['lang'] if 'lang' in request.values else False
-            assessment  = content_service.getAssessment(lang)
+            assessment  = assessment_obj.getAssessment(lang)
             return jsonify(result=True,assessment=assessment)
     except Exception as exc:
         print(exc)
@@ -339,14 +301,12 @@ def assessment():
 
 
 @app.route('/employer/assignment/candidate', methods=['GET'],endpoint='employer-assignment-caandidate')
-def candidate():
+@employer_session
+def candidate(session):
     try:
-         token  = request.values['token']
          assignmentId  = int(request.values['assignmentId'])
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.employer_service')
          if request.method == 'GET':
-            candidateList  = employer_service.getAssignmentCandidate(assignmentId)
+            candidateList  = assignment_obj.get(assignmentId).getCandidate()
             return jsonify(result=True,candidateList=candidateList)
     except Exception as exc:
         print(exc)
@@ -354,31 +314,15 @@ def candidate():
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/candidate', methods=['GET'],endpoint='employer-caandidate')
-def poentialCandidate():
-    try:
-         token  = request.values['token']
-         assignmentId  = int(request.values['assignmentId'])
-         if request.method == 'GET':
-            employeeList  = common_service.searchPotentialCandidate(assignmentId)
-            return jsonify(result=True,employeeList=employeeList)
-    except Exception as exc:
-        print(exc)
-        print 'Potential candidate error '
-        print request.values
-        return jsonify(result=False)
+
 
 @app.route('/employer/report/assessment', methods=['GET'],endpoint='employer-report-assessment')
-def assessmentReport():
+@employer_session
+def assessmentReport(session):
     try:
-         print 'Start'
-         token  = request.values['token']
          candidateId  = int(request.values['candidateId'])
-         erpInstance = ErpInstance.fromToken(token,['employer'])
-         employer_service = erpInstance.service('career.report_service')
          if request.method == 'GET':
-            content  = employer_service.getAssessmentSummaryReport(candidateId)
-            print 'end'
+            content  = report_service.getAssessmentSummaryReport(candidateId)
             return jsonify(result=True,content=content)
     except Exception as exc:
         print(exc)
@@ -386,3 +330,16 @@ def assessmentReport():
         print request.values
         return jsonify(result=False)
 
+@app.route('/employer/account/changePass', methods=['POST'],endpoint='common-account-changepass')
+@employer_session
+def changePass(session):
+    try:
+        oldpass = request.values['oldpass']
+        newpass = request.values['newpass']
+        result = account_obj.changePass( app.config['ERP_DB'],session.info['user'],oldpass,newpass)
+        return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Change pass error '
+        print request.values
+        return jsonify(result=False)

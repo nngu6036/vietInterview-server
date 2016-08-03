@@ -5,7 +5,6 @@ from openerp.osv import osv
 from openerp.service import common
 import base64
 import datetime
-import util
 
 # monkey patching to allow scr not to be remove in html clean
 # see openerp.tools.mail.py
@@ -44,15 +43,7 @@ class LicenseService(osv.AbstractModel):
           return True
       return False
 
-    @api.model
-    def getLicenseStatistic(self,companyId):
-      stats = {'email':0,'license':None}
-      for company in self.env['res.company'].browse(companyId):
-        if company.license_instance_id:
-          stats['email'] = self.env['career.email.history'].search_count([('license_instance_id','=',company.license_instance_id.id)])
-          stats['license'] = {'name':company.license_instance_id.license_id.name,'email':company.license_instance_id.license_id.email,
-                              'expireDate':company.license_instance_id.expire_date,'state':company.license_instance_id.state}
-      return stats
+
 
     @api.model
     def consumeEmail(self,applicantId):
