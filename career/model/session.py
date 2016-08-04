@@ -78,7 +78,7 @@ class Session(models.Model):
 class OTK(models.Model):
 	_name = 'career.otk'
 	token = fields.Char(string='One Time Token')
-	login = fields.Char(string='Login', required=True)
+	email = fields.Char(string='Login', required=True)
 	date_expired = fields.Date(string='Expired Date', default=(date.today() + timedelta(days=1)).strftime('%Y-%m-%d'))
 	url = fields.Char(string='URL to reset password', required=True)
 

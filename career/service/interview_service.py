@@ -75,7 +75,7 @@ class InterviewService(osv.AbstractModel):
         user_input = self.env['survey.user_input'].search([('token','=',invite_code)])
         if user_input[0].state=='skip':
             user_input.write({'state':'skip'})
-            input_line = self.env['survey.user_input_line'].create({'user_input_id':user_input[0].id,'question_id':questionId,
+            self.env['survey.user_input_line'].create({'user_input_id':user_input[0].id,'question_id':questionId,
                                                                     'skipped':False,
                                                                     'answer_type':'url',
                                                                     'value_video_url':videoUrl})

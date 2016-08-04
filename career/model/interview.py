@@ -36,7 +36,13 @@ class Interview(models.Model):
 	status = fields.Selection([('initial', 'Initial status'), ('published', 'Published status'),  ('closed', 'Closed status')], default='initial')
 	conference_id = fields.Many2one('career.conference', string="Conference")
 	mode = fields.Selection([('conference', 'Conference interview'), ('video', 'Video interview')], default='video')
-	round = fields.Integer(string="Interview round number")
+	round = fields.Integer(string="Interview round number", default=1)
+
+	@api.model
+	def create(self, vals):
+		vals['round'] = self.env['survey.survey'].search_count([('job_id','=',vals['job_id'])]) + 1
+		interview = super(Interview, self).create(vals)
+		return interview
 
 	@api.model
 	def updateInterview(self, id, vals):
@@ -65,8 +71,6 @@ class Interview(models.Model):
 			questionIds.append(question.id)
 		return questionIds
 
-
-
 	@api.one
 	def getInterviewQuestion(self):
 		questions = self.env['survey.question'].search([('survey_id', '=', self.id)])
@@ -91,6 +95,22 @@ class Interview(models.Model):
 				documents]
 				responseList.append(response)
 		return responseList
+
+	@api.one
+	def getCandidate(self):
+		applicants = self.env['hr.applicant'].search(['|', ('join_survey_id', '=', self.id),('survey', '=', self.id)])
+		candidateList = [{'id': a.id, 'name': a.name, 'email': a.email_from, 'shortlist': a.shortlist,
+				  'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.job_id.id),
+					   ('email', '=', a.email_from)]) else False} for a in applicants]
+		return candidateList
+
+	@api.model
+	def deleteInterview(self, id):
+		for interview in self.env['survey.survey'].browse(id):
+			if interview.status == 'initial':
+				interview.unlink()
+				return True
+		return False
 
 class InterviewQuestion(models.Model):
 	_name = 'survey.question'

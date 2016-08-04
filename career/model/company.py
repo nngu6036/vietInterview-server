@@ -107,8 +107,6 @@ class CompanyUser(models.Model):
 			return True
 		return False
 
-
-
 	@api.one
 	def getCompanyInfo(self):
 		return {'id': self.company_id.id, 'name': self.company_id.name,	'image': self.company_id.logo or False,
@@ -125,8 +123,22 @@ class CompanyUser(models.Model):
 													  'language': vals['language'] if 'language' in vals else False,
 													  'round': int(vals['round']) if 'roumd' in vals else False,
 													  'mode': vals['mode'] if 'mode' in vals else False})
-		self.env['hr.job'].browse(assignmentId).write({'survey_id':interview.id})
 		return interview.id
+
+	@api.one
+	def openInterview(self, id):
+		for interview in self.env['survey.survey'].browse(id):
+			if interview.status!='published' and interview.job_id.status=='published' and not self.env['survey.survey'].search([('job_id', '=', interview.job_id.id), ('status', '=', 'published')]):
+				interview.write({'status': 'published'})
+				return True
+		return False
+
+	@api.one
+	def closeInterview(self, id):
+		for interview in self.env['survey.survey'].browse(id):
+			interview.write({'status': 'closed'})
+			return True
+		return False
 
 	@api.one
 	def submitAssessment(self, assessmentResult):
