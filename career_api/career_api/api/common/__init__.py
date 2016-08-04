@@ -124,9 +124,10 @@ def resetPass():
             return jsonify(result=False)
         if request.method == 'GET':
             token = request.values['token']
-            new_pass = account_obj.generateNewPass(token)
-            if new_pass:
-                return jsonify(result=True,newpass=new_pass)
+            newpass = request.values['newpass']
+            reset = account_obj.setNewPass(token,newpass)
+            if reset:
+                return jsonify(result=True)
             return jsonify(result=False)
     except Exception as exc:
         print(exc)

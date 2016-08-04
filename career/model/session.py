@@ -118,3 +118,14 @@ class Account(models.Model):
                 user.write({'password': new_pass})
                 return new_pass
         return False
+
+    @api.model
+    def setNewPass(self, token, newpass):
+        otks = self.env['career.otk'].search(
+            [('token', '=', token), ('date_expired', '>=', datetime.now().strftime("%Y-%m-%d"))])
+        for otk in otks:
+            users = self.env['res.users'].search([('login', '=', otk.email)])
+            for user in users:
+                user.write({'password': newpass})
+                return True
+        return False
