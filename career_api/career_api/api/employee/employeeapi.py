@@ -209,4 +209,16 @@ def applyJob(session):
         return jsonify(result=False)
 
 
-
+@app.route('/employee/account/changepass', methods=['POST'],endpoint='employee-account-changepass')
+@employee_session
+def changePass(session):
+    try:
+        oldpass = request.values['oldpass']
+        newpass = request.values['newpass']
+        result = account_obj.changePass( app.config['ERP_DB'],session.info['user'],oldpass,newpass)
+        return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Change pass error '
+        print request.values
+        return jsonify(result=False)
