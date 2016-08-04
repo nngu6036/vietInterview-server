@@ -79,7 +79,7 @@ class OTK(models.Model):
     token = fields.Char(string='One Time Token')
     email = fields.Char(string='Login', required=True)
     date_expired = fields.Date(string='Expired Date', default=(date.today() + timedelta(days=1)).strftime('%Y-%m-%d'))
-    url = fields.Char(string='URL to reset password', required=True)
+    url = fields.Char(string='URL to reset password', required=False)
 
     @api.model
     def create(self, vals):
@@ -122,7 +122,7 @@ class Account(models.Model):
     @api.model
     def setNewPass(self, token, newpass):
         otks = self.env['career.otk'].search(
-            [('token', '=', token), ('date_expired', '<=', datetime.now().strftime("%Y-%m-%d"))])
+            [('token', '=', token), ('date_expired', '>=', datetime.now().strftime("%Y-%m-%d"))])
         for otk in otks:
             users = self.env['res.users'].search([('login', '=', otk.email)])
             for user in users:
