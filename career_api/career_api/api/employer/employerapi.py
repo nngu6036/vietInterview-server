@@ -330,7 +330,7 @@ def assessmentReport(session):
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/account/changePass', methods=['POST'],endpoint='common-account-changepass')
+@app.route('/employer/account/changepass', methods=['POST'],endpoint='common-account-changepass')
 @employer_session
 def changePass(session):
     try:
