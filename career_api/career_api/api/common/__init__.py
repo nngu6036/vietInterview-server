@@ -118,7 +118,7 @@ def resetPass():
     try:
         if request.method == 'POST':
             email = request.values['email']
-            mail_sent = mail_service.sendResetPasswordInstructionMail(email,app.config['RESET_PASS_LINK'])
+            mail_sent = mail_service.sendResetPasswordInstructionMail(email)
             if mail_sent:
                 return jsonify(result=True)
             return jsonify(result=False)
