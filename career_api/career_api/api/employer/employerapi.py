@@ -114,13 +114,13 @@ def assignmentOpen(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/assignment/stats', methods=['GET'],endpoint='employer-assignment-stats')
+@app.route('/employer/assignment/interview/stats', methods=['GET'],endpoint='employer-assignment-interview-stats')
 @employer_session
-def assignmentStatistics(session):
+def interviewStatistics(session):
     try:
          if request.method == 'GET':
-            assignmentId  = int(request.values['assignmentId'])
-            stats = assignment_obj.get(assignmentId).getAassignmentStatistic()
+            interviewId  = int(request.values['interviewId'])
+            stats = interview_obj.get(interviewId).getInterviewStatistic()
             return jsonify(result=True,stats=stats)
     except Exception as exc:
         print(exc)

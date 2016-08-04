@@ -109,10 +109,3 @@ class Assignment(models.Model):
 
 
 
-	@api.one
-	def getAassignmentStatistic(self):
-		applicant_count = self.application_count
-		invite_count = self.env['career.email.history'].search_count([('assignment_id', '=', self.id)])
-		response_count = self.env['survey.user_input'].search_count(
-			[('survey_id', '=', self.survey_id.id), ('state', '=', 'done')])
-		return {'applicant': applicant_count, 'invitation': invite_count, 'response': response_count}
