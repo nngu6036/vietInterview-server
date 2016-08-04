@@ -143,6 +143,36 @@ def assignmentClose(session):
         print request.values
         return jsonify(result=False)
 
+@app.route('/employer/assignment/interview/open', methods=['POST'],endpoint='employer-assignment-interview-open')
+@employer_session
+def interviewOpen(session):
+    try:
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
+         if request.method == 'POST':
+            interviewId  = int(request.values['interviewId'])
+            result = user.openInterview(interviewId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Open Interview error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employer/assignment/interview/close', methods=['POST'],endpoint='employer-assignment-interview-close')
+@employer_session
+def interviewClose(session):
+    try:
+         user = company_user_obj.get([('user_id','=',session.info['uid'])])
+         if request.method == 'POST':
+            interviewId  = int(request.values['interviewId'])
+            result = user.closeInterview(interviewId)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Close Interview error '
+        print request.values
+        return jsonify(result=False)
+
 @app.route('/employer/assignment/interview', methods=['GET','PUT','POST'],endpoint='employer-assignment-interview')
 @employer_session
 def interview(session):
@@ -150,8 +180,8 @@ def interview(session):
          user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'GET':
             assignmentId = int(request.values['assignmentId'])
-            interview = assignment_obj.get(assignmentId).getInterview()
-            return jsonify(result=True,interview=interview)
+            interviewList = assignment_obj.get(assignmentId).getInterview()
+            return jsonify(result=True,interviewList=interviewList)
          if request.method == 'PUT':
             interview  = json.loads(request.values['interview'])
             interview_obj.updateInterview(int(interview['id']),interview)
@@ -163,6 +193,10 @@ def interview(session):
                 return jsonify(result=True,interviewId=interviewId)
             else:
                 return jsonify(result=False)
+         if request.method == 'DELETE':
+             interviewId = int(request.values['interviewId'])
+             result = interview_obj.deleteInterview(interviewId)
+             return jsonify(result=result)
     except Exception as exc:
         print(exc)
         print 'Interview error '
@@ -300,13 +334,13 @@ def assessment(session):
 
 
 
-@app.route('/employer/assignment/candidate', methods=['GET'],endpoint='employer-assignment-caandidate')
+@app.route('/employer/interview/candidate', methods=['GET'],endpoint='employer-interview-caandidate')
 @employer_session
 def candidate(session):
     try:
-         assignmentId  = int(request.values['assignmentId'])
+         interviewId  = int(request.values['interviewId'])
          if request.method == 'GET':
-            candidateList  = assignment_obj.get(assignmentId).getCandidate()
+            candidateList  = interview_obj.get(interviewId).getCandidate()
             return jsonify(result=True,candidateList=candidateList)
     except Exception as exc:
         print(exc)

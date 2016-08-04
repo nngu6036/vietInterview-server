@@ -24,8 +24,9 @@ class MailService(osv.AbstractModel):
             return False
         assignment =  assignments[0]
         interview = self.env['survey.survey'].browse(inteviewId)
-        if not interview:
-          return False
+        if not interview or interview[0].status !='published':
+            return False
+        interview = interview[0]
         lang = util.lang_resolver(interview[0].language)
         email_template = self.env.ref('career.invitation_email_template')
         if not email_template:
@@ -40,9 +41,9 @@ class MailService(osv.AbstractModel):
             if not user_input:
                 user_input = self.env['survey.user_input'].create({'survey_id':inteviewId,'deadline':assignment.deadline,
                                                                    'type':'link','state':'new','email':email})
-            candidate = self.env['hr.applicant'].search([('email_from','=',email),('job_id','=',assignment.id)])
+            candidate = self.env['hr.applicant'].search([('email_from','=',email),'|',('survey','=',inteviewId),('join_survey_id','=',inteviewId)])
             if not candidate:
-                candidate = self.env['hr.applicant'].create({'name':email,'email_from':email,'job_id':assignment.id,
+                candidate = self.env['hr.applicant'].create({'name':email,'email_from':email,'job_id':assignment.id,'join_survey_id':inteviewId,
                                                              'company_id':assignment.company_id.id,'response_id':user_input.id})
             self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True,False,{'lang':lang})
             license_service.consumeEmail(candidate.id)

@@ -598,7 +598,7 @@
         </record>
 
 
-        <record model='ir.translation' id='career.reset_pass_email_template_body_vi'>
+        <record model='ir.translation' id='career.reset_pass_email_template_vi'>
             <field name='name'>email.template,body_html</field>
             <field name='res_id' ref="career.reset_pass_email_template"/>
             <field name='lang'>vi_VN</field>

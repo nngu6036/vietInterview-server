@@ -92,25 +92,22 @@ class Assignment(models.Model):
 	def getCompanyInfo(self):
 		return {'id': self.company_id.id,'name': self.company_id.name,'image': self.company_id.logo or False}
 
-	@api.one
-	def getCandidate(self):
-		applicants = self.env['hr.applicant'].search([('job_id', '=', self.id), ('survey', 'in', self.survey_id.id)])
-		candidateList = [{'id': a.id, 'name': a.name, 'email': a.email_from, 'shortlist': a.shortlist,
-				  'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.id),
-					   ('email', '=', a.email_from)]) else False} for a in applicants]
-		return candidateList
+
 
 	@api.one
 	def getInterview(self):
-		if self.survey_id:
-			interview = {'id': self.survey_id.id, 'name': self.survey_id.title,
-					 'response': self.survey_id.response,
-					 'retry': self.survey_id.retry, 'introUrl': self.survey_id.introUrl,
-					 'exitUrl': self.survey_id.exitUrl,
-					 'aboutUsUrl': self.survey_id.aboutUsUrl, 'language': self.survey_id.language,
-					 'prepare': self.survey_id.prepare,'job_id':self.id,'round':self.survey_id.round,
-					 'mode':self.survey_id.mode,'status':self.survey_id.status}
-			return interview
+		interviewList = []
+		for interview in self.survey_ids:
+			interviewList.append({'id': interview.id, 'name': interview.title,
+								  'response': interview.response,
+								  'retry': interview.retry, 'introUrl': interview.introUrl,
+								  'exitUrl': interview.exitUrl,
+								  'aboutUsUrl': interview.aboutUsUrl, 'language': interview.language,
+								  'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
+								  'mode': interview.mode, 'status': interview.status})
+		return interviewList
+
+
 
 	@api.one
 	def getAassignmentStatistic(self):
