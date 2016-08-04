@@ -112,7 +112,7 @@ class Account(models.Model):
         otks = self.env['career.otk'].search(
             [('token', '=', token), ('date_expired', '<=', datetime.now().strftime("%Y-%m-%d"))])
         for otk in otks:
-            users = self.env['res.users'].search([('login', '=', otk.login)])
+            users = self.env['res.users'].search([('login', '=', otk.email)])
             for user in users:
                 new_pass = util.id_generator(6, chars=string.digits)
                 user.write({'password': new_pass})
@@ -124,7 +124,7 @@ class Account(models.Model):
         otks = self.env['career.otk'].search(
             [('token', '=', token), ('date_expired', '<=', datetime.now().strftime("%Y-%m-%d"))])
         for otk in otks:
-            users = self.env['res.users'].search([('login', '=', otk.login)])
+            users = self.env['res.users'].search([('login', '=', otk.email)])
             for user in users:
                 if user.write({'password': newpass}):
                     return True
