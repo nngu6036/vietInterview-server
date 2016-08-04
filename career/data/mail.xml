@@ -567,7 +567,7 @@
 
 
             <tr><td>
-            <a href="https://vietinterview.com/#/resetpass?token=${object.token}">Reset password link</a>
+            <a href="https://vietinterview.com/#/reset_pass?token=${object.token}">Reset password link</a>
             </td></tr>
 
 

@@ -4,7 +4,6 @@
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/data/mail.xml" afterPath="$PROJECT_DIR$/career/data/mail.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/session.py" afterPath="$PROJECT_DIR$/career/model/session.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -103,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="186">
-              <caret line="569" column="58" selection-start-line="569" selection-start-column="58" selection-end-line="569" selection-end-column="58" />
+              <caret line="569" column="106" selection-start-line="569" selection-start-column="106" selection-end-line="569" selection-end-column="106" />
               <folding />
             </state>
           </provider>
@@ -827,7 +826,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470302945423</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fix resetpass">
+      <created>1470303926509</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1470303926509</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -882,7 +888,8 @@
     <MESSAGE value="Reformat employee model" />
     <MESSAGE value="Add API employee changpass" />
     <MESSAGE value="Change API employee resetpass to receive new use input password" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change API employee resetpass to receive new use input password" />
+    <MESSAGE value="Fix resetpass" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix resetpass" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1234,7 +1241,7 @@
     <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
-          <caret line="569" column="58" selection-start-line="569" selection-start-column="58" selection-end-line="569" selection-end-column="58" />
+          <caret line="569" column="106" selection-start-line="569" selection-start-column="106" selection-end-line="569" selection-end-column="106" />
           <folding />
         </state>
       </provider>
