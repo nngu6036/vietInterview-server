@@ -201,7 +201,7 @@ def employee(session):
 @admin_session
 def employeeProfile(session):
     try:
-         user = user_obj.get([('user_id','=',int(request.values['employeeId']))])
+         user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             employee  = user.getProfile()
             return jsonify(employee=employee)
@@ -221,7 +221,7 @@ def employeeProfile(session):
 @admin_session
 def workExperience(session):
     try:
-         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             expList  = user.getWorkExperience()
             return jsonify(expList=expList)
@@ -248,7 +248,7 @@ def workExperience(session):
 @admin_session
 def certificate(session):
     try:
-         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             certList  = user.getCertificate()
             return jsonify(certList=certList)
@@ -275,7 +275,7 @@ def certificate(session):
 @admin_session
 def educationHistory(session):
     try:
-         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             eduList  = user.getEducationHistory()
             return jsonify(eduList=eduList)
@@ -303,7 +303,7 @@ def educationHistory(session):
 @admin_session
 def document(session):
     try:
-         user = user_obj.get([('user_id', '=', int(request.values['employeeId']))])
+         user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             docList  = user.getDocument()
             return jsonify(docList=docList)
