@@ -17,4 +17,5 @@ class DefaultConfig(object):
     FILE_UPLOAD_FOLDER = '/home/data/Documents'
     VIDEO_UPLOAD_FOLDER = '/home/data/Videos'
     VIDEO_DOWNLOAD_FOLDER = 'https://vietinterview.com/videos/'
+    RESET_PASS_LINK = '<a href="https://vietinterview.com/#/account/resetPass?token=${object.token}">Reset password link</a>'
 

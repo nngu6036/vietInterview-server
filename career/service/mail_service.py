@@ -89,6 +89,6 @@ class MailService(osv.AbstractModel):
     @api.model
     def sendResetPasswordInstructionMail(self, email, link):
         cr, uid, context = self.env.args
-        otk = self.env['career.otk'].create({'login': email, 'url': link})
+        otk = self.env['career.otk'].create({'email': email, 'url': link})
         template = self.env.ref('career.reset_pass_email_template')
         return self.pool.get('email.template').send_mail(cr, uid, template.id, otk.id, True)

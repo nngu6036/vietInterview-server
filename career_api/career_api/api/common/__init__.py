@@ -113,27 +113,29 @@ def searchJob():
 
 
 
-@app.route('/common/account/resetPass', methods=['POST'],endpoint='common-account-resetpass')
+@app.route('/common/account/resetpass', methods=['POST', 'GET'],endpoint='common-account-resetpass')
 def resetPass():
     try:
         if request.method == 'POST':
             email = request.values['email']
-            mail_service.sendResetPasswordInstructionMail(email,app.config['RESET_PASS_LINK'])
-            return ''
+            mail_sent = mail_service.sendResetPasswordInstructionMail(email,app.config['RESET_PASS_LINK'])
+            if mail_sent:
+                return jsonify(result=True)
+            return jsonify(result=False)
         if request.method == 'GET':
             token = request.values['token']
             new_pass = account_obj.generateNewPass(token)
             if new_pass:
-                return new_pass
-            return ''
+                return jsonify(result=True,newpass=new_pass)
+            return jsonify(result=False)
     except Exception as exc:
         print(exc)
         print 'Reset pass error '
         print request.values
-        abort(400)
+        return jsonify(result=False)
 
 
-@app.route('/common/candidate', methods=['GET'],endpoint='employer-caandidate')
+@app.route('/common/candidate', methods=['GET'],endpoint='common-candidate')
 def findCandidate():
     try:
          assignmentId  = int(request.values['assignmentId'])
