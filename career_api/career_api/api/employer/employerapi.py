@@ -2,9 +2,10 @@
 from flask import jsonify, request, abort
 from career_api import app
 from career_api.proxy import Session,company_obj,company_user_obj, assessment_obj,question_category_obj,interview_obj, interview_question_obj,interview_history_obj,interview_answer_obj,assignment_obj,question_obj,account_obj, common_service,mail_service,report_service
-from career_api.proxy import employer_session
+from career_api.proxy import employer_session, edu_hist_obj, document_obj, certificate_obj, user_obj, work_exp_obj
 import json
-
+import base64
+import os
 @app.route('/employer/account/login', methods=['POST'],endpoint='employer-account-login')
 def login():
     try:
@@ -389,5 +390,159 @@ def changePass(session):
     except Exception as exc:
         print(exc)
         print 'Change pass error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/employee', methods=['GET', 'PUT', 'POST'], endpoint='employer-employee')
+@employer_session
+def employee(session):
+    try:
+        if request.method == 'GET':
+            employeeList = user_obj.getEmployee()
+            return jsonify(result=True, companyList=employeeList)
+        if request.method == 'POST':
+            login = request.values['email']
+            password = request.values['password']
+            employeeId = user_obj.createEmployee(login,password)
+            if employeeId:
+                return jsonify(result=True, employeeId=employeeId)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Company  error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/employee/profile', methods=['GET','PUT'],endpoint='employer-employee-profile')
+@employer_session
+def employeeProfile(session):
+    try:
+         user = user_obj.get(int(request.values['employeeId']))
+         if request.method == 'GET':
+            employee  = user.getProfile()
+            return jsonify(employee=employee)
+         if request.method == 'PUT':
+            employee  = json.loads(request.values['employee'])
+            result = user.updateProfile(employee)
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'User profile error '
+        print request.values
+        return jsonify(result=False)
+
+
+
+@app.route('/employer/employee/profile/experience', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-experience')
+@employer_session
+def workExperience(session):
+    try:
+         user = user_obj.get(int(request.values['employeeId']))
+         if request.method == 'GET':
+            expList  = user.getWorkExperience()
+            return jsonify(expList=expList)
+         if request.method == 'POST':
+            exp  = json.loads(request.values['exp'])
+            expId = user.addWorkExperience(exp)
+            return jsonify(expId=expId)
+         if request.method == 'PUT':
+            exp  = json.loads(request.values['exp'])
+            result = work_exp_obj.updateWorkExperience(exp)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            expId  = int(request.values['expId'])
+            result = work_exp_obj.removeWorkExperience([expId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Work experience error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/employee/profile/certificate', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-certificate')
+@employer_session
+def certificate(session):
+    try:
+         user = user_obj.get(int(request.values['employeeId']))
+         if request.method == 'GET':
+            certList  = user.getCertificate()
+            return jsonify(certList=certList)
+         if request.method == 'POST':
+            cert  = json.loads(request.values['cert'])
+            certId = user.addCertificate(cert)
+            return jsonify(certId=certId)
+         if request.method == 'PUT':
+            cert  = json.loads(request.values['cert'])
+            result = certificate_obj.updateCertificate(cert)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            certId  = int(request.values['certId'])
+            result = certificate_obj.removeCertificate([certId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Certificate error '
+        print request.values
+        return jsonify(result=False)
+
+
+@app.route('/employer/employee/profile/education', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-education')
+@employer_session
+def educationHistory(session):
+    try:
+         user = user_obj.get(int(request.values['employeeId']))
+         if request.method == 'GET':
+            eduList  = user.getEducationHistory()
+            return jsonify(eduList=eduList)
+         if request.method == 'POST':
+            edu  = json.loads(request.values['edu'])
+            eduId = user.addEducationHistory(edu)
+            return jsonify(eduId=eduId)
+         if request.method == 'PUT':
+            edu  = json.loads(request.values['edu'])
+            result = edu_hist_obj.updateEducationHistory(edu)
+            return jsonify(result=result)
+         if request.method == 'DELETE':
+            eduId  = int(request.values['eduId'])
+            result = edu_hist_obj.removeEducationHistory([eduId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Education history error '
+        print request.values
+        return jsonify(result=False)
+
+
+
+@app.route('/employer/employee/profile/document', methods=['GET','POST','DELETE'],endpoint='employer-employee-profile-document')
+@employer_session
+def document(session):
+    try:
+         user = user_obj.get(int(request.values['employeeId']))
+         if request.method == 'GET':
+            docList  = user.getDocument()
+            return jsonify(docList=docList)
+         if request.method == 'POST':
+            doc  = json.loads(request.values['doc'])
+            base64FileData  = doc['filedata']
+            filename = doc['filename']
+            comment = doc['title']
+            fileData = base64.urlsafe_b64decode(base64FileData.encode('UTF-8'))
+            server_fname = os.path.join(app.config['FILE_UPLOAD_FOLDER'],  '%s%s' %( datetime.datetime.now().strftime('%S%M%H%m%d%Y') , secure_filename(filename)))
+            with open(server_fname, 'wb') as theFile:
+                theFile.write(fileData)
+            docId = user.addDocument(comment, filename, server_fname)
+            return jsonify(docId=docId)
+         if request.method == 'DELETE':
+            docId  = int(request.values['docId'])
+            result = document_obj.removeDocument([docId])
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Document error '
         print request.values
         return jsonify(result=False)

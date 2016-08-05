@@ -113,28 +113,34 @@ def searchJob():
 
 
 
-@app.route('/common/account/resetpass', methods=['POST', 'GET'],endpoint='common-account-resetpass')
+@app.route('/common/account/requestresetpass', methods=['POST'],endpoint='common-account-requestresetpass')
+def requestResetPass():
+    try:
+        email = request.values['email']
+        mail_sent = mail_service.sendResetPasswordInstructionMail(email)
+        if mail_sent:
+            return jsonify(result=True)
+        return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Request reset pass error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/common/account/resetpass', methods=['POST'],endpoint='common-account-resetpass')
 def resetPass():
     try:
-        if request.method == 'POST':
-            email = request.values['email']
-            mail_sent = mail_service.sendResetPasswordInstructionMail(email)
-            if mail_sent:
-                return jsonify(result=True)
-            return jsonify(result=False)
-        if request.method == 'GET':
-            token = request.values['token']
-            newpass = request.values['newpass']
-            reset = account_obj.setNewPass(token,newpass)
-            if reset:
-                return jsonify(result=True)
-            return jsonify(result=False)
+        token = request.values['token']
+        newpass = request.values['newpass']
+        reset = account_obj.setNewPass(token,newpass)
+        if reset:
+            return jsonify(result=True)
+        return jsonify(result=False)
     except Exception as exc:
         print(exc)
         print 'Reset pass error '
         print request.values
         return jsonify(result=False)
-
 
 @app.route('/common/candidate', methods=['GET'],endpoint='common-candidate')
 def findCandidate():

@@ -85,11 +85,9 @@ class Certificate(models.Model):
 
     @api.model
     def removeCertificate(self, ids):
-        cr, uid, context = self.env.args
-        employees = self.env['career.employee'].search([('user_id', '=', uid)])
-        for employee in employees:
-            self.env['career.certificate'].browse(ids).unlink()
-        return True
+        if self.env['career.certificate'].browse(ids).unlink():
+            return True
+        return False
 
 
 class Document(models.Model):
@@ -132,7 +130,7 @@ class EmployeeUser(models.Model):
     @api.model
     def getEmployee(self):
         employees = self.env['career.employee'].search([])
-        employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'mobile': e.user_id.partner_id.mobile or False,
+        employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'email': e.user_id.partner_id.email, 'mobile': e.user_id.partner_id.mobile or False,
                          'countryId': e.user_id.partner_id.country_id.id} for e in employees]
         return employeeList
 
@@ -232,7 +230,7 @@ class EmployeeUser(models.Model):
                 interview_link = "https://vietinterview.com/interview?code=%s&" % applicant.response_id.token
             applicationList.append(
                 {'id': applicant.id, 'title': applicant.job_id.name, 'company': applicant.company_id.name,
-                 'interview': applicant.join_survey_id.name, 'round': applicant.join_survey_id.round,
+                 'interview': applicant.join_survey_id.title, 'round': applicant.join_survey_id.round,
                  'deadline': applicant.job_id.deadline, 'applyDate': applicant.create_date,
                  'interview_link': interview_link})
         return applicationList
