@@ -232,7 +232,7 @@ class EmployeeUser(models.Model):
                 interview_link = "https://vietinterview.com/interview?code=%s&" % applicant.response_id.token
             applicationList.append(
                 {'id': applicant.id, 'title': applicant.job_id.name, 'company': applicant.company_id.name,
-                 'interview': applicant.join_survey_id.name, 'round': applicant.join_survey_id.round,
+                 'interview': applicant.join_survey_id.title, 'round': applicant.join_survey_id.round,
                  'deadline': applicant.job_id.deadline, 'applyDate': applicant.create_date,
                  'interview_link': interview_link})
         return applicationList
