@@ -85,11 +85,9 @@ class Certificate(models.Model):
 
     @api.model
     def removeCertificate(self, ids):
-        cr, uid, context = self.env.args
-        employees = self.env['career.employee'].search([('user_id', '=', uid)])
-        for employee in employees:
-            self.env['career.certificate'].browse(ids).unlink()
-        return True
+        if self.env['career.certificate'].browse(ids).unlink():
+            return True
+        return False
 
 
 class Document(models.Model):
