@@ -13,7 +13,7 @@ class Applicant(models.Model):
 	_name = 'hr.applicant'
 	_inherit = 'hr.applicant'
 
-	shortlist = fields.Boolean(string="Short-listed")
+	shortlist = fields.Boolean(string="Short-listed",default=False)
 	join_survey_id = fields.Many2one('survey.survey', string="Interview to join")
 
 
@@ -114,7 +114,7 @@ class Interview(models.Model):
 
 	@api.one
 	def getInterviewStatistic(self):
-		applicant_count = self.application_count
+		applicant_count = self.env['hr.applicant'].search_count([('join_survey_id', '=', self.id)])
 		invite_count = self.env['career.email.history'].search_count([('survey_id', '=', self.id)])
 		response_count = self.env['survey.user_input'].search_count(
 			[('survey_id', '=', self.id), ('state', '=', 'done')])

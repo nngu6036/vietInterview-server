@@ -129,6 +129,8 @@ class CompanyUser(models.Model):
 	@api.one
 	def openInterview(self, id):
 		for interview in self.env['survey.survey'].browse(id):
+			if interview.status == 'closed':
+				return False
 			if interview.status!='published' and interview.job_id.status=='published' and not self.env['survey.survey'].search([('job_id', '=', interview.job_id.id), ('status', '=', 'published')]):
 				interview.write({'status': 'published'})
 				return True
@@ -169,6 +171,12 @@ class CompanyUser(models.Model):
 					  for answer in  hr_interview_assessment.request_id.user_input_line_ids]
 		return {'id': hr_interview_assessment.id, 'comment': hr_interview_assessment.note_summary,
 			'vote': hr_interview_assessment.rating, 'answerList': answerList}
+
+	@api.one
+	def shortlistCandidate(self, applicantId):
+		for applicant in self.env['hr.applicant'].browse(applicantId):
+			applicant.write({'shortlist':not applicant.shortlist})
+		return True
 
 	@api.one
 	def getOtherAssessment(self, assessmentId, applicantId):
