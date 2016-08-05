@@ -130,7 +130,7 @@ class EmployeeUser(models.Model):
     @api.model
     def getEmployee(self):
         employees = self.env['career.employee'].search([])
-        employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'mobile': e.user_id.partner_id.mobile or False,
+        employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'email': e.user_id.partner_id.email, 'mobile': e.user_id.partner_id.mobile or False,
                          'countryId': e.user_id.partner_id.country_id.id} for e in employees]
         return employeeList
 

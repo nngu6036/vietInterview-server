@@ -37,7 +37,7 @@
       <file leaf-file-name="proxy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="323">
               <caret line="50" column="56" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="56" />
               <folding />
             </state>
@@ -47,8 +47,18 @@
       <file leaf-file-name="employee.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/employee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
+            <state relative-caret-position="360">
+              <caret line="132" column="90" selection-start-line="132" selection-start-column="90" selection-end-line="132" selection-end-column="90" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin_service.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career/service/admin_service.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="32" column="57" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -57,8 +67,8 @@
       <file leaf-file-name="adminapi.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="264" column="54" selection-start-line="264" selection-start-column="21" selection-end-line="264" selection-end-column="54" />
+            <state relative-caret-position="212">
+              <caret line="187" column="40" selection-start-line="187" selection-start-column="40" selection-end-line="187" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -812,7 +822,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470382473174</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fix removeCertificate">
+      <created>1470386568166</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1470386568166</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -870,7 +887,8 @@
     <MESSAGE value="Fix resetpass" />
     <MESSAGE value="Split API resetpass to requestresetpass &amp; resetpass" />
     <MESSAGE value="Change getApplicantHistory: applicant.join_survey_id.name to applicant.join_survey_id.title" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change getApplicantHistory: applicant.join_survey_id.name to applicant.join_survey_id.title" />
+    <MESSAGE value="Fix removeCertificate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix removeCertificate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -886,13 +904,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/career/data/job.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18190">
-          <caret line="1070" column="5" selection-start-line="1070" selection-start-column="5" selection-end-line="1072" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1179,7 +1190,7 @@
         <state relative-caret-position="85">
           <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#0#45#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1202,26 +1213,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
+    <entry file="file://$PROJECT_DIR$/career/service/admin_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="50" column="56" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="56" />
+        <state relative-caret-position="246">
+          <caret line="32" column="57" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="187" column="40" selection-start-line="187" selection-start-column="40" selection-end-line="187" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="264" column="54" selection-start-line="264" selection-start-column="21" selection-end-line="264" selection-end-column="54" />
+          <caret line="50" column="56" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
+        <state relative-caret-position="360">
+          <caret line="132" column="90" selection-start-line="132" selection-start-column="90" selection-end-line="132" selection-end-column="90" />
           <folding />
         </state>
       </provider>
