@@ -380,7 +380,7 @@ def changePass(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/employee', methods=['GET', 'PUT', 'POST'], endpoint='admin-employee')
+@app.route('/employer/employee', methods=['GET', 'PUT', 'POST'], endpoint='employer-employee')
 @employer_session
 def employee(session):
     try:
@@ -402,7 +402,7 @@ def employee(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/employee/profile', methods=['GET','PUT'],endpoint='admin-employee-profile')
+@app.route('/employer/employee/profile', methods=['GET','PUT'],endpoint='employer-employee-profile')
 @employer_session
 def employeeProfile(session):
     try:
@@ -422,7 +422,7 @@ def employeeProfile(session):
 
 
 
-@app.route('/employer/employee/profile/experience', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-experience')
+@app.route('/employer/employee/profile/experience', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-experience')
 @employer_session
 def workExperience(session):
     try:
@@ -449,7 +449,7 @@ def workExperience(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/employee/profile/certificate', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-certificate')
+@app.route('/employer/employee/profile/certificate', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-certificate')
 @employer_session
 def certificate(session):
     try:
@@ -476,7 +476,7 @@ def certificate(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/employee/profile/education', methods=['GET','PUT','POST','DELETE'],endpoint='admin-employee-profile-education')
+@app.route('/employer/employee/profile/education', methods=['GET','PUT','POST','DELETE'],endpoint='employer-employee-profile-education')
 @employer_session
 def educationHistory(session):
     try:
@@ -504,7 +504,7 @@ def educationHistory(session):
 
 
 
-@app.route('/employer/employee/profile/document', methods=['GET','POST','DELETE'],endpoint='admin-employee-profile-document')
+@app.route('/employer/employee/profile/document', methods=['GET','POST','DELETE'],endpoint='employer-employee-profile-document')
 @employer_session
 def document(session):
     try:
