@@ -19,7 +19,7 @@ class WorkExperience(models.Model):
     employer = fields.Text(string="Employer")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
-    cat_id = fields.Many2one('career.job_category', string="Job category")
+    cat_ids = fields.Many2many('career.job_category', string="Job category")
     description = fields.Text(string="Description")
     current = fields.Boolean(string='Is current')
     country_id = fields.Many2one('res.country', string="Country ")
@@ -28,9 +28,11 @@ class WorkExperience(models.Model):
 
     @api.model
     def updateWorkExperience(self, vals):
+        catIdList = vals['categoryIdList']
+        print catIdList
         self.env['career.work_experience'].browse(int(vals['id'])).write(
             {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
-             'end_date': vals['endDate'], 'current': vals['current'], 'cat_id': vals['categoryId'],
+             'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],
              'country_id': int(vals['countryId']), 'province_id': int(vals['provinceId']),
              'description': vals['description']})
         return True
@@ -159,7 +161,7 @@ class EmployeeUser(models.Model):
         for exp in self.experience_ids:
             expList.append({'id': exp.id, 'title': exp.title, 'employer': exp.employer, 'startDate': exp.start_date,
                             'endDate': exp.end_date,
-                            'current': exp.current, 'categoryId': exp.cat_id.id if exp.cat_id else False,
+                            'current': exp.current, 'categoryIdList': list(exp.cat_ids.ids),
                             'countryId': exp.country_id.id, 'provinceId': exp.province_id.id,
                             'description': exp.description})
         return expList
