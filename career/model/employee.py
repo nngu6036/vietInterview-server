@@ -62,11 +62,9 @@ class EducationHistory(models.Model):
 
     @api.model
     def removeEducationHistory(self, ids):
-        cr, uid, context = self.env.args
-        employees = self.env['career.employee'].search([('user_id', '=', uid)])
-        for employee in employees:
-            self.env['career.education_history'].browse(ids).unlink()
-        return True
+        if self.env['career.education_history'].browse(ids).unlink():
+            return True
+        return False
 
 
 class Certificate(models.Model):
