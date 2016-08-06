@@ -248,11 +248,11 @@ class EmployeeUser(models.Model):
 
     @api.one
     def getDocument(self):
-        certList = []
+        docList = []
         documents = self.env['ir.attachment'].search([('res_model', '=', 'career.employee'), ('res_id', '=', self.id)])
         for doc in documents:
-            certList.append({'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname})
-        return certList
+            docList.append({'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname})
+        return docList
 
     @api.one
     def addDocument(self, title, filename, file_location):
