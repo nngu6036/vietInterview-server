@@ -168,12 +168,13 @@ class EmployeeUser(models.Model):
 
     @api.one
     def addWorkExperience(self, vals):
+        catIdList = vals['categoryIdList']
         exp = self.env['career.work_experience'].create({'title': vals['title'], 'employer': vals['employer'],
                                                          'start_date': 'startDate' in vals and vals['startDate'],
                                                          'description': vals['description'],
                                                          'end_date': 'endDate' in vals and vals['endDate'],
                                                          'current': vals['current'],
-                                                         'cat_id': vals['categoryId'],
+                                                         'cat_ids': [(6, 0, catIdList)],
                                                          'country_id': 'countryId' in vals and int(vals['countryId']),
                                                          'province_id': 'provinceId' in vals and int(
                                                              vals['provinceId']),
