@@ -84,24 +84,31 @@ class Interview(models.Model):
 	def getInterviewResponse(self):
 		responseList = []
 		for input in self.env['survey.user_input'].search([('survey_id', '=', self.id)]):
-			for applicant in self.env['hr.applicant'].search(
-				[('email_from', '=', input.email), ('response_id', '=', input.id)]):
-				response = {'name': input.email, 'email': input.email, 'candidateId': applicant[0].id}
-				response['answerList'] = [
-				{'id': line.id, 'questionId': line.question_id.id, 'videoUrl': line.value_video_url} for line in input.user_input_line_ids]
+			for applicant in self.env['hr.applicant'].search([('email_from', '=', input.email), ('response_id', '=', input.id)]):
+				response={}
+				response['candidate'] = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from, 'shortlist': applicant.shortlist,
+				 'invited': True if self.env['career.email.history'].search([('applicant_id', '=', applicant.id)]) else False}
+				response['answerList'] = [{'id': line.id, 'questionId': line.question_id.id, 'videoUrl': line.value_video_url} for line in input.user_input_line_ids]
 				documents = self.env['ir.attachment'].search([('res_model', '=', 'hr.applicant'), ('res_id', '=', applicant[0].id)])
-				response['documentList'] = [
-				{'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname} for doc in
+				response['documentList'] = [{'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname} for doc in
 				documents]
 				responseList.append(response)
 		return responseList
 
 	@api.one
 	def getCandidate(self):
-		applicants = self.env['hr.applicant'].search(['|', ('join_survey_id', '=', self.id),('survey', '=', self.id)])
-		candidateList = [{'id': a.id, 'name': a.name, 'email': a.email_from, 'shortlist': a.shortlist,
+		candidateList = []
+		for applicant in self.env['hr.applicant'].search(['|', ('join_survey_id', '=', self.id),('survey', '=', self.id)]):
+			candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from, 'shortlist': applicant.shortlist,
 				  'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.job_id.id),
-					   ('email', '=', a.email_from)]) else False} for a in applicants]
+					   ('email', '=', applicant.email_from)]) else False}
+			for employee in self.env['career.employee'].search([('login','=',applicant.email_from)]):
+				candidate['profile'] = employee.getProfile()
+				candidate['expList'] = employee.getWorkExperience()
+				candidate['eduList'] =  employee.getEducationHistory()
+				candidate['certList'] =  employee.getCertificate()
+				candidate['docList'] =  employee.getDocument()
+			candidateList.append(candidate)
 		return candidateList
 
 	@api.model
