@@ -19,7 +19,7 @@ class WorkExperience(models.Model):
     employer = fields.Text(string="Employer")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
-    cat_id = fields.Many2one('career.job_category', string="Reason to leave")
+    cat_id = fields.Many2one('career.job_category', string="Job category")
     description = fields.Text(string="Description")
     current = fields.Boolean(string='Is current')
     country_id = fields.Many2one('res.country', string="Country ")
