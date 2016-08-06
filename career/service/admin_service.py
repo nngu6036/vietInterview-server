@@ -36,3 +36,4 @@ class AdminService(osv.AbstractModel):
                                                 'address_id': address.id, 'state': 'open'})
         self.approveAssignment(assignment.id)
         return assignment.id
+
