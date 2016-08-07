@@ -23,9 +23,12 @@ class CommonService(osv.AbstractModel):
     def searchPotentialCandidate(self,assignmentId):
         employeeList = []
         for assignment in self.env['hr.job'].browse(assignmentId):
-            if assignment.category_id:
-                experiences = self.env['career.work_experience'].search([('cat_id','=',assignment.category_id.id)])
-                employeeList = [{'id':employee.id,'name':employee.user_id.name,'email':employee.user_id.login} for employee in self.env['career.employee'].browse(experiences.employee_id.ids)]
+            if assignment.category_ids:
+                for cat_id in assignment.category_ids.ids:
+                    for exp in self.env['career.work_experience'].search([]):
+                        if cat_id in exp.cat_ids.ids:
+                            employee_id =  exp.employee_id
+                            employeeList.append({'id':employee_id.id,'name':employee_id.user_id.name,'email':employee_id.user_id.login})
         return employeeList
 
     @api.model
