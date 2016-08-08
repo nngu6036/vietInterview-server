@@ -132,18 +132,14 @@ class CompanyUser(models.Model):
                                                       'mode': vals['mode'] if 'mode' in vals else False})
         if interview.mode=='conference':
             conference = self.env['career.conference'].create({'name':interview.title})
-            member = self.env['career.conference'].create({'name':self.name,'conference_id':conference.id,'role':'moderator',
+            print conference
+            member = self.env['career.conference_member'].create({'name':self.name,'conference_id':conference.id,'role':'moderator',
                                                            'rec_mode':'career.employer','rec_id':self.id})
+            print member
             interview.write({'conference_id':conference.id})
         return interview.id
 
-    name = fields.Text(string="Member name")
-    conference_id = fields.Many2one('career.conference', string="Conference")
-    access_code = fields.Char(string="Conference access code")
-    role = fields.Selection([('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],
-                            default='guest')
-    rec_model = fields.Char(string="Record model")
-    rec_id = fields.Integer(string="Record ID")
+
 
     @api.one
     def openInterview(self, id):

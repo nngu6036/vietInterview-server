@@ -49,11 +49,11 @@ class ConferenceMember(models.Model):
 
 	@api.model
 	def create(self, vals):
-		while True:
-			vals['access_code'] = util.id_generator(4,string.digits)
-			if self.env['career.conference_member'].search([('conference_id','=',vals['conferenceId']),('access_code','=',vals['access_code'])]):
-				continue
+		print self.env['career.conference_member'].search([('conference_id','=',vals['conference_id']),('access_code','=',vals['access_code'])])
+		vals['access_code'] = util.id_generator(4, string.digits)
+		print vals
 		member = super(ConferenceMember, self).create(vals)
+		print member
 		return member
 
 class Interview(models.Model):
