@@ -88,6 +88,8 @@ class MailService(osv.AbstractModel):
             if not candidate:
                 candidate = self.env['hr.applicant'].create({'name':email,'email_from':email,'job_id':assignment.id,'join_survey_id':inteviewId,
                                                              'company_id':assignment.company_id.id,'response_id':user_input.id,'interview_time':schedule})
+                member = self.env['career.conference'].create( {'name': candidate.name, 'conference_id': interview.conference.id, 'role': 'candidate',
+                     'rec_mode': 'hr.applicant', 'rec_id': candidate.id})
             self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True,False,{'lang':lang})
             license_service.consumeEmail(candidate.id)
         return True

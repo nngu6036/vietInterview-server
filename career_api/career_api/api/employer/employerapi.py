@@ -174,7 +174,7 @@ def interviewClose(session):
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/assignment/interview', methods=['GET','PUT','POST'],endpoint='employer-assignment-interview')
+@app.route('/employer/assignment/interview', methods=['GET','PUT','POST','DELETE'],endpoint='employer-assignment-interview')
 @employer_session
 def interview(session):
     try:

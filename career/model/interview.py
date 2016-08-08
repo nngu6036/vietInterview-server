@@ -5,8 +5,8 @@ import base64
 import base64
 import datetime
 from datetime import date, timedelta
-
-
+from .. import util
+import string
 
 
 class Applicant(models.Model):
@@ -17,12 +17,25 @@ class Applicant(models.Model):
 	join_survey_id = fields.Many2one('survey.survey', string="Interview to join")
 	interview_time = fields.Datetime("Interview schedule")
 
+	@api.one
+	def getConferenceAccessCode(self):
+		for member in self.join_survey_id.conference_id.member_ids:
+			if member.rec_model == self._name and member.rec_id == self.id:
+				return member.access_code
+		return False
 
 class Conference(models.Model):
 	_name = 'career.conference'
 
 	name = fields.Text(string="Conference name")
+	meeting_id = fields.Text(string="Metting ID")
 	member_ids = fields.One2many('career.conference_member','conference_id', string="Conference member")
+
+	@api.model
+	def create(self, vals):
+		vals['meeting_id'] = util.id_generator(24)
+		conf = super(Conference, self).create(vals)
+		return conf
 
 class ConferenceMember(models.Model):
 	_name = 'career.conference_member'
@@ -30,9 +43,18 @@ class ConferenceMember(models.Model):
 	name = fields.Text(string="Member name")
 	conference_id = fields.Many2one('career.conference', string="Conference")
 	access_code = fields.Char(string="Conference access code")
-	role = fields.Selection(
-		[('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],
-		default='guest')
+	role = fields.Selection([('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],default='guest')
+	rec_model = fields.Char(string="Record model")
+	rec_id = fields.Integer(string="Record ID")
+
+	@api.model
+	def create(self, vals):
+		while True:
+			vals['access_code'] = util.id_generator(4,string.digits)
+			if self.env['career.conference_member'].search([('conference_id','=',vals['conferenceId']),('access_code','=',vals['access_code'])]):
+				continue
+		member = super(ConferenceMember, self).create(vals)
+		return member
 
 class Interview(models.Model):
 	_name = 'survey.survey'

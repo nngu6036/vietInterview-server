@@ -3,6 +3,8 @@ access_career_employer,career.employer,model_career_employer,employer_group,1,1,
 access_career_employee,career.employee,model_career_employee,employer_group,1,1,1,1
 access_career_license_instance,career.license_instance,model_career_license_instance,employer_group,1,1,1,1
 access_career_license,career.license,model_career_license,employer_group,1,1,1,1
+access_career_conference,career.conference,model_career_conference,employer_group,1,1,1,1
+access_career_conference_member,career.conference_member,model_career_conference_member,employer_group,1,1,1,1
 access_career_email_history,career.email.history,model_career_email_history,employer_group,1,1,1,1
 access_career_question_item_employer,career.question,model_career_question,employer_group,1,1,1,1
 access_career_question_category_item_employer,career.question_category,model_career_question_category,employer_group,1,1,1,1
