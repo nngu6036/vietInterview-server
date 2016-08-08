@@ -81,11 +81,11 @@ def company(session):
 
 @app.route('/admin/company/renewlicense', methods=['PUT'], endpoint='admin-company-renewlicense')
 @admin_session
-def company(session):
+def renewicense(session):
     try:
         companyId = int(request.values['companyId'])
         licenseId = int(request.values['licenseId'])
-        if company_obj.renewLicense(companyId, licenseId):
+        if company_obj.get(companyId).renewLicense( licenseId):
             return jsonify(result=True)
         else:
             return jsonify(result=False)
