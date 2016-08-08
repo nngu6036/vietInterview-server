@@ -312,3 +312,17 @@ class Conpany(models.Model):
                                 'expireDate': self.license_instance_id.expire_date,
                                 'state': self.license_instance_id.state}
         return stats
+
+    @api.model
+    def renewLicense(self, companyId, licenseId):
+        license = self.env['career.license'].browse(int(licenseId))
+        company = self.env['res.company'].browse(int(companyId))
+        expiryDdate = date.today() + timedelta(days=license.validity)
+        license_instance = self.env['career.license_instance'].create({'license_id': license.id,
+                                                                       'expire_date': '%d-%d-%d ' % (
+                                                                           expiryDdate.year, expiryDdate.month,
+                                                                           expiryDdate.day)})
+        if company:
+            company.write({'license_instance_id': license_instance.id, })
+            return True
+        return False
