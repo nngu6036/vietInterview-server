@@ -33,14 +33,13 @@ class CommonService(osv.AbstractModel):
 
     @api.model
     def searchJob(self,keyword,options):
+        assignmentList = []
         domain = [('state','=','recruit')]
         if options:
             if options['countryId']:
                 domain.append(('country_id','=',int(options['countryId'])))
             if options['provinceId']:
                 domain.append(('province_id','=',int(options['provinceId'])))
-            if options['categoryId']:
-                domain.append(('category_id','=',int(options['categoryId'])))
             if options['positionId']:
                 domain.append(('position_id','=',int(options['positionId'])))
 
@@ -49,9 +48,11 @@ class CommonService(osv.AbstractModel):
             domain.append(('description','like',keyword))
             domain.append(('name','like',keyword))
 
-        assignments = self.env['hr.job'].search(domain)
-        assignmentList = [{'id':a.id,'name':a.name,'description':a.description,'deadline':a.deadline,'status':a.status,
-                           'countryId':a.country_id.id, 'provinceId':a.province_id.id,'requirements':a.requirements,
-                           'categoryId':a.category_id.id, 'positionId':a.position_id.id} for a in assignments]
+        for a in self.env['hr.job'].search(domain):
+            if options['categoryId'] and a.category_ids and not int(options['categoryId']) in a.category_ids.ids:
+                continue
+            assignmentList.append({'id':a.id,'name':a.name,'description':a.description,'deadline':a.deadline,'status':a.status,
+                               'countryId':a.country_id.id, 'provinceId':a.province_id.id,'requirements':a.requirements,
+                               'categoryIdList':list(a.category_ids.ids), 'positionId':a.position_id.id} )
         return assignmentList
 

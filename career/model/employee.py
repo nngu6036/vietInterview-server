@@ -29,7 +29,6 @@ class WorkExperience(models.Model):
     @api.model
     def updateWorkExperience(self, vals):
         catIdList = vals['categoryIdList']
-        print catIdList
         self.env['career.work_experience'].browse(int(vals['id'])).write(
             {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
              'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],

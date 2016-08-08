@@ -243,7 +243,8 @@ def invitation(session):
             emails  = json.loads(request.values['candidates'])
             interviewId  = int(request.values['interviewId'])
             subject  = request.values['subject']
-            result  = mail_service.sendInterviewInvitation(interviewId,emails,subject)
+            schedule = request.values['schedule'] if 'schedule' in request.values else False
+            result  = mail_service.sendInterviewInvitation(interviewId,emails,subject,schedule)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)

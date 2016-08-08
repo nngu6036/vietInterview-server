@@ -15,11 +15,23 @@ class Applicant(models.Model):
 
 	shortlist = fields.Boolean(string="Short-listed",default=False)
 	join_survey_id = fields.Many2one('survey.survey', string="Interview to join")
-
+	interview_time = fields.Datetime("Interview schedule")
 
 
 class Conference(models.Model):
 	_name = 'career.conference'
+
+	name = fields.Text(string="Conference name")
+	member_ids = fields.One2many('career.conference_member', string="Conference member")
+
+class ConferenceMember(models.Model):
+	_name = 'career.conference_member'
+
+	name = fields.Text(string="Member name")
+	access_code = fields.Char(string="Conference access code")
+	role = fields.Selection(
+		[('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],
+		default='guest')
 
 class Interview(models.Model):
 	_name = 'survey.survey'
@@ -48,9 +60,10 @@ class Interview(models.Model):
 	def updateInterview(self, id, vals):
 		interview = self.env['survey.survey'].browse(id)
 		if interview:
-			interview.write({'title': vals['name'], 'response': int(vals['response']),
+			interview.write({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
 					 'retry': int(vals['retry']) if 'retry' in vals else False,
 					 'introUrl': vals['introUrl'],
+					 'mode': vals['mode'],
 					 'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
 					 'prepare': int(vals['prepare']) if 'prepare' in vals else False,
 					 'language': vals['language'] if 'language' in vals else False})
@@ -99,8 +112,9 @@ class Interview(models.Model):
 	def getCandidate(self):
 		candidateList = []
 		for applicant in self.env['hr.applicant'].search(['|', ('join_survey_id', '=', self.id),('survey', '=', self.id)]):
-			candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from, 'shortlist': applicant.shortlist,
-				  'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.job_id.id),
+			candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
+						 'shortlist': applicant.shortlist,'schedule':applicant.interview_time,
+				  		'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.job_id.id),
 					   ('email', '=', applicant.email_from)]) else False}
 			for employee in self.env['career.employee'].search([('login','=',applicant.email_from)]):
 				candidate['profile'] = employee.getProfile()

@@ -122,7 +122,7 @@ class CompanyUser(models.Model):
 
     @api.one
     def createInterview(self, assignmentId, vals):
-        interview = self.env['survey.survey'].create({'title': vals['name'], 'response': int(vals['response']),
+        interview = self.env['survey.survey'].create({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
                                                       'retry': int(vals['retry']) if 'retry' in vals else False,
                                                       'introUrl': vals['introUrl'], 'job_id': assignmentId,
                                                       'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
