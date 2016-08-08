@@ -22,12 +22,13 @@ class Conference(models.Model):
 	_name = 'career.conference'
 
 	name = fields.Text(string="Conference name")
-	member_ids = fields.One2many('career.conference_member', string="Conference member")
+	member_ids = fields.One2many('career.conference_member','conference_id', string="Conference member")
 
 class ConferenceMember(models.Model):
 	_name = 'career.conference_member'
 
 	name = fields.Text(string="Member name")
+	conference_id = fields.Many2one('career.conference', string="Conference")
 	access_code = fields.Char(string="Conference access code")
 	role = fields.Selection(
 		[('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],
