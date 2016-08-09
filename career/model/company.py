@@ -95,11 +95,7 @@ class CompanyUser(models.Model):
 
     @api.one
     def updateCompanyUser(self, vals):
-        password = vals['password']
-        if password:
-            self.user_id.write({'name': vals['name'], 'password': password})
-        else:
-            self.user_id.write({'name': vals['name']})
+        self.user_id.write({'name': vals['name']})
         return True
 
     @api.one
