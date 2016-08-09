@@ -212,12 +212,12 @@ class EmployeeUser(models.Model):
                                  'type': 'link', 'state': 'new', 'email': self.user_id.login})
                         candidate = self.env['hr.applicant'].search(
                             [('email_from', '=', self.user_id.login), ('job_id', '=', assignment.id),
-                             ('join_survey_id', '=', survey.id)])
+                             ('interview_id', '=', survey.id)])
                         if not candidate:
                             self.env['hr.applicant'].create(
                                 {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
                                  'company_id': assignment.company_id.id, 'response_id': user_input.id,
-                                 'join_survey_id': survey.id})
+                                 'interview_id': survey.id})
                         return True
         return False
 
@@ -231,7 +231,7 @@ class EmployeeUser(models.Model):
                 interview_link = "https://vietinterview.com/interview?code=%s&" % applicant.response_id.token
             applicationList.append(
                 {'id': applicant.id, 'title': applicant.job_id.name, 'company': applicant.company_id.name,
-                 'interview': applicant.join_survey_id.title, 'round': applicant.join_survey_id.round,
+                 'interview': applicant.interview_id.title, 'round': applicant.interview_id.round,
                  'deadline': applicant.job_id.deadline, 'applyDate': applicant.create_date,
                  'interview_link': interview_link})
         return applicationList

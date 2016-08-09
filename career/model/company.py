@@ -60,7 +60,7 @@ class LicenseEmailHistory(models.Model):
     company_id = fields.Many2one('res.company', related='employer_id.user_id.company_id')
     email = fields.Char(string='email', related='applicant_id.email_from')
     assignment_id = fields.Many2one(string='Job', related='applicant_id.job_id')
-    survey_id = fields.Many2one('survey.survey', related='applicant_id.join_survey_id')
+    survey_id = fields.Many2one('survey.survey', related='applicant_id.interview_id')
     date_send = fields.Date(string="Send date")
     employer_id = fields.Many2one('career.employer', string='Employer user')
     license_instance_id = fields.Many2one('career.license_instance', string='Applied license')
@@ -181,23 +181,25 @@ class CompanyUser(models.Model):
     def inviteCandidate(self,emails,subject,schedules,interviewId):
         for index in range(len(emails)):
             email = emails[index]
-            schedule = schedules[index]
+            schedule = schedules[index] if schedules else False
             for interview in self.env['survey.survey'].browse(interviewId):
-                candidate = interview.createCandidate(email)
-                if not candidate:
-                    return False
-                if interview.mode == 'video':
-                    self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
-                if interview.mode == 'conference':
-                    self.scheduleMeeting(candidate, schedule)
-                    self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
+                for candidate in interview.createCandidate(email):
+                    if interview.mode == 'video':
+                        self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                    if interview.mode == 'conference':
+                        self.scheduleMeeting(candidate, schedule)
+                        self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
         return True
 
 
     @api.one
     def scheduleMeeting(self, candidate, schedule):
-        self.env['career.conference'].create({'name': self.title, 'applicant_id': candidate.id,
-                                              'moderator_id': self.id, 'schedule': schedule})
+        meeting = self.env['career.conference'].search([('applicant_id','=',candidate.id)])
+        if not meeting:
+            meeting = self.env['career.conference'].create({'name': candidate.interview_id.title, 'applicant_id': candidate.id,'interview_id':candidate.interview_id.id,
+                                    'schedule': schedule,'meeting_id':candidate.response_id.token})
+            candidate.write({'conference_id':meeting.id})
+        return meeting
 
 class Conpany(models.Model):
     _name = 'res.company'

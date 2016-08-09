@@ -198,13 +198,13 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
             For tips on conference interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
-            The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.interview_time}. When you are ready, click the "Start interview" button to start.
+            The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.interview_time}. When you are ready, click the "Start conference" button to start.
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/conference?meetingId=${object.survey.conference_id.meeting_id}&code=${object.getConferenceAccessCode()}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="https://vietinterview.com/#/conference?meetingId=${object.conference_id.meeting_id}&code=${object.conference_id.access_code}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Conference
         </a><br><br>
     </center>

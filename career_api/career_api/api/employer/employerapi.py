@@ -417,4 +417,15 @@ def conferenceLaunch(session):
         print request.values
         return jsonify(result=False)
 
-
+@app.route('/employer/assignment/interview/conference', methods=['GET'],endpoint='employer-assignment-interview-conference')
+@employer_session
+def conference(session):
+    try:
+         if request.method == 'GET':
+            conferenceList = conference_obj.getConference()
+            return jsonify(result=True,conferenceList=conferenceList)
+    except Exception as exc:
+        print(exc)
+        print 'Conference error '
+        print request.values
+        return jsonify(result=False)

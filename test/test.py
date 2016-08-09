@@ -8,6 +8,6 @@ for job in client.model('hr.job').browse([]):
         job.survey_id.write({'job_id':job.id,'mode':'video','round':1})
         #job.survey_id.write({'status': 'published'})
 for candidate in  client.model('hr.applicant').browse([]):
-    candidate.write({'join_survey_id':candidate.survey.id})
+    candidate.write({'interview_id':candidate.survey.id})
 
 
