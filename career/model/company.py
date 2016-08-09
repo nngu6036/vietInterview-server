@@ -117,6 +117,13 @@ class CompanyUser(models.Model):
         return True
 
     @api.one
+    def deleteCompanyUser(self, vals):
+        if self.user_id.unlink():
+            return True
+        else:
+            return False
+
+    @api.one
     def getCompanyInfo(self):
         return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False,
                 'email': self.company_id.partner_id.email}
