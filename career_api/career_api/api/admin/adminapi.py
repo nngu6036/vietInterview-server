@@ -85,7 +85,7 @@ def renewlicense(session):
     try:
         companyId = int(request.values['companyId'])
         licenseId = int(request.values['licenseId'])
-        if license_service.renewLicense(companyId, licenseId):
+        if license_service.get(int(licenseId)).renewLicense(companyId, licenseId):
             return jsonify(result=True)
         else:
             return jsonify(result=False)
