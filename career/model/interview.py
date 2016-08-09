@@ -171,6 +171,25 @@ class Interview(models.Model):
 			[('survey_id', '=', self.id), ('state', '=', 'done')])
 		return {'applicant': applicant_count, 'invitation': invite_count, 'response': response_count}
 
+	@api.one
+	def action_open(self):
+		if self.status != 'published' and self.job_id.status == 'published' \
+			and not self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')]):
+			if self.mode =='conference:':
+				if not self.env['career.conference_service'].openMeeting():
+					return False
+			self.write({'status': 'published'})
+			return True
+		return False
+
+	@api.one
+	def action_close(self):
+		if self.mode == 'conference:':
+			if self.env['career.conference_service'].meetingStatus()=='running':
+				return False
+		self.write({'status': 'closed'})
+		return True
+
 class InterviewQuestion(models.Model):
 	_name = 'survey.question'
 	_inherit = 'survey.question'

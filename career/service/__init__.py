@@ -5,3 +5,4 @@ import interview_service
 import license_service
 import mail_service
 import report_service
+import conference_service

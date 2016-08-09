@@ -103,10 +103,9 @@ def assignment(session):
 @employer_session
 def assignmentOpen(session):
     try:
-         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             assignmentId  = int(request.values['assignmentId'])
-            result = user.openAssignment(assignmentId)
+            result = assignment_obj.get(assignmentId).action_open()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -133,10 +132,9 @@ def interviewStatistics(session):
 @employer_session
 def assignmentClose(session):
     try:
-         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             assignmentId  = int(request.values['assignmentId'])
-            result = user.closeAssignment(assignmentId)
+            result = assignment_obj.get(assignmentId).action_close()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -148,10 +146,9 @@ def assignmentClose(session):
 @employer_session
 def interviewOpen(session):
     try:
-         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             interviewId  = int(request.values['interviewId'])
-            result = user.openInterview(interviewId)
+            result = interview_obj.get(interviewId).action_open()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -163,10 +160,9 @@ def interviewOpen(session):
 @employer_session
 def interviewClose(session):
     try:
-         user = company_user_obj.get([('user_id','=',session.info['uid'])])
          if request.method == 'POST':
             interviewId  = int(request.values['interviewId'])
-            result = user.closeInterview(interviewId)
+            result = interview_obj.get(interviewId).action_close()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)

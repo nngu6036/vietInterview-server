@@ -1,0 +1,17 @@
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.config_parameter" id="career.meeting_server_api">
+            <field name="key">conference.server.api</field>
+            <field name="value">http://192.168.1.49/bigblubutton/api</field>
+        </record>
+        <record model="ir.config_parameter" id="career.meeting_server_api_secret">
+            <field name="key">conference.server.api.secret</field>
+            <field name="value">ABCDE</field>
+        </record>
+    </data>
+
+</openerp>

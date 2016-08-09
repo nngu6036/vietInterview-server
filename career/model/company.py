@@ -72,6 +72,7 @@ class CompanyUser(models.Model):
 
     user_id = fields.Many2one('res.users', string='User', required=True)
     login = fields.Char(string='Login name', related='user_id.login')
+    company_id = fields.Char(string='Company', related='user_id.company_id')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
 
@@ -91,21 +92,6 @@ class CompanyUser(models.Model):
         self.env['career.mail_service'].sendNewJobNotification(assignment.id)
         return assignment.id
 
-    @api.one
-    def openAssignment(self, id):
-        assignment = self.env['hr.job'].browse(id)
-        if assignment:
-            assignment.write({'status': 'published'})
-            return True
-        return False
-
-    @api.one
-    def closeAssignment(self, id):
-        assignment = self.env['hr.job'].browse(id)
-        if assignment:
-            assignment.write({'status': 'closed'})
-            return True
-        return False
 
     @api.one
     def updateCompanyUser(self, vals):
@@ -135,24 +121,6 @@ class CompanyUser(models.Model):
         return interview.id
 
 
-
-    @api.one
-    def openInterview(self, id):
-        for interview in self.env['survey.survey'].browse(id):
-            if interview.status == 'closed':
-                return False
-            if interview.status != 'published' and interview.job_id.status == 'published' and not self.env[
-                'survey.survey'].search([('job_id', '=', interview.job_id.id), ('status', '=', 'published')]):
-                interview.write({'status': 'published'})
-                return True
-        return False
-
-    @api.one
-    def closeInterview(self, id):
-        for interview in self.env['survey.survey'].browse(id):
-            interview.write({'status': 'closed'})
-            return True
-        return False
 
     @api.one
     def submitAssessment(self, assessmentResult):
@@ -276,9 +244,8 @@ class Conpany(models.Model):
     @api.one
     def getCompanyUser(self):
         userList = []
-        for user in self.user_ids:
-            if user.company_id.id == self.id:
-                userList.append({'id': user.id, 'name': user.name, 'email': user.login})
+        for employer in self.env['career.employer'].search([('company_id','=',self.id)]):
+                userList.append({'id': employer.id, 'name': employer.name, 'email': employer.login})
         return userList
 
     @api.one

@@ -105,3 +105,17 @@ class Assignment(models.Model):
                                   'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
                                   'mode': interview.mode, 'status': interview.status})
         return interviewList
+
+
+    @api.one
+    def action_open(self):
+         if self.write({'status': 'published'}):
+             return True
+         return False
+
+
+    @api.one
+    def action_close(self):
+        if  self.write({'status': 'closed'}):
+            return True
+        return False
