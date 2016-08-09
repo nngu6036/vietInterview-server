@@ -116,8 +116,8 @@ def companyUser(session):
             else:
                 return jsonify(result=False)
         if request.method == 'DELETE':
-            user = json.loads(request.values['user'])
-            if company_user_obj.get(int(user['id'])).deleteCompanyUser(user):
+            userId = request.values['userId']
+            if company_user_obj.get(int(userId)).deleteCompanyUser(userId):
                 return jsonify(result=True)
             else:
                 return jsonify(result=False)
