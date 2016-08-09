@@ -37,6 +37,15 @@ class Conference(models.Model):
 		conf = super(Conference, self).create(vals)
 		return conf
 
+	@api.one
+	def getConference(self):
+		return {'id': self.id, 'name': self.name, 'meetingId': self.meeting_id }
+
+	@api.one
+	def getConferenceMember(self):
+		memberList = [{'id': member.id, 'name': member.name, 'code': member.access_code,'role':member.role} for member in self.member_ids]
+		return memberList
+
 class ConferenceMember(models.Model):
 	_name = 'career.conference_member'
 
@@ -49,11 +58,13 @@ class ConferenceMember(models.Model):
 
 	@api.model
 	def create(self, vals):
-		print self.env['career.conference_member'].search([('conference_id','=',vals['conference_id']),('access_code','=',vals['access_code'])])
-		vals['access_code'] = util.id_generator(4, string.digits)
-		print vals
+		while True:
+			vals['access_code'] = util.id_generator(4, string.digits)
+			if self.env['career.conference_member'].search_count([('conference_id','=',vals['conference_id']),('access_code','=',vals['access_code'])])==0:
+				break
+			else:
+				continue
 		member = super(ConferenceMember, self).create(vals)
-		print member
 		return member
 
 class Interview(models.Model):
@@ -79,19 +90,16 @@ class Interview(models.Model):
 		interview = super(Interview, self).create(vals)
 		return interview
 
-	@api.model
-	def updateInterview(self, id, vals):
-		interview = self.env['survey.survey'].browse(id)
-		if interview:
-			interview.write({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
-					 'retry': int(vals['retry']) if 'retry' in vals else False,
-					 'introUrl': vals['introUrl'],
-					 'mode': vals['mode'],
-					 'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
-					 'prepare': int(vals['prepare']) if 'prepare' in vals else False,
-					 'language': vals['language'] if 'language' in vals else False})
-			return True
-		return False
+	@api.one
+	def updateInterview(self,vals):
+		self.write({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
+				 'retry': int(vals['retry']) if 'retry' in vals else False,
+				 'introUrl': vals['introUrl'],
+				 'mode': vals['mode'],
+				 'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
+				 'prepare': int(vals['prepare']) if 'prepare' in vals else False,
+				 'language': vals['language'] if 'language' in vals else False})
+		return True
 
 	@api.one
 	def addInterviewQuestion(self, jQuestions):
@@ -148,12 +156,11 @@ class Interview(models.Model):
 			candidateList.append(candidate)
 		return candidateList
 
-	@api.model
-	def deleteInterview(self, id):
-		for interview in self.env['survey.survey'].browse(id):
-			if interview.status == 'initial':
-				interview.unlink()
-				return True
+	@api.one
+	def deleteInterview(self):
+		if self.status == 'initial':
+			self.unlink()
+			return True
 		return False
 
 	@api.one

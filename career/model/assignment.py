@@ -57,6 +57,8 @@ class Assignment(models.Model):
             return False
         return True
 
+
+
     @api.model
     def getAssignment(self):
         assignments = self.env['hr.job'].search([])
@@ -69,26 +71,21 @@ class Assignment(models.Model):
              'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
         return assignmentList
 
-    @api.model
-    def updateAssignment(self, id, vals):
+    @api.one
+    def updateAssignment(self, vals):
         catIdList = vals['categoryIdList']
-        assignment = self.env['hr.job'].browse(id)
-        if assignment:
-            assignment.write({'deadline': vals['deadline'], 'description': vals['description'], 'name': vals['name'],
-                              'requirements': vals['requirements'],
-                              'category_ids': [(6, 0, catIdList)] or False,
-                              'position_id': int(vals['positionId']) or False})
-            assignment.address_id.write(
-                {'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
-            return True
-        return False
+        self.write({'deadline': vals['deadline'], 'description': vals['description'], 'name': vals['name'],
+                          'requirements': vals['requirements'],
+                          'category_ids': [(6, 0, catIdList)] or False,
+                          'position_id': int(vals['positionId']) or False})
+        self.address_id.write({'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
+        return True
 
-    @api.model
-    def deleteAssignment(self, id):
-        for assignment in self.env['hr.job'].browse(id):
-            if assignment.status == 'initial':
-                assignment.unlink()
-                return True
+    @api.one
+    def deleteAssignment(self):
+        if self.status == 'initial':
+            self.unlink()
+            return True
         return False
 
     @api.one
@@ -103,6 +100,7 @@ class Assignment(models.Model):
                                   'response': interview.response,
                                   'retry': interview.retry, 'introUrl': interview.introUrl,
                                   'exitUrl': interview.exitUrl,
+                                  'conferenceId': interview.conference_id.id,
                                   'aboutUsUrl': interview.aboutUsUrl, 'language': interview.language,
                                   'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
                                   'mode': interview.mode, 'status': interview.status})

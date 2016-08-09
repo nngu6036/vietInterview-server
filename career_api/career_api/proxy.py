@@ -61,6 +61,7 @@ account_obj = mainInstance.model('res.users')
 degree_obj = mainInstance.model('hr.recruitment.degree')
 country_obj = mainInstance.model('res.country')
 province_obj = mainInstance.model('res.country.state')
+conference_obj = mainInstance.model('career.conference')
 
 # decorator
 def admin_session(func):

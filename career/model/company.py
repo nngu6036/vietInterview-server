@@ -107,13 +107,10 @@ class CompanyUser(models.Model):
             return True
         return False
 
-    @api.model
-    def updateCompanyUser(self, id, vals):
-        employer = self.env['career.employer'].browse(id)
-        if employer:
-            employer.user_id.write({'name': vals['name']})
-            return True
-        return False
+    @api.one
+    def updateCompanyUser(self, vals):
+        self.user_id.write({'name': vals['name']})
+        return True
 
     @api.one
     def getCompanyInfo(self):
@@ -132,10 +129,8 @@ class CompanyUser(models.Model):
                                                       'mode': vals['mode'] if 'mode' in vals else False})
         if interview.mode=='conference':
             conference = self.env['career.conference'].create({'name':interview.title})
-            print conference
             member = self.env['career.conference_member'].create({'name':self.name,'conference_id':conference.id,'role':'moderator',
                                                            'rec_mode':'career.employer','rec_id':self.id})
-            print member
             interview.write({'conference_id':conference.id})
         return interview.id
 
@@ -239,15 +234,11 @@ class Conpany(models.Model):
              'action': 'final', 'survey_id': assessment_form.id})
         return company.id
 
-    @api.model
-    def updateCompany(self, id, vals):
-        company = self.env['res.company'].browse(id)
-        print vals
-        if company:
-            company.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
-            company.partner_id.write({'email': vals['email']})
-            return True
-        return False
+    @api.one
+    def updateCompany(self,vals):
+        self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
+        self.partner_id.write({'email': vals['email']})
+        return True
 
     @api.model
     def getCompany(self):
@@ -313,12 +304,3 @@ class Conpany(models.Model):
                                 'state': self.license_instance_id.state}
         return stats
 
-    @api.one
-    def renewLicense(self, licenseId):
-        license = self.env['career.license'].browse(int(licenseId))
-        expiryDdate = date.today() + timedelta(days=license.validity)
-        license_instance = self.env['career.license_instance'].create({'license_id': license.id,
-                                                                       'expire_date': '%d-%d-%d ' % (
-                                                                           expiryDdate.year, expiryDdate.month,
-                                                                           expiryDdate.day)})
-        return self.write({'license_instance_id': license_instance.id, })

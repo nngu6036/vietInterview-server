@@ -80,11 +80,11 @@ def workExperience(session):
             return jsonify(expId=expId)
          if request.method == 'PUT':
             exp  = json.loads(request.values['exp'])
-            result = work_exp_obj.updateWorkExperience(exp)
+            result = work_exp_obj.get(int(exp['id'])).updateWorkExperience(exp)
             return jsonify(result=result)
          if request.method == 'DELETE':
             expId  = int(request.values['expId'])
-            result = work_exp_obj.removeWorkExperience([expId])
+            result = work_exp_obj.get(expId).removeWorkExperience()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -107,11 +107,11 @@ def certificate(session):
             return jsonify(certId=certId)
          if request.method == 'PUT':
             cert  = json.loads(request.values['cert'])
-            result = certificate_obj.updateCertificate(cert)
+            result = certificate_obj.get(int(cert['id'])).updateCertificate(cert)
             return jsonify(result=result)
          if request.method == 'DELETE':
             certId  = int(request.values['certId'])
-            result = certificate_obj.removeCertificate([certId])
+            result = certificate_obj.get(certId).removeCertificate()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -134,11 +134,11 @@ def educationHistory(session):
             return jsonify(eduId=eduId)
          if request.method == 'PUT':
             edu  = json.loads(request.values['edu'])
-            result = edu_hist_obj.updateEducationHistory(edu)
+            result = edu_hist_obj.get(int(edu['id'])).updateEducationHistory(edu)
             return jsonify(result=result)
          if request.method == 'DELETE':
             eduId  = int(request.values['eduId'])
-            result = edu_hist_obj.removeEducationHistory([eduId])
+            result = edu_hist_obj.get(eduId).removeEducationHistory()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -169,7 +169,7 @@ def document(session):
             return jsonify(docId=docId)
          if request.method == 'DELETE':
             docId  = int(request.values['docId'])
-            result = document_obj.removeDocument([docId])
+            result = document_obj.get(docId).removeDocument()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)

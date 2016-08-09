@@ -2,7 +2,7 @@
 from flask import jsonify, request, abort
 from career_api import app
 from career_api.proxy import Session,company_obj,company_user_obj, assessment_obj,question_category_obj,interview_obj, interview_question_obj,interview_history_obj,interview_answer_obj,assignment_obj,question_obj,account_obj, common_service,mail_service,report_service
-from career_api.proxy import employer_session, edu_hist_obj, document_obj, certificate_obj, user_obj, work_exp_obj
+from career_api.proxy import employer_session, edu_hist_obj, document_obj, certificate_obj, user_obj, work_exp_obj,conference_obj
 import json
 import base64
 import os
@@ -45,7 +45,7 @@ def company(session):
             return jsonify(result=True,company=company)
          if request.method == 'PUT':
             company  = json.loads(request.values['company'])
-            company_obj.updateCompany(int(company['id']),company)
+            company_obj.get(int(company['id'])).updateCompany(company)
             return jsonify(result=True)
     except Exception as exc:
         print(exc)
@@ -79,7 +79,7 @@ def assignment(session):
             return jsonify(result=True,assignmentList=assignmentList)
          if request.method == 'PUT':
             assignment  = json.loads(request.values['assignment'])
-            assignment_obj.updateAssignment(int(assignment['id']),assignment)
+            assignment_obj.get(int(assignment['id'])).updateAssignment(assignment)
             return jsonify(result=True)
          if request.method == 'POST':
             assignment  = json.loads(request.values['assignment'])
@@ -90,7 +90,7 @@ def assignment(session):
                 return jsonify(result=False)
          if request.method == 'DELETE':
             assignmentId  = int(request.values['assignmentId'])
-            result = assignment_obj.deleteAssignment(assignmentId)
+            result = assignment_obj.get(assignmentId).deleteAssignment()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -185,7 +185,7 @@ def interview(session):
             return jsonify(result=True,interviewList=interviewList)
          if request.method == 'PUT':
             interview  = json.loads(request.values['interview'])
-            interview_obj.updateInterview(int(interview['id']),interview)
+            interview_obj.get(int(interview['id'])).updateInterview(interview)
             return jsonify(result=True)
          if request.method == 'POST':
             interview  = json.loads(request.values['interview'])
@@ -196,7 +196,7 @@ def interview(session):
                 return jsonify(result=False)
          if request.method == 'DELETE':
              interviewId = int(request.values['interviewId'])
-             result = interview_obj.deleteInterview(interviewId)
+             result = interview_obj.get(interviewId).deleteInterview()
              return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -233,6 +233,20 @@ def interviewQuestion(session):
         print request.values
         return jsonify(result=False)
 
+
+@app.route('/employer/assignment/interview/conference', methods=['GET'],endpoint='employer-assignment-interview-conference')
+@employer_session
+def interviewConference(session):
+    try:
+         if request.method == 'GET':
+            conference = conference_obj.get(int(request.values['conferenceId'])).getConference()
+            memberList = conference_obj.get(int(request.values['conferenceId'])).getConferenceMember()
+            return jsonify(result=True,conference=conference,memberList=memberList)
+    except Exception as exc:
+        print(exc)
+        print 'Interview conference error '
+        print request.values
+        return jsonify(result=False)
 
 
 @app.route('/employer/assignment/interview/invite', methods=['POST'],endpoint='employer-assignment-interview-invite')

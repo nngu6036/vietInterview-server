@@ -15,10 +15,6 @@ from datetime import date, timedelta
 class CommonService(osv.AbstractModel):
     _name = 'career.common_service'
 
-
-
-
-
     @api.model
     def searchPotentialCandidate(self,assignmentId):
         employeeList = []

@@ -17,13 +17,10 @@ class QuestionCategory(models.Model):
 		categoryList = [{'id':c.id,'title':c.title} for c in categories]
 		return categoryList
 
-	@api.model
-	def updateQuestionCategory(self,id,vals):
-		category = self.env['career.question_category'].browse(id)
-		if category:
-			category.write({'title':vals['title']})
-			return True
-		return False
+	@api.one
+	def updateQuestionCategory(self,vals):
+		self.write({'title':vals['title']})
+		return True
 
 	@api.model
 	def createQuestionCategory(self,vals):
@@ -51,11 +48,8 @@ class Question(models.Model):
 													   'categoryId':int(vals['categoryId']),'lang':vals['lang']})
 		return question.id
 
-	@api.model
-	def updateQuestion(self,id,vals):
-		question = self.env['career.question'].browse(id)
-		if question:
-			question.write({'title':vals['title'],'content':vals['content'],'videoUrl':vals['videoUrl'],
-													   'categoryId':int(vals['categoryId'])})
-			return True
-		return False
+	@api.one
+	def updateQuestion(self,vals):
+		self.write({'title':vals['title'],'content':vals['content'],'videoUrl':vals['videoUrl'],
+												   'categoryId':int(vals['categoryId'])})
+		return True

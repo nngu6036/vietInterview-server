@@ -26,19 +26,19 @@ class WorkExperience(models.Model):
     province_id = fields.Many2one('res.country.state', string="Province ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.model
+    @api.one
     def updateWorkExperience(self, vals):
         catIdList = vals['categoryIdList']
-        self.env['career.work_experience'].browse(int(vals['id'])).write(
+        self.write(
             {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
              'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],
              'country_id': int(vals['countryId']), 'province_id': int(vals['provinceId']),
              'description': vals['description']})
         return True
 
-    @api.model
-    def removeWorkExperience(self, ids):
-        self.env['career.work_experience'].browse(ids).unlink()
+    @api.one
+    def removeWorkExperience(self):
+        self.unlink()
         return True
 
 
@@ -53,17 +53,17 @@ class EducationHistory(models.Model):
     level_id = fields.Many2one('hr.recruitment.degree', string="Degree ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.model
+    @api.one
     def updateEducationHistory(self, vals):
-        self.env['career.education_history'].browse(int(vals['id'])).write(
+        self.write(
             {'program': vals['program'], 'institute': vals['institute'],
              'complete_date': vals['finishDate'], 'status': vals['status'],
              'level_id': int(vals['levelId'])})
         return True
 
-    @api.model
-    def removeEducationHistory(self, ids):
-        if self.env['career.education_history'].browse(ids).unlink():
+    @api.one
+    def removeEducationHistory(self):
+        if self.unlink():
             return True
         return False
 
@@ -76,15 +76,15 @@ class Certificate(models.Model):
     issue_date = fields.Date(string="Date of issuer")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.model
+    @api.one
     def updateCertificate(self, vals):
-        self.env['career.certificate'].browse(int(vals['id'])).write({'title': vals['title'], 'issuer': vals['issuer'],
+        self.write({'title': vals['title'], 'issuer': vals['issuer'],
                                                                       'issue_date': vals['issueDate']})
         return True
 
-    @api.model
-    def removeCertificate(self, ids):
-        if self.env['career.certificate'].browse(ids).unlink():
+    @api.one
+    def removeCertificate(self):
+        if self.unlink():
             return True
         return False
 
@@ -93,10 +93,11 @@ class Document(models.Model):
     _name = 'ir.attachment'
     _inherit = 'ir.attachment'
 
-    @api.model
-    def removeDocument(self, ids):
-        self.env['ir.attachment'].browse(ids).unlink()
-        return True
+    @api.one
+    def removeDocument(self):
+        if self.unlink():
+            return True
+        return False
 
 
 class EmployeeUser(models.Model):
