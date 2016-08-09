@@ -95,7 +95,7 @@ def renewicense(session):
         print request.values
         return jsonify(result=False)
 
-@app.route('/admin/company/user', methods=['GET', 'PUT', 'POST'], endpoint='admin-company-user')
+@app.route('/admin/company/user', methods=['GET', 'PUT', 'POST', 'DELETE'], endpoint='admin-company-user')
 @admin_session
 def companyUser(session):
     try:
@@ -105,7 +105,7 @@ def companyUser(session):
             return jsonify(result=True, userList=userList)
         if request.method == 'PUT':
             user = json.loads(request.values['user'])
-            company_user_obj.get(int(user['id'])).updateCompanyUser( user)
+            company_user_obj.get(int(user['id'])).updateCompanyUser(user)
             return jsonify(result=True)
         if request.method == 'POST':
             user = json.loads(request.values['user'])
@@ -113,6 +113,12 @@ def companyUser(session):
             userId = company_obj.get(companyId).createCompanyUser(user)
             if userId:
                 return jsonify(result=True, userId=userId)
+            else:
+                return jsonify(result=False)
+        if request.method == 'DELETE':
+            user = json.loads(request.values['user'])
+            if company_user_obj.get(int(user['id'])).deleteCompanyUser(user):
+                return jsonify(result=True)
             else:
                 return jsonify(result=False)
     except Exception as exc:
