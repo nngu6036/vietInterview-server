@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <openerp>
-  <data>
+  <data noupdate="1">
     <record model='career.question_category' id='career.question_category_1'>
       <field name='title'>Administrative Assistant</field>
     </record>

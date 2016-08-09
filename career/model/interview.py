@@ -67,6 +67,12 @@ class ConferenceMember(models.Model):
 		member = super(ConferenceMember, self).create(vals)
 		return member
 
+	@api.one
+	def action_launch(self):
+		if not self.env['career.conference_service'].openMeeting(self.id):
+			return False
+		return False
+
 class Interview(models.Model):
 	_name = 'survey.survey'
 	_inherit = 'survey.survey'
@@ -175,20 +181,15 @@ class Interview(models.Model):
 	def action_open(self):
 		if self.status != 'published' and self.job_id.status == 'published' \
 			and not self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')]):
-			if self.mode =='conference:':
-				if not self.env['career.conference_service'].openMeeting():
-					return False
 			self.write({'status': 'published'})
 			return True
 		return False
 
 	@api.one
 	def action_close(self):
-		if self.mode == 'conference:':
-			if self.env['career.conference_service'].meetingStatus()=='running':
-				return False
-		self.write({'status': 'closed'})
-		return True
+		if self.write({'status': 'closed'}):
+			return True
+		return False
 
 class InterviewQuestion(models.Model):
 	_name = 'survey.question'
@@ -200,8 +201,6 @@ class InterviewQuestion(models.Model):
 	source = fields.Selection([('manual', 'User-defined'), ('system', 'System question')], default='system')
 	mode = fields.Selection([('text', 'Reading'), ('video', 'Watching')], default='video')
 	videoUrl = fields.Text(string="Question Video URL")
-
-
 
 	@api.model
 	def updateInterviewQuestion(self, jQuestions):

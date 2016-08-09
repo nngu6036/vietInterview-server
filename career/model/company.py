@@ -72,7 +72,7 @@ class CompanyUser(models.Model):
 
     user_id = fields.Many2one('res.users', string='User', required=True)
     login = fields.Char(string='Login name', related='user_id.login')
-    company_id = fields.Char(string='Company', related='user_id.company_id')
+    company_id = fields.Many2one(string='Company', related='user_id.company_id')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
 

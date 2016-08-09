@@ -374,8 +374,6 @@ def candidate(session):
         print request.values
         return jsonify(result=False)
 
-
-
 @app.route('/employer/report/assessment', methods=['GET'],endpoint='employer-report-assessment')
 @employer_session
 def assessmentReport(session):
@@ -401,6 +399,20 @@ def changePass(session):
     except Exception as exc:
         print(exc)
         print 'Change pass error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employer/assignment/conference/launch', methods=['POST'],endpoint='employer-assignment-conference-launch')
+@employer_session
+def conferenceLaunch(session):
+    try:
+         if request.method == 'POST':
+            conferenceId  = int(request.values['conferenceId'])
+            result = conference_obj.get(conferenceId).action_launch()
+            return jsonify(result=result)
+    except Exception as exc:
+        print(exc)
+        print 'Launch conference error '
         print request.values
         return jsonify(result=False)
 
