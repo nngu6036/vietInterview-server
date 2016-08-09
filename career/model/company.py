@@ -120,13 +120,8 @@ class CompanyUser(models.Model):
                                                       'language': vals['language'] if 'language' in vals else False,
                                                       'round': int(vals['round']) if 'roumd' in vals else False,
                                                       'mode': vals['mode'] if 'mode' in vals else False})
-        if interview.mode=='conference':
-            conference = self.env['career.conference'].create({'name':interview.title})
-            member = self.env['career.conference_member'].create({'name':self.name,'conference_id':conference.id,'role':'moderator',
-                                                           'rec_mode':'career.employer','rec_id':self.id})
-            interview.write({'conference_id':conference.id})
-        return interview.id
 
+        return interview.id
 
 
     @api.one
@@ -182,6 +177,27 @@ class CompanyUser(models.Model):
                  'user': hr_interview_assessment.user_id.name})
         return assessmentResultList
 
+    @api.one
+    def inviteCandidate(self,emails,subject,schedules,interviewId):
+        for index in range(len(emails)):
+            email = emails[index]
+            schedule = schedules[index]
+            for interview in self.env['survey.survey'].browse(interviewId):
+                candidate = interview.createCandidate(email)
+                if not candidate:
+                    return False
+                if interview.mode == 'video':
+                    self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                if interview.mode == 'conference':
+                    self.scheduleMeeting(candidate, schedule)
+                    self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
+        return True
+
+
+    @api.one
+    def scheduleMeeting(self, candidate, schedule):
+        self.env['career.conference'].create({'name': self.title, 'applicant_id': candidate.id,
+                                              'moderator_id': self.id, 'schedule': schedule})
 
 class Conpany(models.Model):
     _name = 'res.company'

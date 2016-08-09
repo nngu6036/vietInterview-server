@@ -15,25 +15,25 @@ class Applicant(models.Model):
 
 	shortlist = fields.Boolean(string="Short-listed",default=False)
 	join_survey_id = fields.Many2one('survey.survey', string="Interview to join")
-	interview_time = fields.Datetime("Interview schedule")
 
-	@api.one
-	def getConferenceAccessCode(self):
-		for member in self.join_survey_id.conference_id.member_ids:
-			if member.rec_model == self._name and member.rec_id == self.id:
-				return member.access_code
-		return False
 
 class Conference(models.Model):
 	_name = 'career.conference'
 
 	name = fields.Text(string="Conference name")
-	meeting_id = fields.Text(string="Metting ID")
-	member_ids = fields.One2many('career.conference_member','conference_id', string="Conference member")
+	meeting_id = fields.Char(string="Metting ID",related='applicant_id.response_id.token')
+	applicant_id = fields.Many2one('hr.applicant', string="Candidate")
+	moderator_id = fields.Many2one('career.employer', string="Interviewer")
+	access_code = fields.Char(string="Conference access code")
+	mod_access_code = fields.Char(string="Conference moderator access code")
+	interview_id =  fields.Many2one(string='Interview', related='applicant_id.survey')
+	schedule = fields.Datetime("Interview schedule")
 
 	@api.model
 	def create(self, vals):
 		vals['meeting_id'] = util.id_generator(24)
+		vals['access_code'] = util.id_generator(4, string.digits)
+		vals['mod_access_code'] = util.id_generator(4, string.digits)
 		conf = super(Conference, self).create(vals)
 		return conf
 
@@ -41,37 +41,14 @@ class Conference(models.Model):
 	def getConference(self):
 		return {'id': self.id, 'name': self.name, 'meetingId': self.meeting_id }
 
-	@api.one
-	def getConferenceMember(self):
-		memberList = [{'id': member.id, 'name': member.name, 'code': member.access_code,'role':member.role} for member in self.member_ids]
-		return memberList
 
-class ConferenceMember(models.Model):
-	_name = 'career.conference_member'
-
-	name = fields.Text(string="Member name")
-	conference_id = fields.Many2one('career.conference', string="Conference")
-	access_code = fields.Char(string="Conference access code")
-	role = fields.Selection([('moderator', 'Interviewer'), ('candidate', 'Interviewee'), ('guest', 'Guest')],default='guest')
-	rec_model = fields.Char(string="Record model")
-	rec_id = fields.Integer(string="Record ID")
-
-	@api.model
-	def create(self, vals):
-		while True:
-			vals['access_code'] = util.id_generator(4, string.digits)
-			if self.env['career.conference_member'].search_count([('conference_id','=',vals['conference_id']),('access_code','=',vals['access_code'])])==0:
-				break
-			else:
-				continue
-		member = super(ConferenceMember, self).create(vals)
-		return member
 
 	@api.one
 	def action_launch(self):
 		if not self.env['career.conference_service'].openMeeting(self.id):
 			return False
-		return False
+		return {'id': self.id, 'name': self.name, 'meetingId': self.meeting_id,'moderatorPwd':self.mod_access_code }
+
 
 class Interview(models.Model):
 	_name = 'survey.survey'
@@ -86,7 +63,7 @@ class Interview(models.Model):
 	language = fields.Char(string="Language",default="en")
 	job_id = fields.Many2one('hr.job', string="Job")
 	status = fields.Selection([('initial', 'Initial status'), ('published', 'Published status'),  ('closed', 'Closed status')], default='initial')
-	conference_id = fields.Many2one('career.conference', string="Conference")
+	conference_ids = fields.One2Many('career.conference','interview_id', string="Conference")
 	mode = fields.Selection([('conference', 'Conference interview'), ('video', 'Video interview')], default='video')
 	round = fields.Integer(string="Interview round number", default=1)
 
@@ -190,6 +167,21 @@ class Interview(models.Model):
 		if self.write({'status': 'closed'}):
 			return True
 		return False
+
+
+	@api.one
+	def createCandidate(self,email,name=None):
+		if self.job_id.status !='published' or self.status!='published':
+			return False
+		user_input = self.env['survey.user_input'].search([('email', '=', email), ('survey_id', '=', self.id)])
+		if not user_input:
+			user_input = self.env['survey.user_input'].create({'survey_id': self.id, 'deadline': self.job_id.deadline,
+														   'type': 'link', 'state': 'new', 'email': email})
+		candidate = self.env['hr.applicant'].search([('email_from', '=', email), '|', ('survey', '=', self.id), ('join_survey_id', '=', self.id)])
+		if not candidate:
+			candidate = self.env['hr.applicant'].create({'name': email or name, 'email_from': email, 'job_id': self.job_id.id, 'join_survey_id': self.id,
+				'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
+		return candidate[0]
 
 class InterviewQuestion(models.Model):
 	_name = 'survey.question'

@@ -100,7 +100,6 @@ class Assignment(models.Model):
                                   'response': interview.response,
                                   'retry': interview.retry, 'introUrl': interview.introUrl,
                                   'exitUrl': interview.exitUrl,
-                                  'conferenceId': interview.conference_id.id,
                                   'aboutUsUrl': interview.aboutUsUrl, 'language': interview.language,
                                   'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
                                   'mode': interview.mode, 'status': interview.status})

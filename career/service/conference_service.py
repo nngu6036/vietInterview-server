@@ -17,9 +17,11 @@ import urllib, urllib2
 class ConferenceService(osv.AbstractModel):
 	_name = 'career.conference_service'
 
+
+
 	@api.model
 	def openMeeting(self,conferenceId):
-		for conference in self.env['career.conference']:
+		for conference in self.env['career.conference'].browse(conferenceId):
 			api_url = self.env['ir.config_parameter'].get_param('conference.server.api')
 			secret = self.env['ir.config_parameter'].get_param('conference.server.api.secret')
 			bbb_service = BBB_API(api_url,secret)
@@ -30,6 +32,8 @@ class ConferenceService(osv.AbstractModel):
 					mod_pw = member.access_code
 				if member.role =='candidate':
 					interviewee_pw =  member.access_code
+			print mod_pw
+			print interviewee_pw
 			if not mod_pw or not interviewee_pw:
 				return False
 			create_meeting_request = CreateMettingRequest(conference.name,conference.meeting_id,interviewee_pw,mod_pw)

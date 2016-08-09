@@ -249,12 +249,13 @@ def interviewConference(session):
 @employer_session
 def invitation(session):
     try:
+         user = company_user_obj.get([('user_id', '=', session.info['uid'])])
          if request.method == 'POST':
             emails  = json.loads(request.values['candidates'])
             interviewId  = int(request.values['interviewId'])
             subject  = request.values['subject']
-            schedule = request.values['schedule'] if 'schedule' in request.values else False
-            result  = mail_service.sendInterviewInvitation(interviewId,emails,subject,schedule)
+            schedules = json.loads(request.values['schedule'])if 'schedule' in request.values else False
+            result  = user.inviteCandidate(emails,subject,schedules,interviewId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -402,7 +403,7 @@ def changePass(session):
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/assignment/conference/launch', methods=['POST'],endpoint='employer-assignment-conference-launch')
+@app.route('/employer/assignment/interview/conference/launch', methods=['POST'],endpoint='employer-assignment-interview-conference-launch')
 @employer_session
 def conferenceLaunch(session):
     try:
