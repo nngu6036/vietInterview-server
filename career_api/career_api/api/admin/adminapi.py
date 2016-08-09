@@ -105,7 +105,7 @@ def companyUser(session):
             return jsonify(result=True, userList=userList)
         if request.method == 'PUT':
             user = json.loads(request.values['user'])
-            company_user_obj.get(int(user['id'])).updateCompanyUser( user)
+            company_user_obj.get(int(user['id'])).updateCompanyUser(user)
             return jsonify(result=True)
         if request.method == 'POST':
             user = json.loads(request.values['user'])
