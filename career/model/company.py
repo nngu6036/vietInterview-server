@@ -198,7 +198,13 @@ class CompanyUser(models.Model):
         if not meeting:
             meeting = self.env['career.conference'].create({'name': candidate.interview_id.title, 'applicant_id': candidate.id,'interview_id':candidate.interview_id.id,
                                     'schedule': schedule,'meeting_id':candidate.response_id.token})
-            candidate.write({'conference_id':meeting.id})
+            mode_member = self.env['career.conference_member'].create({'name': self.name, 'role': 'moderator',
+                 'access_code': meeting.mod_access_code,
+                 'conference_id': meeting.id})
+            candidate_member = self.env['career.conference_member'].create({'name': candidate.name, 'role': 'candidate',
+                                                                       'access_code': meeting.access_code,
+                                                                       'conference_id': meeting.id})
+            candidate.write({'member_id':candidate_member.id})
         return meeting
 
 class Conpany(models.Model):

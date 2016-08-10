@@ -15,8 +15,23 @@ class Applicant(models.Model):
 
 	shortlist = fields.Boolean(string="Short-listed",default=False)
 	interview_id = fields.Many2one('survey.survey', string="Interview to join")
+	member_id = fields.Many2one('career.conference_member', string="Conference member")
+
+class ConferenceMember(models.Model):
+	_name = 'career.conference_member'
+
+	name = fields.Text(string="Member name")
+	member_id = fields.Char(string="Member ID")
+	role = fields.Selection([('moderator', 'Moderator'), ('guest', 'Participant'), ('candidate', 'Candidate')],
+							  default='guest')
+	access_code = fields.Char(string="Conference access code")
 	conference_id = fields.Many2one('career.conference', string="Conference to join")
 
+	@api.model
+	def create(self, vals):
+		vals['member_id'] = util.id_generator(24, string.digits)
+		conf = super(ConferenceMember, self).create(vals)
+		return conf
 
 class Conference(models.Model):
 	_name = 'career.conference'
@@ -27,6 +42,7 @@ class Conference(models.Model):
 	access_code = fields.Char(string="Conference access code")
 	mod_access_code = fields.Char(string="Conference moderator access code")
 	interview_id =  fields.Many2one('survey.survey',string='Interview')
+	member_ids = fields.One2many('career.conference_member')
 	schedule = fields.Datetime("Interview schedule")
 	status = fields.Selection([('pending', 'Initial status'), ('started', 'Start status'), ('ended', 'Closed status')],
 		default='pending')

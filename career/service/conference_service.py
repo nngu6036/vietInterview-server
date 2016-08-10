@@ -6,9 +6,7 @@ from openerp.service import common
 import base64
 import datetime
 import hashlib
-
-# monkey patching to allow scr not to be remove in html clean
-# see openerp.tools.mail.py
+from xml.dom import minidom
 import lxml.html.clean as clean
 from datetime import date, timedelta
 import urllib, urllib2
@@ -17,25 +15,14 @@ import urllib, urllib2
 class ConferenceService(osv.AbstractModel):
 	_name = 'career.conference_service'
 
-
-
 	@api.model
 	def openMeeting(self,conferenceId):
 		for conference in self.env['career.conference'].browse(conferenceId):
 			api_url = self.env['ir.config_parameter'].get_param('conference.server.api')
 			secret = self.env['ir.config_parameter'].get_param('conference.server.api.secret')
 			bbb_service = BBB_API(api_url,secret)
-			mod_pw = None
-			interviewee_pw = None
-			for member in conference.member_ids:
-				if member.role=='moderator':
-					mod_pw = member.access_code
-				if member.role =='candidate':
-					interviewee_pw =  member.access_code
-			print mod_pw
-			print interviewee_pw
-			if not mod_pw or not interviewee_pw:
-				return False
+			mod_pw = conference.mod_access_code
+			interviewee_pw = conference.access_code
 			create_meeting_request = CreateMettingRequest(conference.name,conference.meeting_id,interviewee_pw,mod_pw)
 			bbb_service.call('create',create_meeting_request)
 			return True
@@ -43,7 +30,7 @@ class ConferenceService(osv.AbstractModel):
 
 
 	@api.model
-	def joinMeeting(self):
+	def joinMeeting(self,meetingId,):
 		pass
 
 	@api.model
@@ -75,13 +62,30 @@ class CreateMettingRequest(object):
 		self.moderatorPW = moderatorPW
 
 	def urlString(self):
-		return 'name=%s&meetingId=%s&attendeePW=%s&moderatorPW=%s' % (
-		self.name, self.meetingId, self.attendeePW, self.moderatorPW)
+		return 'name=%s&meetingID=%s&attendeePW=%s&moderatorPW=%s' % (self.name, self.meetingId, self.attendeePW, self.moderatorPW)
 
 
 class CreateMettingResponse(object):
 	def __init__(self, xmlString):
-		pass
+		xmldoc = minidom.parseString(xmlString)
+		self.returnCode = xmldoc.getElementsByTagName('returncode')[0]
+		self.meeting = xmldoc.getElementsByTagName('meeting')[0]
+
+
+class JoinMettingRequest(object):
+	def __init__(self, fullName, meetingId, password):
+		self.fullName = fullName
+		self.meetingId = meetingId
+		self.password = password
+
+	def urlString(self):
+		return 'fullName=%s&meetingID=%s&password=%s' % (self.fullName, self.meetingId, self.password)
+
+
+class JoinMettingResponse(object):
+	def __init__(self, xmlString):
+		xmldoc = minidom.parseString(xmlString)
+
 
 class BBB_API(object):
 	def __init__(self, endpoint, secret):
