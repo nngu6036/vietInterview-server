@@ -20,7 +20,7 @@ class MailService(osv.AbstractModel):
     @api.model
     def sendVideoInterviewInvitation(self,candidate,subject):
         cr, uid, context = self.env.args
-        interview = candidate.survey
+        interview = candidate.interview_id
         lang = util.lang_resolver(interview.language)
         email_template = self.env.ref('career.interview_invitation_email_template')
         if not email_template:
@@ -38,7 +38,7 @@ class MailService(osv.AbstractModel):
     @api.model
     def sendConferenceInvitation(self,candidate,subject):
         cr, uid, context = self.env.args
-        interview = candidate.survey
+        interview = candidate.interview_id
         lang = util.lang_resolver(interview[0].language)
         email_template = self.env.ref('career.conference_invitation_email_template')
         if not email_template:

@@ -35,6 +35,7 @@ admin_service = mainInstance.model('career.admin_service')
 common_service = mainInstance.model('career.common_service')
 interview_service = mainInstance.model('career.interview_service')
 license_service = mainInstance.model('career.license_service')
+conference_service = mainInstance.model('career.conference_service')
 mail_service = mainInstance.model('career.mail_service')
 report_service = mainInstance.model('career.report_service')
 assessment_obj = mainInstance.model('hr.evaluation.interview')
@@ -89,4 +90,11 @@ def interview_session(func):
     def func_wrapper():
         inviteCode = request.values['code']
         return func(inviteCode)
+    return func_wrapper
+
+def conference_session(func):
+    def func_wrapper():
+        meetingId = request.values['meetingId']
+        memberId = request.values['memberId']
+        return func(meetingId,memberId)
     return func_wrapper

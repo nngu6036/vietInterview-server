@@ -3,7 +3,7 @@
     <data>
         <record model="ir.config_parameter" id="career.meeting_server_api">
             <field name="key">conference.server.api</field>
-            <field name="value">http://192.168.1.49/bigbluebutton/api/</field>
+            <field name="value">http://192.168.1.48/bigbluebutton/api</field>
         </record>
         <record model="ir.config_parameter" id="career.meeting_server_api_secret">
             <field name="key">conference.server.api.secret</field>

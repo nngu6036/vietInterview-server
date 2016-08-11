@@ -204,7 +204,7 @@
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/conference?meetingId=${object.conference_id.meeting_id}&code=${object.conference_id.access_code}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="https://vietinterview.com/#/conference?meetingId=${object.member_id.conference_id.meeting_id}&memberId=${object.member_id.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Conference
         </a><br><br>
     </center>
@@ -276,7 +276,7 @@
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/conference?meetingId=${object.survey.conference_id.meeting_id}&code=${object.getConferenceAccessCode()}translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="https://vietinterview.com/#/conference?meetingId=${object.member_id.conference_id.meeting_id}&memberId=${object.member_id.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Bắt đầu phỏng vấn
         </a><br><br>
     </center>

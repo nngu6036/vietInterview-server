@@ -230,19 +230,6 @@ def interviewQuestion(session):
         return jsonify(result=False)
 
 
-@app.route('/employer/assignment/interview/conference', methods=['GET'],endpoint='employer-assignment-interview-conference')
-@employer_session
-def interviewConference(session):
-    try:
-         if request.method == 'GET':
-            conference = conference_obj.get(int(request.values['conferenceId'])).getConference()
-            memberList = conference_obj.get(int(request.values['conferenceId'])).getConferenceMember()
-            return jsonify(result=True,conference=conference,memberList=memberList)
-    except Exception as exc:
-        print(exc)
-        print 'Interview conference error '
-        print request.values
-        return jsonify(result=False)
 
 
 @app.route('/employer/assignment/interview/invite', methods=['POST'],endpoint='employer-assignment-interview-invite')
@@ -403,19 +390,7 @@ def changePass(session):
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/assignment/interview/conference/launch', methods=['POST'],endpoint='employer-assignment-interview-conference-launch')
-@employer_session
-def conferenceLaunch(session):
-    try:
-         if request.method == 'POST':
-            conferenceId  = int(request.values['conferenceId'])
-            result = conference_obj.get(conferenceId).action_launch()
-            return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Launch conference error '
-        print request.values
-        return jsonify(result=False)
+
 
 @app.route('/employer/assignment/interview/conference', methods=['GET'],endpoint='employer-assignment-interview-conference')
 @employer_session

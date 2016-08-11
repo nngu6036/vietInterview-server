@@ -57,7 +57,7 @@ class LicenseEmailHistory(models.Model):
     _name = 'career.email.history'
 
     applicant_id = fields.Many2one('hr.applicant', string='Applicant ')
-    company_id = fields.Many2one('res.company', related='employer_id.user_id.company_id')
+    company_id = fields.Many2one('res.company', related='applicant_id.company_id')
     email = fields.Char(string='email', related='applicant_id.email_from')
     assignment_id = fields.Many2one(string='Job', related='applicant_id.job_id')
     survey_id = fields.Many2one('survey.survey', related='applicant_id.interview_id')

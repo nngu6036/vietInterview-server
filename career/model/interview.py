@@ -42,7 +42,8 @@ class Conference(models.Model):
 	access_code = fields.Char(string="Conference access code")
 	mod_access_code = fields.Char(string="Conference moderator access code")
 	interview_id =  fields.Many2one('survey.survey',string='Interview')
-	member_ids = fields.One2many('career.conference_member')
+	language = fields.Char(string = 'Language', related='interview_id.language')
+	member_ids = fields.One2many('career.conference_member','conference_id')
 	schedule = fields.Datetime("Interview schedule")
 	status = fields.Selection([('pending', 'Initial status'), ('started', 'Start status'), ('ended', 'Closed status')],
 		default='pending')
@@ -62,10 +63,10 @@ class Conference(models.Model):
 
 	@api.model
 	def getConference(self):
-		conferences = self.env['career.conference'].search([()])
+		conferences = self.env['career.conference'].search([])
 		conferenceList = [
-			{'id': c.id, 'name': c.name, 'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
-			 'accessCode': c.access_code, 'moderatorAccessCode': c.mod_access_code, 'schedule': c.schedule, 'status': c.status} for c in conferences]
+			{'id': c.id, 'name': c.name,'language': c.language,'meetingId':c.meeting_id, 'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
+			  'schedule': c.schedule, 'status': c.status,'memberList':[{'name':m.name,'memberId':m.member_id,'role':m.role} for m in c.member_ids]} for c in conferences]
 		return conferenceList
 
 class Interview(models.Model):
