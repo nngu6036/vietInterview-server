@@ -12,7 +12,8 @@ career_api/api/__init__.py
 career_api/api/admin/__init__.py
 career_api/api/admin/adminapi.py
 career_api/api/candidate/__init__.py
-career_api/api/candidate/candidateapi.py
+career_api/api/candidate/conferenceapi.py
+career_api/api/candidate/interviewapi.py
 career_api/api/common/__init__.py
 career_api/api/employee/__init__.py
 career_api/api/employee/employeeapi.py

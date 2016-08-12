@@ -4,8 +4,7 @@ from career_api import app
 from career_api.proxy import Session,company_obj,company_user_obj, assessment_obj,question_category_obj,interview_obj, interview_question_obj,interview_history_obj,interview_answer_obj,assignment_obj,question_obj,account_obj, common_service,mail_service,report_service
 from career_api.proxy import employer_session, edu_hist_obj, document_obj, certificate_obj, user_obj, work_exp_obj,conference_obj
 import json
-import base64
-import os
+
 @app.route('/employer/account/login', methods=['POST'],endpoint='employer-account-login')
 def login():
     try:

@@ -17,15 +17,21 @@ class CommonService(osv.AbstractModel):
 
     @api.model
     def searchPotentialCandidate(self,assignmentId):
-        employeeList = []
+        candidateList = []
         for assignment in self.env['hr.job'].browse(assignmentId):
             if assignment.category_ids:
                 for cat_id in assignment.category_ids.ids:
                     for exp in self.env['career.work_experience'].search([]):
                         if cat_id in exp.cat_ids.ids:
                             employee_id =  exp.employee_id
-                            employeeList.append({'id':employee_id.id,'name':employee_id.user_id.name,'email':employee_id.user_id.login})
-        return employeeList
+                            candidate  = {'id':employee_id.id,'name':employee_id.user_id.name,'email':employee_id.user_id.login}
+                            candidate['profile'] = employee_id.getProfile()
+                            candidate['expList'] = employee_id.getWorkExperience()
+                            candidate['eduList'] = employee_id.getEducationHistory()
+                            candidate['certList'] = employee_id.getCertificate()
+                            candidate['docList'] = employee_id.getDocument()
+                            candidateList.append(candidate)
+        return candidateList
 
     @api.model
     def searchJob(self,keyword,options):

@@ -197,7 +197,7 @@ def application(session):
 @employee_session
 def applyJob(session):
     try:
-         user = user_obj.get([('user_id','=',session['uid'])])
+         user = user_obj.get([('user_id', '=', session.info['uid'])])
          if request.method == 'POST':
             assignmentId = int( request.values['assignmentId'])
             result = user.applyJob(assignmentId)

@@ -64,15 +64,3 @@ def endConference(meetingId,memberId):
         return jsonify(result=False)
 
 
-@app.route('/conference/join', methods=['POST'],endpoint='conference-join')
-@conference_session
-def joinConference(meetingId,memberId):
-    try:
-         if request.method == 'POST':
-            result  = conference_service.joinMeeting(meetingId,memberId)
-            return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Conference join error '
-        print request.values
-        return jsonify(result=False)
