@@ -147,8 +147,10 @@ class Interview(models.Model):
 		for applicant in self.env['hr.applicant'].search(['|', ('interview_id', '=', self.id),('survey', '=', self.id)]):
 			candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
 						 'shortlist': applicant.shortlist,
-				  		'invited': True if self.env['career.email.history'].search( [('assignment_id', '=', self.job_id.id),
+				  		'invited': True if self.env['career.email.history'].search( [('survey_id', '=', self.id),
 					   ('email', '=', applicant.email_from)]) else False}
+			if self.mode=='conference' and applicant.member_id:
+				candidate['schedule'] = applicant.member_id.conference_id.schedule
 			for employee in self.env['career.employee'].search([('login','=',applicant.email_from)]):
 				candidate['profile'] = employee.getProfile()
 				candidate['expList'] = employee.getWorkExperience()

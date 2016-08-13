@@ -82,12 +82,14 @@ class CompanyUser(models.Model):
         address = self.env['res.partner'].create({'name': vals['name'], 'type': 'contact',
                                                   'country_id': 'countryId' in vals and int(vals['countryId']),
                                                   'state_id': 'provinceId' in vals and int(vals['provinceId']),
-                                                  'company_id': self.id})
+                                                  'company_id': self.user_id.company_id.id})
+        print vals
+        print vals['positionId']
         assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
                                                 'deadline': vals['deadline'], 'company_id': self.user_id.company_id.id,
                                                 'requirements': vals['requirements'] or False,
-                                                'category_ids': [(6, 0, catIdList)] or False,
-                                                'position_id': 'positionId' in vals and int(vals['positionId']),
+                                                'category_ids': [(6, 0, catIdList)] ,
+                                                'position_id':  int(vals['positionId']) if 'positionId' in vals else False,
                                                 'address_id': address.id, 'state': 'open'})
         self.env['career.mail_service'].sendNewJobNotification(assignment.id)
         return assignment.id
