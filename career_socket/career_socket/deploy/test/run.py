@@ -4,7 +4,7 @@
 # different async modes, or leave it set to None for the application to choose
 # the best option based on available packages.
 
-from emapush import app, socketio
+from career_socket import app, socketio
 import erppeek
 from flask import jsonify, abort, request,render_template
 import time

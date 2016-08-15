@@ -4,7 +4,7 @@ from fabric.api import *
 from fabric.contrib import *
 
 # the user to use for the remote commands
-env.user = 'root'
+env.user = 'devadmin'
 env.password = '123456'
 # the servers where the commands are executed
 env.hosts = ['192.168.1.200']
@@ -14,7 +14,7 @@ parent_dir = os.path.abspath(os.path.join(cur_dir, os.pardir))
 project_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 
 package_dir = "%s/%s" % (project_dir, project)
-install_dir = '/home/%s/%s' % (env.user, project)
+install_dir = '/home/data/%s' % (project)
 bin_dir = '%s/bin/' % install_dir
 conf_dir = '%s/conf/' % install_dir
 

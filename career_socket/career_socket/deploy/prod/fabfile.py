@@ -13,7 +13,7 @@ cur_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.abspath(os.path.join(cur_dir, os.pardir))
 project_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 package_dir = "%s/%s" % (project_dir, project)
-install_dir = '/home/%s/%s' % (env.user, project)
+install_dir = '/home/%s' % ( project)
 
 
 def pack():
