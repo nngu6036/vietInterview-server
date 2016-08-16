@@ -219,9 +219,9 @@ def interviewQuestion(session):
             else:
                 return jsonify(result=False)
          if request.method == 'DELETE':
-            jQuestionIds  = json.loads(request.values['questionIds'])
-            interview_question_obj.removeInterviewQuestion(jQuestionIds)
-            return jsonify(result=True)
+             jQuestionIds  = json.loads(request.values['questionIds'])
+             interview_question_obj.removeInterviewQuestion(jQuestionIds)
+             return jsonify(result=True)
     except Exception as exc:
         print(exc)
         print 'Interview question error '

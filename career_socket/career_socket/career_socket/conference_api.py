@@ -23,9 +23,6 @@ def disconnect():
 	print 'Client disconnected %s' % request.sid
 	Member = Query()
 	table = db.table('member')
-	member = table.get(Member.sid == request.sid)
-	if member:
-		socketio.emit('userDisconnectEvent', {'memberId': member['memberid']}, room=member['meetingid'], namespace='/conference')
 	table.remove(Member.sid == request.sid)
 
 
@@ -120,5 +117,5 @@ def chat(message):
 def question(message):
 	question_message =  message['data']
 	print 'question', question_message
-	socketio.emit('questionEvent',{'data':{'title':question_message['title'],'videoUrl':question_message['videoUrl']}},
+	socketio.emit('questionEvent',{'question':question_message['question']},
 				  room=question_message['meetingId'],namespace='/conference')
