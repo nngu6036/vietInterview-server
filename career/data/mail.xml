@@ -46,7 +46,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career_detail?careertab=interviews">VietInterview Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
@@ -118,7 +118,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career_detail?careertab=interviews">VietInterview Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
@@ -197,7 +197,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on conference interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            For tips on conference interviewing, please go to <a href="https://vietinterview.com/#/career_detail?careertab=interviews">VietInterview Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.interview_time}. When you are ready, click the "Start conference" button to start.
 
             </td></tr>
@@ -269,7 +269,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="https://vietinterview.com/#/career_detail?careertab=interviews">VietInterview Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn trực tuyến, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Cuộc phỏng vấn sẽ bắt đầu vào lúc ${object.interview_time}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
