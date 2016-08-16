@@ -6,6 +6,7 @@ from career_api.proxy import common_service, assignment_obj,account_obj,mail_ser
 from flask import request, jsonify, abort
 from werkzeug.utils import secure_filename
 from career_api import app
+from urlparse import urlparse
 
 ALLOWED_EXTENSIONS = ['mkv', 'flv', 'vob', 'avi', 'mov', 'wmv', 'mp4', 'mpg', 'mpeg', 'webm']
 
@@ -31,8 +32,9 @@ def upload_file():
         filename = secure_filename(file.filename)
         server_fname = '%s%s' % (datetime.datetime.now().strftime('%S%M%H%m%d%Y'), filename)
         file.save(os.path.join(app.config['VIDEO_UPLOAD_FOLDER'], server_fname))
-        print '%s%s' % (app.config['VIDEO_DOWNLOAD_FOLDER'], server_fname)
-        return jsonify(result=True, url='%s%s' % (app.config['VIDEO_DOWNLOAD_FOLDER'], server_fname))
+        parsed_uri = urlparse(request.url_root)
+        domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+        return jsonify(result=True, url='%s/%s/%s' % (domain,app.config['VIDEO_DOWNLOAD_FOLDER'], server_fname))
   except Exception as exc:
     print(exc)
     print 'Upload file error '

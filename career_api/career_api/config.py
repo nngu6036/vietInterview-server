@@ -16,5 +16,5 @@ class DefaultConfig(object):
     ERP_DB_PASS = '123456'
     FILE_UPLOAD_FOLDER = '/home/data/Documents'
     VIDEO_UPLOAD_FOLDER = '/home/data/Videos'
-    VIDEO_DOWNLOAD_FOLDER = 'https://vietinterview.com/videos/'
+    VIDEO_DOWNLOAD_FOLDER = 'videos'
 
