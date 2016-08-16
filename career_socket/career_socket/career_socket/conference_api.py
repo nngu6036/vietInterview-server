@@ -23,7 +23,11 @@ def disconnect():
 	print 'Client disconnected %s' % request.sid
 	Member = Query()
 	table = db.table('member')
+	member = table.get(Member.sid == request.sid)
+	if member:
+		socketio.emit('userDisconnectEvent', {'memberId': member['memberid']}, room=member['meetingid'], namespace='/conference')
 	table.remove(Member.sid == request.sid)
+
 
 @socketio.on('test', namespace='/conference')
 def test(message):
@@ -55,7 +59,18 @@ def leave(message):
 	if not table.all():
 		close_room(leave_message['meetingId'])
 	socketio.emit('userLeaveEvent',{'memberId':leave_message['memberId']},room=leave_message['meetingId'],namespace='/conference')
-	print table.all()
+
+@socketio.on('end', namespace='/conference')
+def end(message):
+	end_message =  message['data']
+	print 'end', end_message
+	Member = Query()
+	table = db.table('member')
+	if  table.search((Member.memberid==end_message['memberId']),(Member.role=='moderator')):
+		socketio.emit('endMeetingEvent',room=end_message['meetingId'],namespace='/conference')
+		table.remove(Member.meetingid == end_message['meetingId'])
+		close_room(end_message['meetingId'])
+
 
 # Video Call Signaling
 @socketio.on('signal', namespace='/conference')
@@ -67,17 +82,14 @@ def signal(message,*args):
 	if signal_message['type']=='availUpdate':
 		if  table.search((Member.memberid==signal_message['memberId']) &(Member.meetingid==signal_message['meetingId'])):
 			table.update({'status':signal_message['status']},(Member.memberid==signal_message['memberId']) &(Member.meetingid==signal_message['meetingId']))
-			socketio.emit('signal',{'type':'memberAvailEvent','memberId':signal_message['memberId'],'status':signal_message['status']},
-							room=signal_message['meetingId'],namespace='/conference')
-	if signal_message['type'] == 'availRequest':
-		member = table.get((Member.memberid==signal_message['memberId']) &(Member.meetingid==signal_message['meetingId']))
-		if member:
-			socketio.emit('signal',
-						  {'type':'memberAvailEvent','memberId': signal_message['memberId'], 'status': member['status']},
-						  room=request.sid, namespace='/conference')
-		else:
-			socketio.emit('signal', {'type':'memberAvailEvent','memberId': signal_message['memberId'], 'status': False},
-						  room=request.sid, namespace='/conference')
+			count =0
+			for member in table.search(Member.meetingid==signal_message['meetingId']):
+				if member['status'] and member['role']=='moderator':
+					count = count +1
+				if member['status'] and member['role']=='candidate':
+					count = count +1
+			if count == 2:
+				socketio.emit('signal', {'type':'channelAvailEvent'}, room=signal_message['meetingId'], namespace='/conference')
 	if signal_message['type']=='candidate':
 		signal_message['type'] = 'candidateEvent'
 		socketio.emit('signal',signal_message,room=signal_message['meetingId'],namespace='/conference')
