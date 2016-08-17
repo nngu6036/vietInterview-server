@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     _inherit = 'res.partner'
 
     gender = fields.Char(string="Gender")
+    videoUrl = fields.Char(string="Video URL")
 
 
 class WorkExperience(models.Model):
@@ -108,7 +109,6 @@ class EmployeeUser(models.Model):
     login = fields.Char(string='Login name', related='user_id.login')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
-    videoUrl = fields.Char(string='Video URL')
     experience_ids = fields.One2many('career.work_experience', 'employee_id', string="Working experience")
     education_ids = fields.One2many('career.education_history', 'employee_id', string="Education history")
     certificate_ids = fields.One2many('career.certificate', 'employee_id', string="Certificate")
@@ -143,7 +143,7 @@ class EmployeeUser(models.Model):
                 'provinceId': partner.state_id.id, 'birthdate': partner.birthdate or False,
                 'image': partner.image or False,
                 'gender': partner.gender or False,
-                'videoUrl': self.videoUrl or False}
+                'videoUrl': partner.videoUrl or False}
 
     @api.one
     def updateProfile(self, vals):
