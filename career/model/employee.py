@@ -108,6 +108,7 @@ class EmployeeUser(models.Model):
     login = fields.Char(string='Login name', related='user_id.login')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
+    videoUrl = fields.Char(string='Video URL')
     experience_ids = fields.One2many('career.work_experience', 'employee_id', string="Working experience")
     education_ids = fields.One2many('career.education_history', 'employee_id', string="Education history")
     certificate_ids = fields.One2many('career.certificate', 'employee_id', string="Certificate")
@@ -141,7 +142,8 @@ class EmployeeUser(models.Model):
                 'email': partner.email, 'address': partner.street, 'countryId': partner.country_id.id,
                 'provinceId': partner.state_id.id, 'birthdate': partner.birthdate or False,
                 'image': partner.image or False,
-                'gender': partner.gender or False}
+                'gender': partner.gender or False,
+                'videoUrl': self.videoUrl or False}
 
     @api.one
     def updateProfile(self, vals):
@@ -151,7 +153,8 @@ class EmployeeUser(models.Model):
                                        'state_id': vals['provinceId'],
                                        'birthdate': vals['birthdate'] if 'birthdate' in vals else None,
                                        'image': vals['image'] if 'image' in vals else None,
-                                       'gender': vals['gender'] if 'gender' in vals else None
+                                       'gender': vals['gender'] if 'gender' in vals else None,
+                                       'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else None
                                        })
         return True
 
