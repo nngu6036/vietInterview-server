@@ -180,12 +180,13 @@ class CompanyUser(models.Model):
         return assessmentResultList
 
     @api.one
-    def inviteCandidate(self,emails,subject,schedules,interviewId):
+    def inviteCandidate(self,names, emails,subject,schedules,interviewId):
         for index in range(len(emails)):
             email = emails[index]
+            name = names[index]
             schedule = schedules[index] if schedules else False
             for interview in self.env['survey.survey'].browse(interviewId):
-                for candidate in interview.createCandidate(email):
+                for candidate in interview.createCandidate(email, name):
                     if interview.mode == 'video':
                         self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
                     if interview.mode == 'conference':
