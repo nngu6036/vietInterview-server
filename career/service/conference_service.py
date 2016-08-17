@@ -36,13 +36,15 @@ class ConferenceService(osv.AbstractModel):
 		for conference in self.env['career.conference'].search([('meeting_id','=',meetingId)]):
 			info['status']  = conference.status
 			if conference.status !='ended':
-				for member in self.env['career.conference_member'].search([('member_id', '=', memberId)]):
+				for member in self.env['career.conference_member'].search([('member_id', '=', memberId),('role','=','moderator')]):
 					info['profile'] = {'name':member.name,'role':member.role,'memberId':member.member_id,'meetingId':member.conference_id.meeting_id}
 					if member.role=='moderator':
 						questions = self.env['survey.question'].search([('survey_id', '=', conference.interview_id.id)])
 						info['questionList'] = [{'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry,
 												 'prepare': q.prepare, 'videoUrl': q.videoUrl,	 'source': q.source,
 												 'type': q.mode, 'order': q.sequence} for q in questions]
+				for member in self.env['career.conference_member'].search([('role', '=', 'candidate')]):
+					info['candidate'] = {'name': member.name, 'role': member.role, 'memberId': member.member_id,  'meetingId': member.conference_id.meeting_id}
 				job =  conference.interview_id.job_id
 				info['job']= {'name': job.name, 'description': job.description, 'deadline': job.deadline, 'status': job.status,
 							  'requirements': job.requirements,  'company': job.company_id.name, 'country': job.country_id.name,
