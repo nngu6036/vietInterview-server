@@ -37,7 +37,7 @@ class ConferenceService(osv.AbstractModel):
 			info['status']  = conference.status
 			if conference.status !='ended':
 				for member in self.env['career.conference_member'].search([('member_id', '=', memberId),('role','=','moderator')]):
-					info['profile'] = {'name':member.name,'role':member.role,'memberId':member.member_id,'meetingId':member.conference_id.meeting_id}
+					info['moderator'] = {'name':member.name,'role':member.role,'memberId':member.member_id,'meetingId':member.conference_id.meeting_id}
 					if member.role=='moderator':
 						questions = self.env['survey.question'].search([('survey_id', '=', conference.interview_id.id)])
 						info['questionList'] = [{'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry,
