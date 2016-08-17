@@ -238,10 +238,11 @@ def invitation(session):
          user = company_user_obj.get([('user_id', '=', session.info['uid'])])
          if request.method == 'POST':
             emails  = json.loads(request.values['candidates'])
+            names = json.loads(request.values['names'])
             interviewId  = int(request.values['interviewId'])
             subject  = request.values['subject']
             schedules = json.loads(request.values['schedule'])if 'schedule' in request.values else False
-            result  = user.inviteCandidate(emails,subject,schedules,interviewId)
+            result  = user.inviteCandidate(names,emails,subject,schedules,interviewId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
