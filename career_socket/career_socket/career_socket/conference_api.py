@@ -37,7 +37,16 @@ def join(message):
 	table = db.table('member')
 	if not table.search(Member.memberid.exists()) or not table.search(Member.memberid==join_message['memberId']):
 		table.insert({'sid':request.sid,'meetingid':join_message['meetingId'],'memberid':join_message['memberId'],
-					  'name':join_message['name'],'role':join_message['role'],'status':True})
+					'role':join_message['role'],'status':True})
+		count = 0
+		for member in table.search(Member.meetingid == join_message['meetingId']):
+			if member['status'] and member['role'] == 'moderator':
+				count = count + 1
+			if member['status'] and member['role'] == 'candidate':
+				count = count + 1
+		if count == 2:
+			socketio.emit('signal', {'type': 'channelAvailEvent'}, room=join_message['meetingId'],
+						  namespace='/conference')
 	print table.all()
 
 @socketio.on('leave', namespace='/conference')
@@ -51,7 +60,8 @@ def leave(message):
 		table.remove(Member.meetingid == leave_message['memberId'])
 	if not table.all():
 		close_room(leave_message['meetingId'])
-	socketio.emit('userLeaveEvent',{'memberId':leave_message['memberId']},room=leave_message['meetingId'],namespace='/conference')
+	socketio.emit('signal', {'type': 'channelUnavailEvent'}, room=leave_message['meetingId'],
+				  namespace='/conference')
 
 @socketio.on('end', namespace='/conference')
 def end(message):
@@ -68,8 +78,6 @@ def end(message):
 @socketio.on('signal', namespace='/conference')
 def signal(message,*args):
 	signal_message =  message['data']
-	Member = Query()
-	table = db.table('member')
 	print 'signal', signal_message
 	if signal_message['type']=='candidate':
 		signal_message['type'] = 'candidateEvent'

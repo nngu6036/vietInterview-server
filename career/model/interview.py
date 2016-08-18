@@ -209,18 +209,18 @@ class Interview(models.Model):
         return False
 
     @api.one
-    def createCandidate(self, email, name):
+    def createCandidate(self, candidate):
         if self.job_id.status != 'published' or self.status != 'published':
             return False
-        user_input = self.env['survey.user_input'].search([('email', '=', email), ('survey_id', '=', self.id)])
+        user_input = self.env['survey.user_input'].search([('email', '=', candidate['email']), ('survey_id', '=', self.id)])
         if not user_input:
             user_input = self.env['survey.user_input'].create({'survey_id': self.id, 'deadline': self.job_id.deadline,
-                                                               'type': 'link', 'state': 'new', 'email': email})
+                                                               'type': 'link', 'state': 'new', 'email': candidate['email']})
         candidate = self.env['hr.applicant'].search(
-            [('email_from', '=', email), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
+            [('email_from', '=', candidate['email']), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
         if not candidate:
             candidate = self.env['hr.applicant'].create(
-                {'name': name or email, 'email_from': email, 'job_id': self.job_id.id, 'interview_id': self.id,
+                {'name': candidate['name'] or candidate['email'], 'email_from': candidate['email'], 'job_id': self.job_id.id, 'interview_id': self.id,
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
         return candidate
 

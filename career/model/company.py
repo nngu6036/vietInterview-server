@@ -180,23 +180,20 @@ class CompanyUser(models.Model):
         return assessmentResultList
 
     @api.one
-    def inviteCandidate(self,names, emails,subject,schedules,interviewId):
-        for index in range(len(emails)):
-            email = emails[index]
-            name = names[index]
-            schedule = schedules[index] if schedules else False
+    def inviteCandidate(self,jsCandidates,subject,interviewId):
+        for jsCandidate in jsCandidates:
             for interview in self.env['survey.survey'].browse(interviewId):
-                for candidate in interview.createCandidate(email, name):
+                for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
                         self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
                     if interview.mode == 'conference':
-                        self.scheduleMeeting(candidate, schedule)
+                        self.scheduleMeeting(candidate,jsCandidate['schedule'])
                         self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
         return True
 
 
     @api.one
-    def scheduleMeeting(self, candidate, schedule):
+    def scheduleMeeting(self, candidate,schedule):
         meeting = self.env['career.conference'].search([('applicant_id','=',candidate.id)])
         if not meeting:
             meeting = self.env['career.conference'].create({'name': candidate.interview_id.title, 'applicant_id': candidate.id,'interview_id':candidate.interview_id.id,
