@@ -95,3 +95,8 @@ def chat(message):
 	print 'chat', chat_message
 	socketio.emit('chatEvent',{'text':chat_message['text'],'memberId':chat_message['memberId']},room=chat_message['meetingId'],namespace='/conference')
 
+@socketio.on('file', namespace='/conference')
+def file(message):
+	file_message =  message['file']
+	print 'file', file_message
+	socketio.emit('fileEvent',{'data':file_message['data'],'memberId':file_message['memberId'],'name':file_message['name','type':file_message['type']]},room=file_message['meetingId'],namespace='/conference')

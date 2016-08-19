@@ -1,7 +1,7 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import interview_service, employer_session,conference_session,conference_service
+from career_api.proxy import conference_session
 import json, os, datetime
 from werkzeug.utils import secure_filename
 import base64
@@ -10,10 +10,10 @@ import base64
 
 @app.route('/conference', methods=['GET'],endpoint='conference')
 @conference_session
-def conference(meetingId,memberId):
+def conference(member):
     try:
          if request.method == 'GET':
-            conferenceInfo = conference_service.getMeetingInfo(meetingId,memberId)
+            conferenceInfo = member.getMeetingInfo()
             return jsonify(result=True,info=conferenceInfo)
     except Exception as exc:
         print(exc)
@@ -22,45 +22,36 @@ def conference(meetingId,memberId):
         return jsonify(result=False)
 
 
-@app.route('/conference/question', methods=['GET'],endpoint='conference-question')
+
+@app.route('/conference/answer', methods=['POST'],endpoint='conference-answer')
 @conference_session
-def question(meetingId,memberId):
-    try:
-         if request.method == 'GET':
-            questionList = conference_service.getInterviewQuestion(meetingId)
-            return jsonify(result=True,questionList=questionList)
-    except Exception as exc:
-        print(exc)
-        print 'Conference question error '
-        print request.values
-        return jsonify(result=False)
-
-
-@app.route('/conference/open', methods=['POST'],endpoint='conference-open')
-@employer_session
-def openConference(session):
+def submitAnswer(member):
     try:
          if request.method == 'POST':
-            conferenceId =  int(request.values['conferenceId'])
-            result  = conference_service.openMeeting(conferenceId)
+            questionId  = int(request.values['questionId'])
+            videoUrl = request.values['videoUrl']
+            candidateMemberId = request.values['candidateMemberId']
+            result  = member.submitInterviewAnswer(candidateMemberId,questionId,videoUrl)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Conference open error '
+        print 'Interview answer error '
         print request.values
         return jsonify(result=False)
 
-@app.route('/conference/end', methods=['POST'],endpoint='conference-end')
+
+
+@app.route('/conference/assessment', methods=['GET','POST'],endpoint='conference-assessment')
 @conference_session
-def endConference(meetingId,memberId):
+def candidateAssessment(member):
     try:
          if request.method == 'POST':
-            result  = conference_service.endMeeting(meetingId,memberId)
-            return jsonify(result=result)
+            candidateMemberId = request.values['candidateMemberId']
+            assessmentResult  = json.loads(request.values['assessmentResult'])
+            assessmentId  = member.submitAssessment(candidateMemberId,assessmentResult)
+            return jsonify(result=True,assessmentId=assessmentId)
     except Exception as exc:
         print(exc)
-        print 'Conference end error '
+        print 'Candidate Assessment error '
         print request.values
         return jsonify(result=False)
-
-

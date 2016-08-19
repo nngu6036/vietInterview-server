@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 
-from career_api.proxy import common_service, assignment_obj,account_obj,mail_service,job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj
+from career_api.proxy import common_service,account_service, job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj,assessment_obj,question_obj,question_category_obj
 from flask import request, jsonify, abort
 from werkzeug.utils import secure_filename
 from career_api import app
@@ -10,10 +10,8 @@ from urlparse import urlparse
 
 ALLOWED_EXTENSIONS = ['mkv', 'flv', 'vob', 'avi', 'mov', 'wmv', 'mp4', 'mpg', 'mpeg', 'webm']
 
-
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
 
 @app.route('/common/video/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -40,7 +38,6 @@ def upload_file():
     print 'Upload file error '
     return jsonify(result=False)
 
-
 @app.route('/common/assignment/category', methods=['GET'], endpoint='common-assignment-category')
 def jobCategory():
   try:
@@ -53,7 +50,6 @@ def jobCategory():
     print 'Get category error '
     print request.values
     return jsonify(result=False)
-
 
 @app.route('/common/assignment/position', methods=['GET'], endpoint='common-assignment-position')
 def jobPosition():
@@ -68,7 +64,6 @@ def jobPosition():
     print request.values
     return jsonify(result=False)
 
-
 @app.route('/common/assignment/location', methods=['GET'], endpoint='common-assignment-location')
 def jobLocation():
   try:
@@ -82,8 +77,6 @@ def jobLocation():
     print request.values
     return jsonify(result=False)
 
-
-
 @app.route('/common/assignment/edulevel', methods=['GET'], endpoint='common-assignment-edulevel')
 def eduLevel():
   try:
@@ -96,7 +89,6 @@ def eduLevel():
     print 'Get level error '
     print request.values
     return jsonify(result=False)
-
 
 @app.route('/common/assignment', methods=['POST'], endpoint='common-assignment')
 def searchJob():
@@ -112,17 +104,12 @@ def searchJob():
     print request.values
     return jsonify(result=False)
 
-
-
-
 @app.route('/common/account/requestresetpass', methods=['POST'],endpoint='common-account-requestresetpass')
 def requestResetPass():
     try:
         email = request.values['email']
-        mail_sent = mail_service.sendResetPasswordInstructionMail(email)
-        if mail_sent:
-            return jsonify(result=True)
-        return jsonify(result=False)
+        result = account_service.sendResetPasswordInstructionMail(email)
+        return jsonify(result=result)
     except Exception as exc:
         print(exc)
         print 'Request reset pass error '
@@ -134,7 +121,7 @@ def resetPass():
     try:
         token = request.values['token']
         newpass = request.values['newpass']
-        reset = account_obj.setNewPass(token,newpass)
+        reset = account_service.setNewPass(token,newpass)
         if reset:
             return jsonify(result=True)
         return jsonify(result=False)
@@ -157,16 +144,57 @@ def findCandidate():
         print request.values
         return jsonify(result=False)
 
-
 @app.route('/common/company', methods=['GET'],endpoint='employee-company')
 def company():
     try:
          if request.method == 'GET':
             assignmentId = int( request.values['assignmentId'])
-            company = assignment_obj.get(assignmentId).getCompanyInfo()
+            company = common_service.getCompanyInfo(assignmentId)
             return jsonify(company=company)
     except Exception as exc:
         print(exc)
         print 'Get company error '
         print request.values
         return jsonify(result=False)
+
+@app.route('/common/question', methods=['GET'],endpoint='employer-question')
+def question():
+    try:
+         if request.method == 'GET':
+            lang = request.values['lang'] if 'lang' in request.values else False
+            questionList = question_obj.getQuestion(lang)
+            return jsonify(result=True,questionList=questionList)
+         return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Question error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/common/question/category', methods=['GET'],endpoint='admin-question-employer')
+def questionCategory():
+    try:
+         if request.method == 'GET':
+            lang = request.values['lang'] if 'lang' in request.values else False
+            categoryList = question_category_obj.getQuestionCategory(lang)
+            return jsonify(result=True,categoryList=categoryList)
+         return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Question category error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/common/assessment', methods=['GET'],endpoint='employer-assessment')
+def assessment(session):
+    try:
+         if request.method == 'GET':
+            lang = request.values['lang'] if 'lang' in request.values else False
+            assessment  = assessment_obj.getAssessment(lang)
+            return jsonify(result=True,assessment=assessment)
+    except Exception as exc:
+        print(exc)
+        print 'Assessment error '
+        print request.values
+        return jsonify(result=False)
+

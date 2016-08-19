@@ -15,18 +15,73 @@ class Applicant(models.Model):
 
     shortlist = fields.Boolean(string="Short-listed", default=False)
     interview_id = fields.Many2one('survey.survey', string="Interview to join")
-    member_id = fields.Many2one('career.conference_member', string="Conference member")
+    input_token = fields.Char(string="Input token", related='response_id.token')
 
+    @api.one
+    def getInterviewHistory(self):
+        return {'id':self.response_id.id,'state':self.response_id.state,'deadline':self.response_id.deadline,
+                          'wrap_up':self.response_id.wrap_up}
+
+    @api.one
+    def getCandidateInfo(self):
+        return {'id': self.id, 'name': self.name, 'email': self.email_from}
+
+
+    @api.one
+    def startInterview(self):
+        if self.response_id.state=='new':
+            self.response_id.write({'state':'skip'})
+            return True
+        return False
+
+
+    @api.one
+    def stopInterview(self):
+        if self.response_id.state == 'new' or self.response_id.state == 'skip':
+            self.response_id.write({'state': 'done'})
+            self.env['career.mail_service'].sendInterviewThankyou(self.interview_id.id, self.email_from)
+            return True
+        return False
+
+
+    @api.one
+    def submitInterviewAnswer(self,questionId,videoUrl):
+        if self.response_id.state=='skip':
+            self.response_id.write({'state':'skip'})
+            self.env['survey.user_input_line'].create({'user_input_id':self.response_id.id,'question_id':questionId,
+                                                                    'skipped':False,
+                                                                    'answer_type':'url',
+                                                                    'value_video_url':videoUrl})
+            return True
+        return False
+
+
+    @api.one
+    def attachDocument(self, file_name, file_location, comment):
+        applicants = self.env['hr.applicant'].search([('email_from', '=', self.response_id.email)])
+        if applicants:
+            applicant = applicants[0]
+            assignment = applicant.job_id
+            if assignment and assignment.status == 'published' and assignment.survey_id:
+                self.env['ir.attachment'].create({'name': comment, 'description': comment,
+                                                  'res_model': 'hr.applicant', 'res_id': applicant[0].id,
+                                                  'company_id': assignment.company_id.id, 'type': 'binary',
+                                                  'store_fname': file_location, 'datas_fname': file_name})
+                return True
+        return False
 
 class ConferenceMember(models.Model):
     _name = 'career.conference_member'
 
     name = fields.Text(string="Member name")
     member_id = fields.Char(string="Member ID")
+    meeting_id = fields.Char(string="Meeting ID",related='conference_id.meeting_id')
     role = fields.Selection([('moderator', 'Moderator'), ('guest', 'Participant'), ('candidate', 'Candidate')],
                             default='guest')
     access_code = fields.Char(string="Conference access code")
     conference_id = fields.Many2one('career.conference', string="Conference to join")
+    rec_model = fields.Char(string="Record model")
+    rec_id = fields.Integer(string="Record ID")
 
     @api.model
     def create(self, vals):
@@ -34,6 +89,65 @@ class ConferenceMember(models.Model):
         conf = super(ConferenceMember, self).create(vals)
         return conf
 
+    @api.one
+    def getMeetingInfo(self):
+        info = {}
+        info['status'] = self.conference_id.status
+        if self.conference_id.status != 'ended':
+            for member in self.conference_id.member_ids:
+                if member.role == 'moderator':
+                    info['moderator'] = {'name': member.name, 'role': member.role, 'memberId': member.member_id,
+                                         'meetingId': member.meeting_id}
+                    questions = self.env['survey.question'].search([('survey_id', '=', self.conference_id.interview_id.id)])
+                    info['questionList'] = [
+                        {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry,
+                         'prepare': q.prepare, 'videoUrl': q.videoUrl, 'source': q.source,
+                         'type': q.mode, 'order': q.sequence} for q in questions]
+                if member.role == 'candidate':
+                    info['candidate'] = {'name': member.name, 'role': member.role, 'memberId': member.member_id,
+                                         'meetingId': member.meeting_id}
+                    for applicant in self.env[member.rec_model].browse(member.rec_id):
+                        for question in info['questionList']:
+                            question['attempted'] = self.env['survey.user_input_line'].search_count(
+                                [('user_input_id', '=', applicant.response_id.id),
+                                 ('question_id', '=', question['id'])]) == 1
+            job = self.conference_id.interview_id.job_id
+            info['job'] = {'name': job.name, 'description': job.description, 'deadline': job.deadline,
+                           'status': job.status,
+                           'requirements': job.requirements, 'company': job.company_id.name,
+                           'country': job.country_id.name,
+                           'province': job.province_id.name, 'createDate': job.create_date}
+        return info
+
+    @api.one
+    def submitInterviewAnswer(self, candidateMemberId, questionId, videoUrl):
+        if self.role !='moderator':
+            return False
+        for member in self.env['career.conference_member'].search( [('member_id', '=', candidateMemberId), ('meeting_id', '=', self.meeting_id)]):
+            for applicant in self.env[member.rec_model].browse(member.rec_id):
+                applicant.response_id.write({'state': 'skip'})
+                answer = self.env['survey.user_input_line'].search( [('user_input_id', '=', applicant.response_id.id), ('question_id', '=', questionId)])
+                if not answer:
+                    self.env['survey.user_input_line'].create(
+                        {'user_input_id': applicant.response_id.id, 'question_id': questionId,
+                         'skipped': False,
+                         'answer_type': 'url',
+                         'value_video_url': videoUrl})
+                else:
+                    answer.write({'skipped': False, 'answer_type': 'url', 'value_video_url': videoUrl})
+                return True
+        return False
+
+    @api.one
+    def submitAssessment(self, candidateMemberId,assessmentResult):
+        if self.role != 'moderator':
+            return False
+        for employer in self.env[self.rec_model].browse(self.rec_id):
+            for candidate_member in self.env['career.conference_member'].search( [('member_id', '=', candidateMemberId), ('meeting_id', '=', self.meeting_id)]):
+                for applicant in self.env[candidate_member.rec_model].browse(candidate_member.rec_id):
+                    assessmentResult['candidateId'] = applicant.id
+                    return employer.submitAssessment(assessmentResult)
+        return False
 
 class Conference(models.Model):
     _name = 'career.conference'
@@ -41,6 +155,7 @@ class Conference(models.Model):
     name = fields.Text(string="Conference name")
     meeting_id = fields.Char(string="Metting ID")
     applicant_id = fields.Many2one('hr.applicant', string="Candidate")
+    company_id = fields.Integer(string='Company', related='applicant_id.company_id')
     access_code = fields.Char(string="Conference access code")
     mod_access_code = fields.Char(string="Conference moderator access code")
     interview_id = fields.Many2one('survey.survey', string='Interview')
@@ -49,6 +164,16 @@ class Conference(models.Model):
     schedule = fields.Datetime("Interview schedule")
     status = fields.Selection([('pending', 'Initial status'), ('started', 'Start status'), ('ended', 'Closed status')],
                               default='pending')
+
+    @api.one
+    def action_open(self):
+        self.write({'status': 'started'})
+        return True
+
+    @api.one
+    def action_end(self):
+        self.write({'status': 'ended'})
+        return True
 
     @api.model
     def create(self, vals):
@@ -63,16 +188,7 @@ class Conference(models.Model):
             return False
         return {'id': self.id, 'name': self.name, 'meetingId': self.meeting_id, 'moderatorPwd': self.mod_access_code}
 
-    @api.model
-    def getConference(self):
-        conferences = self.env['career.conference'].search([])
-        conferenceList = [
-            {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
-             'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
-             'schedule': c.schedule, 'status': c.status,
-             'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
-            conferences]
-        return conferenceList
+
 
 
 class Interview(models.Model):
@@ -224,6 +340,20 @@ class Interview(models.Model):
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
         return candidate
 
+    @api.one
+    def getInterview(self):
+        return {'id': self.id, 'name': self.title, 'response': self.response,
+                'prepare': self.prepare,
+                'retry': self.retry, 'introUrl': self.introUrl, 'exitUrl': self.exitUrl,
+                'aboutUsUrl': self.aboutUsUrl}
+
+    @api.one
+    def getInterviewQuestion(self,invite_code):
+        questions = self.env['survey.question'].search([('survey_id','=',self.id)])
+        questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'prepare':q.prepare,'videoUrl':q.videoUrl,
+                         'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]
+        return questionList
+
 
 class InterviewQuestion(models.Model):
     _name = 'survey.question'
@@ -236,25 +366,24 @@ class InterviewQuestion(models.Model):
     mode = fields.Selection([('text', 'Reading'), ('video', 'Watching')], default='video')
     videoUrl = fields.Text(string="Question Video URL")
 
-    @api.model
-    def updateInterviewQuestion(self, jQuestions):
-        for jQuestion in jQuestions:
-            self.env['survey.question'].browse(int(jQuestion['id'])).write(
-                {'question': jQuestion['title'], 'response': int(jQuestion['response']),
-                 'retry': int(jQuestion['retry']) if 'retry' in jQuestions else False,
-                 'videoUrl': jQuestion['videoUrl'],
-                 'prepare': int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
-                 'source': jQuestion['source'], 'mode': jQuestion['type'],
-                 'sequence': int(jQuestion['order'])})
+    @api.one
+    def updateInterviewQuestion(self, vals):
+        self.write(
+            {'question': vals['title'], 'response': int(vals['response']),
+             'retry': int(vals['retry']) if 'retry' in vals else False,
+             'videoUrl': vals['videoUrl'],
+             'prepare': int(vals['prepare']) if 'prepare' in vals else False,
+             'source': vals['source'], 'mode': vals['type'],
+             'sequence': int(vals['order'])})
         return True
 
-    @api.model
-    def removeInterviewQuestion(self, jQuestionIds):
-        for qId in jQuestionIds:
-            question = self.env['survey.question'].browse(int(qId))
-            question.page_id.unlink()
-            question.unlink()
+    @api.one
+    def removeInterviewQuestion(self):
+        self.page_id.unlink()
+        self.unlink()
         return True
+
+
 
 
 class InterviewHistory(models.Model):

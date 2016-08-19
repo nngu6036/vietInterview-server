@@ -58,3 +58,8 @@ class CommonService(osv.AbstractModel):
                                'categoryIdList':list(a.category_ids.ids), 'positionId':a.position_id.id} )
         return assignmentList
 
+
+    @api.model
+    def getCompanyInfo(self,assignmentId):
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            return {'id': assignment.company_id.id, 'name': assignment.company_id.name, 'image': assignment.company_id.logo or False}

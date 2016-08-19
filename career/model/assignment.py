@@ -88,12 +88,10 @@ class Assignment(models.Model):
             return True
         return False
 
-    @api.one
-    def getCompanyInfo(self):
-        return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False}
+
 
     @api.one
-    def getInterview(self):
+    def getInterviewList(self):
         interviewList = []
         for interview in self.survey_ids:
             interviewList.append({'id': interview.id, 'name': interview.title,

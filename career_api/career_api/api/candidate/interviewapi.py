@@ -1,7 +1,7 @@
 
 from flask import jsonify, request, abort
 from career_api import app
-from career_api.proxy import interview_service, interview_session
+from career_api.proxy import  interview_session
 import json, os, datetime
 from werkzeug.utils import secure_filename
 import base64
@@ -10,12 +10,12 @@ import base64
 
 @app.route('/interview', methods=['GET'],endpoint='interview')
 @interview_session
-def interview(inviteCode):
+def interview(applicant):
     try:
          if request.method == 'GET':
-            interview = interview_service.getInterview(inviteCode)
-            history = interview_service.getInterviewHistory(inviteCode)
-            candidate = interview_service.getCandidate(inviteCode)
+            interview = applicant.interview_id.getInterview()
+            history = applicant.getInterviewHistory()
+            candidate = applicant.getCandidateInfo()
             return jsonify(result=True,interview=interview,history=history,candidate=candidate)
     except Exception as exc:
         print(exc)
@@ -26,10 +26,10 @@ def interview(inviteCode):
 
 @app.route('/interview/question', methods=['GET'],endpoint='interview-question')
 @interview_session
-def question(inviteCode):
+def question(applicant):
     try:
          if request.method == 'GET':
-            questionList = interview_service.getInterviewQuestion(inviteCode)
+            questionList = applicant.interview_id.getInterviewQuestion()
             return jsonify(result=True,questionList=questionList)
     except Exception as exc:
         print(exc)
@@ -40,10 +40,10 @@ def question(inviteCode):
 
 @app.route('/interview/start', methods=['POST'],endpoint='interview-start')
 @interview_session
-def startInterview(inviteCode):
+def startInterview(applicant):
     try:
          if request.method == 'POST':
-            result  = interview_service.startInterview(inviteCode)
+            result  = applicant.startInterview()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -53,10 +53,10 @@ def startInterview(inviteCode):
 
 @app.route('/interview/finish', methods=['POST'],endpoint='interview-finish')
 @interview_session
-def finishInterview(inviteCode):
+def finishInterview(applicant):
     try:
          if request.method == 'POST':
-            result  = interview_service.stopInterview(inviteCode)
+            result  = applicant.stopInterview()
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -68,12 +68,12 @@ def finishInterview(inviteCode):
 
 @app.route('/interview/answer', methods=['POST'],endpoint='interview-answer')
 @interview_session
-def submitAnswer(inviteCode):
+def submitAnswer(applicant):
     try:
          if request.method == 'POST':
             questionId  = int(request.values['questionId'])
             videoUrl = request.values['videoUrl']
-            result  = interview_service.submitInterviewAnswer(inviteCode,questionId,videoUrl)
+            result  = applicant.submitInterviewAnswer(questionId,videoUrl)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -83,7 +83,7 @@ def submitAnswer(inviteCode):
 
 @app.route('/interview/document', methods=['POST'],endpoint='interview-document')
 @interview_session
-def attachDocument(inviteCode):
+def attachDocument(applicant):
     try:
          if request.method == 'POST':
             base64FileData  = request.values['file']
@@ -93,7 +93,7 @@ def attachDocument(inviteCode):
             server_fname = os.path.join(app.config['FILE_UPLOAD_FOLDER'],  '%s%s' %( datetime.datetime.now().strftime('%S%M%H%m%d%Y') , secure_filename(filename)))
             with open(server_fname, 'wb') as theFile:
                 theFile.write(fileData)
-            result  = interview_service.attachDocument(inviteCode,filename,server_fname,comment)
+            result  = applicant.attachDocument(filename,server_fname,comment)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)

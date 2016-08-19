@@ -30,8 +30,7 @@ class WorkExperience(models.Model):
     @api.one
     def updateWorkExperience(self, vals):
         catIdList = vals['categoryIdList']
-        self.write(
-            {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
+        self.write( {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
              'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],
              'country_id': int(vals['countryId']), 'province_id': int(vals['provinceId']),
              'description': vals['description']})
@@ -185,6 +184,21 @@ class EmployeeUser(models.Model):
         return exp.id
 
     @api.one
+    def updateWorkExperience(self, vals):
+        for exp in self.env['career.work_experience'].browse(int(vals['id'])):
+            if exp.employee_id.id == self.id:
+                return exp.updateWorkExperience(vals)
+        return False
+
+    @api.one
+    def removeWorkExperience(self, id):
+        for exp in self.env['career.work_experience'].browse(id):
+            if exp.employee_id.id == self.id:
+                return exp.removeWorkExperience()
+        return False
+
+
+    @api.one
     def getEducationHistory(self):
         eduList = []
         for edu in self.education_ids:
@@ -200,6 +214,20 @@ class EmployeeUser(models.Model):
                                                            'status': vals['status'],
                                                            'level_id': int(vals['levelId']), 'employee_id': self.id})
         return edu.id
+
+    @api.one
+    def updateEducationHistory(self, vals):
+        for edu in self.env['career.education_history'].browse(int(vals['id'])):
+            if edu.employee_id.id == self.id:
+                return edu.updateEducationHistory(vals)
+        return False
+
+    @api.one
+    def removeEducationHistory(self, id):
+        for edu in self.env['career.education_history'].browse(id):
+            if edu.employee_id.id == self.id:
+                return edu.removeEducationHistory()
+        return False
 
     @api.one
     def applyJob(self, assignmentId):
@@ -253,6 +281,20 @@ class EmployeeUser(models.Model):
         return cert.id
 
     @api.one
+    def updateCertificate(self, vals):
+        for cert in self.env['career.certificate'].browse(int(vals['id'])):
+            if cert.employee_id.id == self.id:
+                return cert.updateCertificate(vals)
+        return False
+
+    @api.one
+    def removeCertificate(self, id):
+        for cert in self.env['career.certificate'].browse(id):
+            if cert.employee_id.id == self.id:
+                return cert.removeCertificate()
+        return False
+
+    @api.one
     def getDocument(self):
         docList = []
         documents = self.env['ir.attachment'].search([('res_model', '=', 'career.employee'), ('res_id', '=', self.id)])
@@ -266,3 +308,11 @@ class EmployeeUser(models.Model):
             {'name': title, 'description': title, 'res_model': 'career.employee', 'res_id': self.id,
              'type': 'binary', 'store_fname': file_location, 'datas_fname': filename})
         return doc.id
+
+
+    @api.one
+    def removeDocument(self, id):
+        for doc in self.env['ir.attachment'].browse(id):
+            if doc.res_model == self._name and doc.res_id == self.id:
+                return doc.unlink()
+        return False

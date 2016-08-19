@@ -114,17 +114,30 @@ class CompanyUser(models.Model):
 
     @api.one
     def createInterview(self, assignmentId, vals):
-        interview = self.env['survey.survey'].create({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
-                                                      'retry': int(vals['retry']) if 'retry' in vals else False,
-                                                      'introUrl': vals['introUrl'], 'job_id': assignmentId,
-                                                      'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
-                                                      'prepare': int(vals['prepare']) if 'prepare' in vals else False,
-                                                      'language': vals['language'] if 'language' in vals else False,
-                                                      'round': int(vals['round']) if 'roumd' in vals else False,
-                                                      'mode': vals['mode'] if 'mode' in vals else False})
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            if assignment.company_id.id == self.company_id.id:
+                interview = self.env['survey.survey'].create({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
+                                                              'retry': int(vals['retry']) if 'retry' in vals else False,
+                                                              'introUrl': vals['introUrl'], 'job_id': assignmentId,
+                                                              'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
+                                                              'prepare': int(vals['prepare']) if 'prepare' in vals else False,
+                                                              'language': vals['language'] if 'language' in vals else False,
+                                                              'round': int(vals['round']) if 'roumd' in vals else False,
+                                                              'mode': vals['mode'] if 'mode' in vals else False})
 
-        return interview.id
+                return interview.id
+        return False
 
+    @api.model
+    def getConference(self):
+        conferences = self.env['career.conference'].search([('company_id','=',self.company_id.id)])
+        conferenceList = [
+            {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
+             'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
+             'schedule': c.schedule, 'status': c.status,
+             'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
+            conferences]
+        return conferenceList
 
     @api.one
     def submitAssessment(self, assessmentResult):
@@ -199,13 +212,141 @@ class CompanyUser(models.Model):
             meeting = self.env['career.conference'].create({'name': candidate.interview_id.title, 'applicant_id': candidate.id,'interview_id':candidate.interview_id.id,
                                     'schedule': schedule,'meeting_id':candidate.response_id.token})
             mode_member = self.env['career.conference_member'].create({'name': self.name, 'role': 'moderator',
-                 'access_code': meeting.mod_access_code,
-                 'conference_id': meeting.id})
+                 'access_code': meeting.mod_access_code, 'conference_id': meeting.id,'rec_model': self._name,'rec_id': self.id})
             candidate_member = self.env['career.conference_member'].create({'name': candidate.name, 'role': 'candidate',
-                                                                       'access_code': meeting.access_code,
-                                                                       'conference_id': meeting.id})
-            candidate.write({'member_id':candidate_member.id})
+                                                                       'access_code': meeting.access_code, 'conference_id': meeting.id,
+                                                                        'rec_model': 'hr.applicant', 'rec_id': candidate.id})
+            candidate.write({'member':candidate_member.id})
         return meeting
+
+    @api.one
+    def updateAssignment(self, vals):
+        for assignment in self.env['hr.job'].browse(int(vals['id'])):
+            if assignment.company_id.id == self.company_id.id:
+                assignment.updateAssignment(vals)
+
+    @api.one
+    def updateInterview(self, vals):
+        for interview in self.env['survey.survey'].browse(int(vals['id'])):
+            if interview.job_id.company_id.id == self.company_id.id:
+                interview.updateInterview(vals)
+
+    @api.one
+    def openAssignment(self, assignmentId):
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            if assignment.company_id.id == self.company_id.id:
+                return assignment.action_open()
+        return False
+
+    @api.one
+    def closeAssignment(self, assignmentId):
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            if assignment.company_id.id == self.company_id.id:
+                return assignment.action_close()
+        return False
+
+    @api.one
+    def deleteAssignment(self, assignmentId):
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            if assignment.company_id.id == self.company_id.id:
+                return assignment.deleteAssignment()
+        return False
+
+    @api.one
+    def getInterviewList(self, assignmentId):
+        for assignment in self.env['hr.job'].browse(assignmentId):
+            if assignment.company_id.id == self.company_id.id:
+                return assignment.getInterviewList()
+        return False
+
+    @api.one
+    def openInterview(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.action_open()
+        return False
+
+    @api.one
+    def closeInterview(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.action_close()
+        return False
+
+    @api.one
+    def deleteInterview(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.deleteInterview()
+        return False
+
+    @api.one
+    def getInterviewResponse(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.getInterviewResponse()
+        return False
+
+    @api.one
+    def getCandidate(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.getCandidate()
+        return False
+
+    @api.one
+    def addInterviewQuestion(self, interviewId,jQuestions):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.addInterviewQuestion(jQuestions)
+        return False
+
+    @api.one
+    def getInterviewQuestion(self, interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.getInterviewQuestion()
+        return False
+
+    @api.model
+    def updateInterviewQuestion(self, jQuestions):
+        for jQuestion in jQuestions:
+            self.env['survey.question'].browse(int(jQuestion['id'])).updateInterviewQuestion(jQuestion)
+        return True
+
+    @api.model
+    def removeInterviewQuestion(self, jIds):
+        for id in jIds:
+            self.env['survey.question'].browse(id).removeInterviewQuestion()
+        return True
+
+    @api.one
+    def openConference(self, conferenceId):
+        for conference in self.env['career.conference'].browse(conferenceId):
+            if conference.interview_id.job_id.company_id.id == self.company_id.id:
+                return conference.action_open()
+        return False
+
+    @api.one
+    def closeConference(self, conferenceId):
+        for conference in self.env['career.conference'].browse(conferenceId):
+            if conference.interview_id.job_id.company_id.id == self.company_id.id:
+                return conference.action_close()
+        return False
+
+    @api.one
+    def getInterviewStatistic(self,interviewId):
+        for interview in self.env['survey.survey'].browse(interviewId):
+            if interview.job_id.company_id.id == self.company_id.id:
+                return interview.getInterviewStatistic()
+        return False
+
+    @api.one
+    def getAssessmentSummaryReport(self, candidateId):
+        for candidate in self.env['hr.applicant'].browse(candidateId):
+            if candidate.company_id.id == self.company_id.id:
+                return self['career.report_service'].getAssessmentSummaryReport(candidateId)
+        return False
 
 class Conpany(models.Model):
     _name = 'res.company'
