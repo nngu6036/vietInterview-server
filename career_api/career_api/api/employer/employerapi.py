@@ -199,7 +199,7 @@ def interview(employer):
 def interviewQuestion(employer):
     try:
          if request.method == 'GET':
-            questionList = employer.get().getInterviewQuestion(int(request.values['interviewId']))
+            questionList = employer.getInterviewQuestion(int(request.values['interviewId']))
             return jsonify(result=True,questionList=questionList)
          if request.method == 'PUT':
             jQuestions  = json.loads(request.values['questionList'])

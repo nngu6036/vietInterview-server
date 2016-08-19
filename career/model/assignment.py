@@ -46,8 +46,9 @@ class Assignment(models.Model):
     province_id = fields.Many2one(string='Province ', related='address_id.state_id')
     survey_ids = fields.One2many('survey.survey', 'job_id', string="Interview rounds")
 
-    @api.one
+    @api.multi
     def isEnabled(self):
+        self.ensure_one()
         if self.state != 'recruit':
             return False
         if not self.deadline:
@@ -71,8 +72,9 @@ class Assignment(models.Model):
              'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
         return assignmentList
 
-    @api.one
+    @api.multi
     def updateAssignment(self, vals):
+        self.ensure_one()
         catIdList = vals['categoryIdList']
         self.write({'deadline': vals['deadline'], 'description': vals['description'], 'name': vals['name'],
                           'requirements': vals['requirements'],
@@ -81,7 +83,7 @@ class Assignment(models.Model):
         self.address_id.write({'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
         return True
 
-    @api.one
+    @api.multi
     def deleteAssignment(self):
         if self.status == 'initial':
             self.unlink()
@@ -90,8 +92,9 @@ class Assignment(models.Model):
 
 
 
-    @api.one
+    @api.multi
     def getInterviewList(self):
+        self.ensure_one()
         interviewList = []
         for interview in self.survey_ids:
             interviewList.append({'id': interview.id, 'name': interview.title,
@@ -104,15 +107,17 @@ class Assignment(models.Model):
         return interviewList
 
 
-    @api.one
+    @api.multi
     def action_open(self):
+         self.ensure_one()
          if self.write({'status': 'published'}):
              return True
          return False
 
 
-    @api.one
+    @api.multi
     def action_close(self):
+        self.ensure_one()
         if  self.write({'status': 'closed'}):
             return True
         return False

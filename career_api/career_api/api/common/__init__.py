@@ -186,7 +186,7 @@ def questionCategory():
         return jsonify(result=False)
 
 @app.route('/common/assessment', methods=['GET'],endpoint='employer-assessment')
-def assessment(session):
+def assessment():
     try:
          if request.method == 'GET':
             lang = request.values['lang'] if 'lang' in request.values else False

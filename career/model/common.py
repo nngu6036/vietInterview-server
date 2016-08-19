@@ -5,6 +5,7 @@ from .. import util
 class Country(models.Model):
 	_name = 'res.country'
 	_inherit = 'res.country'
+
 	@api.model
 	def getCountry(self):
 		countries = self.env['res.country'].search([])

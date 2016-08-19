@@ -89,8 +89,9 @@ class ConferenceMember(models.Model):
         conf = super(ConferenceMember, self).create(vals)
         return conf
 
-    @api.one
+    @api.multi
     def getMeetingInfo(self):
+        self.ensure_one()
         info = {}
         info['status'] = self.conference_id.status
         if self.conference_id.status != 'ended':
@@ -99,6 +100,8 @@ class ConferenceMember(models.Model):
                     info['moderator'] = {'name': member.name, 'role': member.role, 'memberId': member.member_id,
                                          'meetingId': member.meeting_id}
                     questions = self.env['survey.question'].search([('survey_id', '=', self.conference_id.interview_id.id)])
+                    print self.conference_id.interview_id.id
+                    print questions
                     info['questionList'] = [
                         {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry,
                          'prepare': q.prepare, 'videoUrl': q.videoUrl, 'source': q.source,
@@ -119,8 +122,9 @@ class ConferenceMember(models.Model):
                            'province': job.province_id.name, 'createDate': job.create_date}
         return info
 
-    @api.one
+    @api.multi
     def submitInterviewAnswer(self, candidateMemberId, questionId, videoUrl):
+        self.ensure_one()
         if self.role !='moderator':
             return False
         for member in self.env['career.conference_member'].search( [('member_id', '=', candidateMemberId), ('meeting_id', '=', self.meeting_id)]):
@@ -138,8 +142,9 @@ class ConferenceMember(models.Model):
                 return True
         return False
 
-    @api.one
+    @api.multi
     def submitAssessment(self, candidateMemberId,assessmentResult):
+        self.ensure_one()
         if self.role != 'moderator':
             return False
         for employer in self.env[self.rec_model].browse(self.rec_id):
@@ -155,7 +160,7 @@ class Conference(models.Model):
     name = fields.Text(string="Conference name")
     meeting_id = fields.Char(string="Metting ID")
     applicant_id = fields.Many2one('hr.applicant', string="Candidate")
-    company_id = fields.Integer(string='Company', related='applicant_id.company_id')
+    company_id = fields.Many2one(string='Company', related='applicant_id.company_id')
     access_code = fields.Char(string="Conference access code")
     mod_access_code = fields.Char(string="Conference moderator access code")
     interview_id = fields.Many2one('survey.survey', string='Interview')
@@ -165,13 +170,15 @@ class Conference(models.Model):
     status = fields.Selection([('pending', 'Initial status'), ('started', 'Start status'), ('ended', 'Closed status')],
                               default='pending')
 
-    @api.one
+    @api.multi
     def action_open(self):
+        self.ensure_one()
         self.write({'status': 'started'})
         return True
 
-    @api.one
+    @api.multi
     def action_end(self):
+        self.ensure_one()
         self.write({'status': 'ended'})
         return True
 
@@ -182,8 +189,9 @@ class Conference(models.Model):
         conf = super(Conference, self).create(vals)
         return conf
 
-    @api.one
+    @api.multi
     def action_launch(self):
+        self.ensure_one()
         if not self.env['career.conference_service'].openMeeting(self.id):
             return False
         return {'id': self.id, 'name': self.name, 'meetingId': self.meeting_id, 'moderatorPwd': self.mod_access_code}
@@ -227,8 +235,9 @@ class Interview(models.Model):
                     'language': vals['language'] if 'language' in vals else False})
         return True
 
-    @api.one
+    @api.multi
     def addInterviewQuestion(self, jQuestions):
+        self.ensure_one()
         questionIds = []
         for jQuestion in jQuestions:
             page = self.env['survey.page'].create({'title': 'Single Page', 'survey_id': self.id})
@@ -242,16 +251,18 @@ class Interview(models.Model):
             questionIds.append(question.id)
         return questionIds
 
-    @api.one
+    @api.multi
     def getInterviewQuestion(self):
+        self.ensure_one()
         questions = self.env['survey.question'].search([('survey_id', '=', self.id)])
         questionList = [
             {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry, 'videoUrl': q.videoUrl,
              'source': q.source, 'type': q.mode, 'order': q.sequence, 'prepare': q.prepare} for q in questions]
         return questionList
 
-    @api.one
+    @api.multi
     def getInterviewResponse(self):
+        self.ensure_one()
         responseList = []
         for input in self.env['survey.user_input'].search([('survey_id', '=', self.id)]):
             for applicant in self.env['hr.applicant'].search(
@@ -267,14 +278,13 @@ class Interview(models.Model):
                 documents = self.env['ir.attachment'].search(
                     [('res_model', '=', 'hr.applicant'), ('res_id', '=', applicant[0].id)])
                 response['documentList'] = [
-                    {'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname} for doc
-                    in
-                    documents]
+                    {'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname} for doc  in   documents]
                 responseList.append(response)
         return responseList
 
-    @api.one
+    @api.multi
     def getCandidate(self):
+        self.ensure_one()
         candidateList = []
         for applicant in self.env['hr.applicant'].search(
                 ['|', ('interview_id', '=', self.id), ('survey', '=', self.id)]):
@@ -283,8 +293,9 @@ class Interview(models.Model):
                          'invited': True if self.env['career.email.history'].search([('survey_id', '=', self.id),
                                                                                      ('email', '=',
                                                                                       applicant.email_from)]) else False}
-            if self.mode == 'conference' and applicant.member_id:
-                candidate['schedule'] = applicant.member_id.conference_id.schedule
+            for conference in self.conference_ids:
+                if conference.applicant_id.id == applicant.id:
+                    candidate['schedule'] = conference.schedule
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
                 candidate['profile'] = employee.getProfile()
                 candidate['expList'] = employee.getWorkExperience()
@@ -294,61 +305,69 @@ class Interview(models.Model):
             candidateList.append(candidate)
         return candidateList
 
-    @api.one
+    @api.multi
     def deleteInterview(self):
         if self.status == 'initial':
             self.unlink()
             return True
         return False
 
-    @api.one
+    @api.multi
     def getInterviewStatistic(self):
+        self.ensure_one()
         applicant_count = self.env['hr.applicant'].search_count([('interview_id', '=', self.id)])
         invite_count = self.env['career.email.history'].search_count([('survey_id', '=', self.id)])
         response_count = self.env['survey.user_input'].search_count(
             [('survey_id', '=', self.id), ('state', '=', 'done')])
         return {'applicant': applicant_count, 'invitation': invite_count, 'response': response_count}
 
-    @api.one
+    @api.multi
     def action_open(self):
-        if self.status != 'published' and self.job_id.status == 'published' \
-                and not self.env['survey.survey'].search(
-                    [('job_id', '=', self.job_id.id), ('status', '=', 'published')]):
+        self.ensure_one()
+        print self.status
+        print self.job_id.status
+        print self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')])
+        if self.status != 'published' and self.job_id.status == 'published' and not self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')]):
             self.write({'status': 'published'})
             return True
         return False
 
-    @api.one
+    @api.multi
     def action_close(self):
+        self.ensure_one()
         if self.write({'status': 'closed'}):
             return True
         return False
 
-    @api.one
-    def createCandidate(self, candidate):
+    @api.multi
+    def createCandidate(self, vals):
+        self.ensure_one()
         if self.job_id.status != 'published' or self.status != 'published':
             return False
-        user_input = self.env['survey.user_input'].search([('email', '=', candidate['email']), ('survey_id', '=', self.id)])
+        user_input = self.env['survey.user_input'].search([('email', '=', vals['email']), ('survey_id', '=', self.id)])
         if not user_input:
             user_input = self.env['survey.user_input'].create({'survey_id': self.id, 'deadline': self.job_id.deadline,
-                                                               'type': 'link', 'state': 'new', 'email': candidate['email']})
+                                                               'type': 'link', 'state': 'new', 'email': vals['email']})
         candidate = self.env['hr.applicant'].search(
-            [('email_from', '=', candidate['email']), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
+            [('email_from', '=', vals['email']), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
         if not candidate:
             candidate = self.env['hr.applicant'].create(
-                {'name': candidate['name'] or candidate['email'], 'email_from': candidate['email'], 'job_id': self.job_id.id, 'interview_id': self.id,
+                {'name': vals['name'] or vals['email'], 'email_from': vals['email'], 'job_id': self.job_id.id, 'interview_id': self.id,
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
+        print candidate
         return candidate
 
-    @api.one
+    @api.multi
     def getInterview(self):
+        self.ensure_one()
         return {'id': self.id, 'name': self.title, 'response': self.response,
                 'prepare': self.prepare,
                 'retry': self.retry, 'introUrl': self.introUrl, 'exitUrl': self.exitUrl,
                 'aboutUsUrl': self.aboutUsUrl}
 
-    @api.one
-    def getInterviewQuestion(self,invite_code):
+    @api.multi
+    def getInterviewQuestion(self):
+        self.ensure_one()
         questions = self.env['survey.question'].search([('survey_id','=',self.id)])
         questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'prepare':q.prepare,'videoUrl':q.videoUrl,
                          'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]

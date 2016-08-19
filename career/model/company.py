@@ -41,8 +41,9 @@ class LicenseInstance(models.Model):
                               ('closed', 'Closed state')], default='initial')
     email_history_ids = fields.One2many('career.email.history', 'license_instance_id', 'Email history')
 
-    @api.one
+    @api.multi
     def isEnabled(self):
+        self.ensure_one()
         if self.state != 'active':
             return False
         if not self.expire_date:
@@ -128,7 +129,7 @@ class CompanyUser(models.Model):
                 return interview.id
         return False
 
-    @api.model
+    @api.one
     def getConference(self):
         conferences = self.env['career.conference'].search([('company_id','=',self.company_id.id)])
         conferenceList = [
@@ -223,13 +224,15 @@ class CompanyUser(models.Model):
     def updateAssignment(self, vals):
         for assignment in self.env['hr.job'].browse(int(vals['id'])):
             if assignment.company_id.id == self.company_id.id:
-                assignment.updateAssignment(vals)
+                return assignment.updateAssignment(vals)
+        return False
 
     @api.one
     def updateInterview(self, vals):
         for interview in self.env['survey.survey'].browse(int(vals['id'])):
             if interview.job_id.company_id.id == self.company_id.id:
-                interview.updateInterview(vals)
+                return interview.updateInterview(vals)
+        return False
 
     @api.one
     def openAssignment(self, assignmentId):
@@ -256,14 +259,14 @@ class CompanyUser(models.Model):
     def getInterviewList(self, assignmentId):
         for assignment in self.env['hr.job'].browse(assignmentId):
             if assignment.company_id.id == self.company_id.id:
-                return assignment.getInterviewList()
+                return  assignment.getInterviewList()
         return False
 
     @api.one
     def openInterview(self, interviewId):
         for interview in self.env['survey.survey'].browse(interviewId):
             if interview.job_id.company_id.id == self.company_id.id:
-                return interview.action_open()
+                return  interview.action_open()
         return False
 
     @api.one
@@ -284,7 +287,7 @@ class CompanyUser(models.Model):
     def getInterviewResponse(self, interviewId):
         for interview in self.env['survey.survey'].browse(interviewId):
             if interview.job_id.company_id.id == self.company_id.id:
-                return interview.getInterviewResponse()
+                return  interview.getInterviewResponse()
         return False
 
     @api.one
@@ -331,7 +334,7 @@ class CompanyUser(models.Model):
     def closeConference(self, conferenceId):
         for conference in self.env['career.conference'].browse(conferenceId):
             if conference.interview_id.job_id.company_id.id == self.company_id.id:
-                return conference.action_close()
+                return conference.action_end()
         return False
 
     @api.one

@@ -27,8 +27,9 @@ class WorkExperience(models.Model):
     province_id = fields.Many2one('res.country.state', string="Province ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateWorkExperience(self, vals):
+        self.ensure_one()
         catIdList = vals['categoryIdList']
         self.write( {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
              'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],
@@ -36,7 +37,7 @@ class WorkExperience(models.Model):
              'description': vals['description']})
         return True
 
-    @api.one
+    @api.multi
     def removeWorkExperience(self):
         self.unlink()
         return True
@@ -53,15 +54,16 @@ class EducationHistory(models.Model):
     level_id = fields.Many2one('hr.recruitment.degree', string="Degree ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateEducationHistory(self, vals):
+        self.ensure_one()
         self.write(
             {'program': vals['program'], 'institute': vals['institute'],
              'complete_date': vals['finishDate'], 'status': vals['status'],
              'level_id': int(vals['levelId'])})
         return True
 
-    @api.one
+    @api.multi
     def removeEducationHistory(self):
         if self.unlink():
             return True
@@ -76,13 +78,14 @@ class Certificate(models.Model):
     issue_date = fields.Date(string="Date of issuer")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateCertificate(self, vals):
+        self.ensure_one()
         self.write({'title': vals['title'], 'issuer': vals['issuer'],
                                                                       'issue_date': vals['issueDate']})
         return True
 
-    @api.one
+    @api.multi
     def removeCertificate(self):
         if self.unlink():
             return True
@@ -93,7 +96,7 @@ class Document(models.Model):
     _name = 'ir.attachment'
     _inherit = 'ir.attachment'
 
-    @api.one
+    @api.multi
     def removeDocument(self):
         if self.unlink():
             return True

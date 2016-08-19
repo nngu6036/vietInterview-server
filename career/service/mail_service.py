@@ -48,7 +48,10 @@ class MailService(osv.AbstractModel):
         if not license_service.validateLicense(candidate.company_id.id):
             print "License error ", candidate.company_id.name
             return False
-        self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True,False,{'lang':lang})
+        for conference in self.env['career.conference'].search([('interview_id','=',candidate.interview_id.id),('applicant_id','=',candidate.id)]):
+            for member in conference.member_ids:
+                if member.role=='candidate':
+                    self.pool.get('email.template').send_mail(cr, uid, email_template.id, member.id, True,False,{'lang':lang})
         license_service.consumeEmail(candidate.id)
         return True
 

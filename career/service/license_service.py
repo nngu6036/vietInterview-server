@@ -18,7 +18,7 @@ class LicenseService(osv.AbstractModel):
     @api.model
     def validateLicense(self,companyId):
       for company in self.env['res.company'].browse(companyId):
-        if not company.license_instance_id.isEnabled()[0]:
+        if not company.license_instance_id.isEnabled():
           return False
         else:
           return True
