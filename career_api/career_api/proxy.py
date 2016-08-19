@@ -46,7 +46,8 @@ question_category_obj = mainInstance.model('career.question_category')
 degree_obj = mainInstance.model('hr.recruitment.degree')
 country_obj = mainInstance.model('res.country')
 province_obj = mainInstance.model('res.country.state')
-
+company_obj = mainInstance.model('res.company')
+assignment_obj = mainInstance.model('hr.job')
 
 conference_member_obj = mainInstance.model('career.conference_member')
 company_user_obj = mainInstance.model('career.employer')
