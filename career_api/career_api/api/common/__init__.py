@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 
-from career_api.proxy import common_service,account_service, job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj,assessment_obj,question_obj,question_category_obj
+from career_api.proxy import common_service,account_service,mail_service, job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj,assessment_obj,question_obj,question_category_obj
 from flask import request, jsonify, abort
 from werkzeug.utils import secure_filename
 from career_api import app
@@ -108,7 +108,7 @@ def searchJob():
 def requestResetPass():
     try:
         email = request.values['email']
-        result = account_service.sendResetPasswordInstructionMail(email)
+        result = mail_service.sendResetPasswordInstructionMail(email)
         return jsonify(result=result)
     except Exception as exc:
         print(exc)
@@ -198,3 +198,19 @@ def assessment():
         print request.values
         return jsonify(result=False)
 
+
+@app.route('/common/employee', methods=['GET'],endpoint='common-employee')
+def findCandidate():
+    try:
+         email = request.values['email']
+         if request.method == 'GET':
+            employeeProfile  = common_service.searchEmployee(email)
+            if employeeProfile:
+                return jsonify(result=True,employeeList=employeeProfile)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Search employee error '
+        print request.values
+        return jsonify(result=False)
