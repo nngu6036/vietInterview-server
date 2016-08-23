@@ -47,3 +47,15 @@ class CommonService(osv.AbstractModel):
     def getCompanyInfo(self,assignmentId):
         for assignment in self.env['hr.job'].browse(assignmentId):
             return {'id': assignment.company_id.id, 'name': assignment.company_id.name, 'image': assignment.company_id.logo or False}
+
+    @api.model
+    def searchEmployee(self, email):
+        employees = self.env['career.employee'].search([('login', '=', email)])
+        employeeList = [{'id': e.id, 'name': e.user_id.name, 'email': e.user_id.login,
+                         'profile': e.getProfile(),
+                         'expList': e.getWorkExperience(),
+                         'eduList': e.getEducationHistory(),
+                         'certList': e.getCertificate(),
+                         'docList': e.getDocument(),
+                         } for e in employees]
+        return employeeList

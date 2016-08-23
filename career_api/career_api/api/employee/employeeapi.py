@@ -130,7 +130,7 @@ def educationHistory(employee):
             return jsonify(eduId=eduId)
          if request.method == 'PUT':
             edu  = json.loads(request.values['edu'])
-            result = employee.ateEducationHistory(edu)
+            result = employee.updateEducationHistory(edu)
             return jsonify(result=result)
          if request.method == 'DELETE':
             eduId  = int(request.values['eduId'])

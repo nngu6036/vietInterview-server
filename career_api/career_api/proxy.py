@@ -35,7 +35,7 @@ admin_service = mainInstance.model('career.admin_service')
 common_service = mainInstance.model('career.common_service')
 account_service = mainInstance.model('career.account_service')
 license_service = mainInstance.model('career.license_service')
-
+mail_service = mainInstance.model('career.mail_service')
 
 license_obj = mainInstance.model('career.license')
 license_instance_obj = mainInstance.model('career.license_instance')
