@@ -378,6 +378,8 @@ class CompanyUser(models.Model):
                         categoryID_match = True
                 if categoryID_match:
                     employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
+            else:
+                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
         return employeeList
 
     @api.model

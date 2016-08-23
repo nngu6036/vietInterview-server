@@ -393,7 +393,6 @@ def employee(employer):
 def employeeSearch(employer):
     try:
          options  = json.loads(request.values['option'])
-         keyword = request.values['keyword']
          if request.method == 'GET':
             employeeList  = employer.searchEmployee(options)
             return jsonify(result=True,employeeList=employeeList)
