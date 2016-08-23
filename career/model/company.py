@@ -129,10 +129,11 @@ class CompanyUser(models.Model):
 				interview = self.env['survey.survey'].create({'title': vals['name'], 'response':int(vals['response']) if 'response' in vals else False,
 															  'retry': int(vals['retry']) if 'retry' in vals else False,
 															  'introUrl': vals['introUrl'], 'job_id': assignmentId,
-															  'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
+															  'exitUrl': vals['exitUrl'],
 															  'prepare': int(vals['prepare']) if 'prepare' in vals else False,
 															  'language': vals['language'] if 'language' in vals else False,
 															  'round': int(vals['round']) if 'roumd' in vals else False,
+															  'aboutUsUrl':self.company_id.partner_id.videoUrl,
 															  'mode': vals['mode'] if 'mode' in vals else False})
 
 				return interview.id
@@ -418,14 +419,14 @@ class Conpany(models.Model):
 	@api.one
 	def updateCompany(self,vals):
 		self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
-		self.partner_id.write({'email': vals['email']})
+		self.partner_id.write({'email': vals['email'],'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False})
 		return True
 
 	@api.model
 	def getCompany(self):
 		main_compnay = self.env.ref('base.main_company')
 		companys = self.env['res.company'].search([('id', '!=', main_compnay.id)])
-		companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False,
+		companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False,'videoUrl':c.partner_id.videoUrl,
 						'licenseId': c.license_instance_id.license_id.id if c.license_instance_id else False,
 						'license': c.license_instance_id.license_id.name if c.license_instance_id else False,
 						'licenseExpire': c.expire_date if c.license_instance_id else False, 'email': c.partner_id.email}

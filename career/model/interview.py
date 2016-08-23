@@ -230,7 +230,7 @@ class Interview(models.Model):
                     'retry': int(vals['retry']) if 'retry' in vals else False,
                     'introUrl': vals['introUrl'],
                     'mode': vals['mode'],
-                    'exitUrl': vals['exitUrl'], 'aboutUsUrl': vals['aboutUsUrl'],
+                    'exitUrl': vals['exitUrl'],
                     'prepare': int(vals['prepare']) if 'prepare' in vals else False,
                     'language': vals['language'] if 'language' in vals else False})
         return True
