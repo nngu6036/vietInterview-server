@@ -365,6 +365,7 @@ class CompanyUser(models.Model):
     def searchEmployee(self, options):
         employeeList = []
         domain = []
+        print options
         if options:
             if options['countryId']:
                 domain.append(('country_id', '=', int(options['countryId'])))
