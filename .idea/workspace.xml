@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" afterPath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/company.py" afterPath="$PROJECT_DIR$/career/model/company.py" />
     </list>
@@ -58,9 +57,11 @@
       <file leaf-file-name="company.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/company.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="377" column="69" selection-start-line="377" selection-start-column="69" selection-end-line="377" selection-end-column="69" />
-              <folding />
+            <state relative-caret-position="90">
+              <caret line="371" column="5" selection-start-line="371" selection-start-column="5" selection-end-line="371" selection-end-column="5" />
+              <folding>
+                <marker date="1471936374303" expanded="false" signature="0:190" ph="import ..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -386,10 +387,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/career/model/company.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/career/service/common_service.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/career/service/license_service.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/career/model/interview.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -433,6 +431,7 @@
         <option name="mySupportsDeletion" value="false" />
         <option name="myCanBeAbsent" value="false" />
         <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        <PATH vcs="Git" revision="">$PROJECT_DIR$/career/model/company.py</PATH>
       </FILE-GROUP>
       <FILE-GROUP>
         <option name="myUpdateName" value="Merged with tree conflicts" />
@@ -940,7 +939,14 @@
       <option name="project" value="LOCAL" />
       <updated>1471919551440</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Add searchEmployee">
+      <created>1471936218835</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1471936218835</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -987,7 +993,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reformat employee model" />
     <MESSAGE value="Add API employee changpass" />
     <MESSAGE value="Change API employee resetpass to receive new use input password" />
     <MESSAGE value="Fix resetpass" />
@@ -1012,7 +1017,8 @@
     <MESSAGE value="Add mail_service proxy to send request reset password api" />
     <MESSAGE value="Add common API get employee by email (/common/employee)" />
     <MESSAGE value=" Fix update education history" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Fix update education history" />
+    <MESSAGE value="Add searchEmployee" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add searchEmployee" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1323,9 +1329,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/company.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="377" column="69" selection-start-line="377" selection-start-column="69" selection-end-line="377" selection-end-column="69" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="371" column="5" selection-start-line="371" selection-start-column="5" selection-end-line="371" selection-end-column="5" />
+          <folding>
+            <marker date="1471936374303" expanded="false" signature="0:190" ph="import ..." />
+          </folding>
         </state>
       </provider>
     </entry>
