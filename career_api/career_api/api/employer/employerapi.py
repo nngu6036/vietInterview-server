@@ -373,3 +373,32 @@ def endConference(employer):
         print 'Conference end error '
         print request.values
         return jsonify(result=False)
+
+@app.route('/employer/employee/', methods=['GET'],endpoint='employer-employee')
+@employer_session
+def employee(employer):
+    try:
+         employeeId  = int(request.values['employeeId'])
+         if request.method == 'GET':
+            employeeDetail  = employer.getEmployeeDetail(employeeId)
+            return jsonify(result=True,employeeDetail=employeeDetail)
+    except Exception as exc:
+        print(exc)
+        print 'Employee error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employer/employee/search', methods=['GET'],endpoint='employer-employee-search')
+@employer_session
+def employeeSearch(employer):
+    try:
+         options  = json.loads(request.values['option'])
+         keyword = request.values['keyword']
+         if request.method == 'GET':
+            employeeList  = employer.searchEmployee(options,keyword)
+            return jsonify(result=True,employeeList=employeeList)
+    except Exception as exc:
+        print(exc)
+        print 'Employee search error '
+        print request.values
+        return jsonify(result=False)
