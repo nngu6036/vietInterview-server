@@ -361,7 +361,7 @@ class CompanyUser(models.Model):
 		return False
 
 	@api.model
-	def searchEmployee(self, options,keyword):
+	def searchEmployee(self, options):
 		employeeList = []
 		domain = []
 		if options:
