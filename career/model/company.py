@@ -2,7 +2,7 @@ from openerp import models, fields, api, tools
 from openerp.osv import osv
 from openerp.service import common
 import base64
-import base64
+import json
 import datetime
 from datetime import date, timedelta
 
@@ -361,29 +361,36 @@ class CompanyUser(models.Model):
                 return self['career.report_service'].getAssessmentSummaryReport(candidateId)
         return False
 
-    @api.model
+    @api.one
     def searchEmployee(self, options):
         employeeList = []
         domain = []
-        print options
         if options:
             if options['countryId']:
                 domain.append(('country_id', '=', int(options['countryId'])))
             if options['provinceId']:
-                domain.append(('province_id', '=', int(options['provinceId'])))
+                domain.append(('state_id', '=', int(options['provinceId'])))
         for e in self.env['career.employee'].search(domain):
             if options['categoryId']:
                 categoryID_match = False
-                for exp in e.getWorkExperience():
-                    if options['categoryId'] in exp['categoryIdList']:
-                        categoryID_match = True
+                for exp in e.experience_ids:
+                    for catid in exp.cat_ids.ids:
+                        if int(options['categoryId']) == int(catid):
+                            categoryID_match = True
+                            break;
+                    if categoryID_match:
+                        break;
                 if categoryID_match:
-                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
+                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                         'countryId': e.partner_id.country_id.id,
+                                         'categoryIds': e.experience_ids.ids})
             else:
-                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
+                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                     'countryId': e.partner_id.country_id.id,
+                                     'categoryIds': e.experience_ids.ids})
         return employeeList
 
-    @api.model
+    @api.one
     def getEmployeeDetail(self, employeeId):
         license_service = self.env['career.license_service']
         if not license_service.validateLicense(self.company_id.id):
