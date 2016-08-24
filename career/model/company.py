@@ -499,7 +499,7 @@ class Conpany(models.Model):
             stats['license'] = {'name': self.license_instance_id.license_id.name,
                                 'email': self.license_instance_id.license_id.email,
                                 'assignment': self.license_instance_id.license_id.assignment,
-                                'applicant': self.license_instance_id.license_id.applicant,
+                                'employee': self.license_instance_id.license_id.employee,
                                 'expireDate': self.license_instance_id.expire_date,
                                 'state': self.license_instance_id.state}
         return stats
