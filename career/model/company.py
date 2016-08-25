@@ -503,6 +503,8 @@ class Conpany(models.Model):
         if self.license_instance_id:
             stats['email'] = self.env['career.email.history'].search_count(
                 [('license_instance_id', '=', self.license_instance_id.id)])
+            stats['employee'] = self.env['career.employee.history'].search_count(
+                [('license_instance_id', '=', self.license_instance_id.id)])
             stats['license'] = {'name': self.license_instance_id.license_id.name,
                                 'email': self.license_instance_id.license_id.email,
                                 'assignment': self.license_instance_id.license_id.assignment,
