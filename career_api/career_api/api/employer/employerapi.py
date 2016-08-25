@@ -394,8 +394,8 @@ def employeeSearch(employer):
     try:
          options  = json.loads(request.values['option'])
          if request.method == 'GET':
-            employeeList  = employer.searchEmployee(options)
-            return jsonify(result=True,employeeList=employeeList)
+             employeeList  = employer.searchEmployee(options)
+             return jsonify(result=True,employeeList=employeeList)
     except Exception as exc:
         print(exc)
         print 'Employee search error '

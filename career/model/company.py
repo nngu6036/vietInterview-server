@@ -361,11 +361,10 @@ class CompanyUser(models.Model):
                 return self['career.report_service'].getAssessmentSummaryReport(candidateId)
         return False
 
-    @api.model
+    @api.one
     def searchEmployee(self, options):
         employeeList = []
         domain = []
-        print options
         if options:
             if options['countryId']:
                 domain.append(('country_id', '=', int(options['countryId'])))
@@ -383,7 +382,7 @@ class CompanyUser(models.Model):
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
         return employeeList
 
-    @api.model
+    @api.one
     def getEmployeeDetail(self, employeeId):
         license_service = self.env['career.license_service']
         if not license_service.validateLicense(self.company_id.id):
