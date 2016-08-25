@@ -2,10 +2,15 @@ from openerp import models, fields, api, tools
 from openerp.osv import osv
 from openerp.service import common
 import base64
-import base64
+import json
 import datetime
 from datetime import date, timedelta
 
+class CompanyProfile(models.Model):
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+
+    description = fields.Char(string="Description")
 
 
 class License(models.Model):
@@ -120,7 +125,8 @@ class CompanyUser(models.Model):
     @api.one
     def getCompanyInfo(self):
         return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False,
-                'email': self.company_id.partner_id.email}
+                'email': self.company_id.partner_id.email, 'videoUrl': self.company_id.partner_id.videoUrl,
+                'description': self.company_id.partner_id.description}
 
     @api.one
     def createInterview(self, assignmentId, vals):
@@ -369,17 +375,25 @@ class CompanyUser(models.Model):
             if options['countryId']:
                 domain.append(('country_id', '=', int(options['countryId'])))
             if options['provinceId']:
-                domain.append(('province_id', '=', int(options['provinceId'])))
+                domain.append(('state_id', '=', int(options['provinceId'])))
         for e in self.env['career.employee'].search(domain):
             if options['categoryId']:
                 categoryID_match = False
-                for exp in e.getWorkExperience():
-                    if options['categoryId'] in exp['categoryIdList']:
-                        categoryID_match = True
+                for exp in e.experience_ids:
+                    for catid in exp.cat_ids.ids:
+                        if int(options['categoryId']) == int(catid):
+                            categoryID_match = True
+                            break;
+                    if categoryID_match:
+                        break;
                 if categoryID_match:
-                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
+                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                         'countryId': e.partner_id.country_id.id,
+                                         'categoryIds': e.experience_ids.ids})
             else:
-                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.provinceId})
+                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                     'countryId': e.partner_id.country_id.id,
+                                     'categoryIds': e.experience_ids.ids})
         return employeeList
 
     @api.one
@@ -428,7 +442,8 @@ class Conpany(models.Model):
     @api.one
     def updateCompany(self,vals):
         self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
-        self.partner_id.write({'email': vals['email'],'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False})
+        self.partner_id.write({'email': vals['email'],'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
+                               'description': vals['description'] if 'description' in vals else False})
         return True
 
     @api.model
@@ -491,7 +506,7 @@ class Conpany(models.Model):
             stats['license'] = {'name': self.license_instance_id.license_id.name,
                                 'email': self.license_instance_id.license_id.email,
                                 'assignment': self.license_instance_id.license_id.assignment,
-                                'applicant': self.license_instance_id.license_id.applicant,
+                                'employee': self.license_instance_id.license_id.employee,
                                 'expireDate': self.license_instance_id.expire_date,
                                 'state': self.license_instance_id.state}
         return stats
