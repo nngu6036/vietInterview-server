@@ -6,6 +6,11 @@ import json
 import datetime
 from datetime import date, timedelta
 
+class CompanyProfile(models.Model):
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+
+    description = fields.Char(string="Description")
 
 
 class License(models.Model):
