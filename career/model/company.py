@@ -125,7 +125,8 @@ class CompanyUser(models.Model):
     @api.one
     def getCompanyInfo(self):
         return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False,
-                'email': self.company_id.partner_id.email}
+                'email': self.company_id.partner_id.email, 'videoUrl': self.company_id.partner_id.videoUrl,
+                'description': self.company_id.partner_id.description}
 
     @api.one
     def createInterview(self, assignmentId, vals):
@@ -441,7 +442,8 @@ class Conpany(models.Model):
     @api.one
     def updateCompany(self,vals):
         self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
-        self.partner_id.write({'email': vals['email'],'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False})
+        self.partner_id.write({'email': vals['email'],'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
+                               'description': vals['description'] if 'description' in vals else False})
         return True
 
     @api.model
