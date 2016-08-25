@@ -6,9 +6,9 @@
             <!-- Add report style -->
             <!-- Add report style -->
             <xpath expr="//head" position="inside">
-                <link href="https://vietinterview.com/odoo/web/static/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-                <link href="https://vietinterview.com/odoo/website/static/src/css/website.css" rel="stylesheet"/>
-                <link href="https://vietinterview.com/odoo/web/static/lib/fontawesome/css/font-awesome.css" rel="stylesheet"/>
+                <link href="http://localhost:8069/web/static/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+                <link href="http://localhost:8069/website/static/src/css/website.css" rel="stylesheet"/>
+                <link href="http://localhost:8069/web/static/lib/fontawesome/css/font-awesome.css" rel="stylesheet"/>
                 <style type="text/css">
                     <t t-call="report.style"/>
                 </style>
