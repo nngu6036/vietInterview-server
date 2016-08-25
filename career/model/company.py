@@ -364,7 +364,7 @@ class CompanyUser(models.Model):
     def getAssessmentSummaryReport(self, candidateId):
         for candidate in self.env['hr.applicant'].browse(candidateId):
             if candidate.company_id.id == self.company_id.id:
-                return self['career.report_service'].getAssessmentSummaryReport(candidateId)
+                return self.env['career.report_service'].getAssessmentSummaryReport(candidateId)
         return False
 
     @api.one
