@@ -247,9 +247,9 @@ def workExperience(session):
          if request.method == 'GET':
             expList  = user.getWorkExperience()
             if type(expList) is list:
-                return jsonify(eduList=expList)
+                return jsonify(expList=expList)
             else:
-                return jsonify(eduList=[expList])
+                return jsonify(expList=[expList])
          if request.method == 'POST':
             exp  = json.loads(request.values['exp'])
             expId = user.addWorkExperience(exp)
@@ -277,9 +277,9 @@ def certificate(session):
          if request.method == 'GET':
             certList  = user.getCertificate()
             if type(certList) is list:
-                return jsonify(eduList=certList)
+                return jsonify(certList=certList)
             else:
-                return jsonify(eduList=[certList])
+                return jsonify(certList=[certList])
          if request.method == 'POST':
             cert  = json.loads(request.values['cert'])
             certId = user.addCertificate(cert)
@@ -338,9 +338,9 @@ def document(session):
          if request.method == 'GET':
             docList  = user.getDocument()
             if type(docList) is list:
-                return jsonify(eduList=docList)
+                return jsonify(docList=docList)
             else:
-                return jsonify(eduList=[docList])
+                return jsonify(docList=[docList])
          if request.method == 'POST':
             doc  = json.loads(request.values['doc'])
             base64FileData  = doc['filedata']
