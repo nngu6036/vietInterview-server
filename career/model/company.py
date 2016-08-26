@@ -404,11 +404,11 @@ class CompanyUser(models.Model):
             return False
         for employee in self.env['career.employee'].browse(employeeId):
             employeeDetail = {'name':employee.user_id.name,'email':employee.user_id.email}
-            employeeDetail['profile'] = employee.getProfile()[0]
-            employeeDetail['expList'] = employee.getWorkExperience()[0]
-            employeeDetail['eduList'] = employee.getEducationHistory()[0]
-            employeeDetail['certList'] = employee.getCertificate()[0]
-            employeeDetail['docList'] = employee.getDocument()[0]
+            employeeDetail['profile'] = employee.getProfile()
+            employeeDetail['expList'] = employee.getWorkExperience()
+            employeeDetail['eduList'] = employee.getEducationHistory()
+            employeeDetail['certList'] = employee.getCertificate()
+            employeeDetail['docList'] = employee.getDocument()
             license_service.consumeEmployee(self.company_id.id,employeeId)
             return employeeDetail
         return False

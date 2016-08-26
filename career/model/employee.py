@@ -11,6 +11,7 @@ class UserProfile(models.Model):
 
     gender = fields.Char(string="Gender")
     videoUrl = fields.Char(string="Video URL")
+    position_ids = fields.Many2many('career.job_position', string="Position")
 
 
 class WorkExperience(models.Model):
@@ -27,7 +28,7 @@ class WorkExperience(models.Model):
     province_id = fields.Many2one('res.country.state', string="Province ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateWorkExperience(self, vals):
         
         catIdList = vals['categoryIdList']
@@ -37,7 +38,7 @@ class WorkExperience(models.Model):
              'description': vals['description']})
         return True
 
-    @api.one
+    @api.multi
     def removeWorkExperience(self):
         self.unlink()
         return True
@@ -54,7 +55,7 @@ class EducationHistory(models.Model):
     level_id = fields.Many2one('hr.recruitment.degree', string="Degree ")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateEducationHistory(self, vals):
         
         self.write(
@@ -63,7 +64,7 @@ class EducationHistory(models.Model):
              'level_id': int(vals['levelId'])})
         return True
 
-    @api.one
+    @api.multi
     def removeEducationHistory(self):
         if self.unlink():
             return True
@@ -78,14 +79,14 @@ class Certificate(models.Model):
     issue_date = fields.Date(string="Date of issuer")
     employee_id = fields.Many2one('career.employee', string="Employee")
 
-    @api.one
+    @api.multi
     def updateCertificate(self, vals):
         
         self.write({'title': vals['title'], 'issuer': vals['issuer'],
                                                                       'issue_date': vals['issueDate']})
         return True
 
-    @api.one
+    @api.multi
     def removeCertificate(self):
         if self.unlink():
             return True
@@ -96,7 +97,7 @@ class Document(models.Model):
     _name = 'ir.attachment'
     _inherit = 'ir.attachment'
 
-    @api.one
+    @api.multi
     def removeDocument(self):
         if self.unlink():
             return True
@@ -137,8 +138,9 @@ class EmployeeUser(models.Model):
                          'countryId': e.user_id.partner_id.country_id.id} for e in employees]
         return employeeList
 
-    @api.one
+    @api.multi
     def getProfile(self):
+        self.ensure_one()
         partner = self.user_id.partner_id
         return {'id': partner.id, 'name': partner.name, 'phone': partner.phone, 'mobile': partner.mobile,
                 'email': partner.email, 'address': partner.street, 'countryId': partner.country_id.id,
@@ -147,8 +149,9 @@ class EmployeeUser(models.Model):
                 'gender': partner.gender or False,
                 'videoUrl': partner.videoUrl or False}
 
-    @api.one
+    @api.multi
     def updateProfile(self, vals):
+        self.ensure_one()
         self.user_id.partner_id.write({'name': vals['name'], 'phone': vals['phone'], 'mobile': vals['mobile'],
                                        'email': vals['email'], 'street': vals['address'],
                                        'country_id': vals['countryId'],
@@ -160,8 +163,9 @@ class EmployeeUser(models.Model):
                                        })
         return True
 
-    @api.one
+    @api.multi
     def getWorkExperience(self):
+        self.ensure_one()
         expList = []
         for exp in self.experience_ids:
             expList.append({'id': exp.id, 'title': exp.title, 'employer': exp.employer, 'startDate': exp.start_date,
@@ -171,8 +175,9 @@ class EmployeeUser(models.Model):
                             'description': exp.description})
         return expList
 
-    @api.one
+    @api.multi
     def addWorkExperience(self, vals):
+        self.ensure_one()
         catIdList = vals['categoryIdList']
         exp = self.env['career.work_experience'].create({'title': vals['title'], 'employer': vals['employer'],
                                                          'start_date': 'startDate' in vals and vals['startDate'],
@@ -186,23 +191,26 @@ class EmployeeUser(models.Model):
                                                          'employee_id': self.id})
         return exp.id
 
-    @api.one
+    @api.multi
     def updateWorkExperience(self, vals):
+        self.ensure_one()
         for exp in self.env['career.work_experience'].browse(int(vals['id'])):
             if exp.employee_id.id == self.id:
                 return exp.updateWorkExperience(vals)
         return False
 
-    @api.one
+    @api.multi
     def removeWorkExperience(self, id):
+        self.ensure_one()
         for exp in self.env['career.work_experience'].browse(id):
             if exp.employee_id.id == self.id:
                 return exp.removeWorkExperience()
         return False
 
 
-    @api.one
+    @api.multi
     def getEducationHistory(self):
+        self.ensure_one()
         eduList = []
         for edu in self.education_ids:
             eduList.append(
@@ -210,30 +218,34 @@ class EmployeeUser(models.Model):
                  'status': edu.status, 'levelId': edu.level_id.id})
         return eduList
 
-    @api.one
+    @api.multi
     def addEducationHistory(self, vals):
+        self.ensure_one()
         edu = self.env['career.education_history'].create({'program': vals['program'], 'institute': vals['institute'],
                                                            'complete_date': vals['finishDate'],
                                                            'status': vals['status'],
                                                            'level_id': int(vals['levelId']), 'employee_id': self.id})
         return edu.id
 
-    @api.one
+    @api.multi
     def updateEducationHistory(self, vals):
+        self.ensure_one()
         for edu in self.env['career.education_history'].browse(int(vals['id'])):
             if edu.employee_id.id == self.id:
                 return edu.updateEducationHistory(vals)
         return False
 
-    @api.one
+    @api.multi
     def removeEducationHistory(self, id):
+        self.ensure_one()
         for edu in self.env['career.education_history'].browse(id):
             if edu.employee_id.id == self.id:
                 return edu.removeEducationHistory()
         return False
 
-    @api.one
+    @api.multi
     def applyJob(self, assignmentId):
+        self.ensure_one()
         for assignment in self.env['hr.job'].browse(assignmentId):
             if assignment.isEnabled():
                 for survey in assignment.survey_ids:
@@ -255,8 +267,9 @@ class EmployeeUser(models.Model):
                         return True
         return False
 
-    @api.one
+    @api.multi
     def getApplicantHistory(self):
+        self.ensure_one()
         applicationList = []
         applicants = self.env['hr.applicant'].search([('email_from', '=', self.user_id.login)])
         for applicant in applicants:
@@ -270,51 +283,58 @@ class EmployeeUser(models.Model):
                  'interview_link': interview_link})
         return applicationList
 
-    @api.one
+    @api.multi
     def getCertificate(self):
+        self.ensure_one()
         certList = []
         for cert in self.certificate_ids:
             certList.append({'id': cert.id, 'title': cert.title, 'issuer': cert.issuer, 'issueDate': cert.issue_date})
         return certList
 
-    @api.one
+    @api.multi
     def addCertificate(self, vals):
+        self.ensure_one()
         cert = self.env['career.certificate'].create({'title': vals['title'], 'issuer': vals['issuer'],
                                                       'issue_date': vals['issueDate'], 'employee_id': self.id})
         return cert.id
 
-    @api.one
+    @api.multi
     def updateCertificate(self, vals):
+        self.ensure_one()
         for cert in self.env['career.certificate'].browse(int(vals['id'])):
             if cert.employee_id.id == self.id:
                 return cert.updateCertificate(vals)
         return False
 
-    @api.one
+    @api.multi
     def removeCertificate(self, id):
+        self.ensure_one()
         for cert in self.env['career.certificate'].browse(id):
             if cert.employee_id.id == self.id:
                 return cert.removeCertificate()
         return False
 
-    @api.one
+    @api.multi
     def getDocument(self):
+        self.ensure_one()
         docList = []
         documents = self.env['ir.attachment'].search([('res_model', '=', 'career.employee'), ('res_id', '=', self.id)])
         for doc in documents:
             docList.append({'id': doc.id, 'title': doc.name, 'filename': doc.datas_fname, 'filedata': doc.store_fname})
         return docList
 
-    @api.one
+    @api.multi
     def addDocument(self, title, filename, file_location):
+        self.ensure_one()
         doc = self.env['ir.attachment'].create(
             {'name': title, 'description': title, 'res_model': 'career.employee', 'res_id': self.id,
              'type': 'binary', 'store_fname': file_location, 'datas_fname': filename})
         return doc.id
 
 
-    @api.one
+    @api.multi
     def removeDocument(self, id):
+        self.ensure_one()
         for doc in self.env['ir.attachment'].browse(id):
             if doc.res_model == self._name and doc.res_id == self.id:
                 return doc.unlink()

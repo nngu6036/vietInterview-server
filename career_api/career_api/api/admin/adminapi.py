@@ -300,6 +300,7 @@ def educationHistory(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             eduList  = user.getEducationHistory()
+            print eduList
             return jsonify(eduList=eduList)
          if request.method == 'POST':
             edu  = json.loads(request.values['edu'])
@@ -328,6 +329,7 @@ def document(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             docList  = user.getDocument()
+            print docList
             return jsonify(docList=docList)
          if request.method == 'POST':
             doc  = json.loads(request.values['doc'])
