@@ -511,11 +511,14 @@ class Conpany(models.Model):
     @api.one
     def getLicenseStatistic(self):
         stats = {'email': 0, 'license': False}
+        employee_quota = 0
         if self.license_instance_id:
             stats['email'] = self.env['career.email.history'].search_count(
                 [('license_instance_id', '=', self.license_instance_id.id)])
-            stats['employee'] = self.env['career.employee.history'].search_count(
-                [('license_instance_id', '=', self.license_instance_id.id)])
+            for employeeHistory in self.env['career.employee.history'].search(
+                [('license_instance_id', '=', self.license_instance_id.id)]):
+                employee_quota += employeeHistory.cost
+            stats['employee'] = employee_quota
             stats['license'] = {'name': self.license_instance_id.license_id.name,
                                 'email': self.license_instance_id.license_id.email,
                                 'assignment': self.license_instance_id.license_id.assignment,
