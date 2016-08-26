@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" afterPath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/company.py" afterPath="$PROJECT_DIR$/career/model/company.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,8 +38,8 @@
       <file leaf-file-name="company.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/company.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="453" column="12" selection-start-line="453" selection-start-column="12" selection-end-line="453" selection-end-column="12" />
+            <state relative-caret-position="44">
+              <caret line="445" column="49" selection-start-line="445" selection-start-column="49" selection-end-line="445" selection-end-column="49" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -678,13 +678,6 @@
       <option name="presentableId" value="Default" />
       <updated>1464594794783</updated>
     </task>
-    <task id="LOCAL-00015" summary="Split API resetpass to requestresetpass &amp; resetpass">
-      <created>1470305410089</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1470305410089</updated>
-    </task>
     <task id="LOCAL-00016" summary="Change getApplicantHistory: applicant.join_survey_id.name to applicant.join_survey_id.title">
       <created>1470382473174</created>
       <option name="number" value="00016" />
@@ -1021,7 +1014,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472207627307</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Spit to getEmployeeDetailNoContact &amp; WithContact">
+      <created>1472208643241</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1472208643241</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1040,10 +1040,10 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17142858" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.49375975" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.256651" sideWeight="0.5619048" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32394367" sideWeight="0.5436508" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.49687988" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.256651" sideWeight="0.43809524" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32411674" sideWeight="0.4595238" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.256651" sideWeight="0.43809524" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32394367" sideWeight="0.4563492" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960998" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33486944" sideWeight="0.49063963" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20046802" sideWeight="0.5083682" order="2" side_tool="true" content_ui="tabs" />
@@ -1068,7 +1068,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add videoUrl to employee profile" />
     <MESSAGE value="Add createCandidate name" />
     <MESSAGE value="Add inviteCandidate name" />
     <MESSAGE value="Add API invitation +name" />
@@ -1093,7 +1092,8 @@
     <MESSAGE value="consumeEmployee by cost" />
     <MESSAGE value="Change getLicenseStatistics employee quota count" />
     <MESSAGE value="Update search employee" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update search employee" />
+    <MESSAGE value="Spit to getEmployeeDetailNoContact &amp; WithContact" />
+    <option name="LAST_COMMIT_MESSAGE" value="Spit to getEmployeeDetailNoContact &amp; WithContact" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1426,8 +1426,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/company.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="453" column="12" selection-start-line="453" selection-start-column="12" selection-end-line="453" selection-end-column="12" />
+        <state relative-caret-position="44">
+          <caret line="445" column="49" selection-start-line="445" selection-start-column="49" selection-end-line="445" selection-end-column="49" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
