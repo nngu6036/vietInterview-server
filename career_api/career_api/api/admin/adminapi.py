@@ -246,7 +246,10 @@ def workExperience(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             expList  = user.getWorkExperience()
-            return jsonify(expList=expList)
+            if type(expList) is list:
+                return jsonify(eduList=expList)
+            else:
+                return jsonify(eduList=[expList])
          if request.method == 'POST':
             exp  = json.loads(request.values['exp'])
             expId = user.addWorkExperience(exp)
@@ -273,7 +276,10 @@ def certificate(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             certList  = user.getCertificate()
-            return jsonify(certList=certList)
+            if type(certList) is list:
+                return jsonify(eduList=certList)
+            else:
+                return jsonify(eduList=[certList])
          if request.method == 'POST':
             cert  = json.loads(request.values['cert'])
             certId = user.addCertificate(cert)
@@ -300,8 +306,10 @@ def educationHistory(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             eduList  = user.getEducationHistory()
-            print eduList
-            return jsonify(eduList=eduList)
+            if type(eduList) is list:
+                return jsonify(eduList=eduList)
+            else:
+                return jsonify(eduList=[eduList])
          if request.method == 'POST':
             edu  = json.loads(request.values['edu'])
             eduId = user.addEducationHistory(edu)
@@ -329,8 +337,10 @@ def document(session):
          user = user_obj.get(int(request.values['employeeId']))
          if request.method == 'GET':
             docList  = user.getDocument()
-            print docList
-            return jsonify(docList=docList)
+            if type(docList) is list:
+                return jsonify(eduList=docList)
+            else:
+                return jsonify(eduList=[docList])
          if request.method == 'POST':
             doc  = json.loads(request.values['doc'])
             base64FileData  = doc['filedata']
