@@ -60,14 +60,24 @@ class LicenseService(osv.AbstractModel):
 
     @api.model
     def consumeEmployee(self, companyId, employeeId):
+        cost = 0
+        employee_quota = 0
         for company in self.env['res.company'].browse(companyId):
             license_instance = company.license_instance_id
             if license_instance:
+                for employee in self.env['career.employee']:
+                    for exp in employee.experience_ids:
+                        for license_rule in license_instance.license_id.rules:
+                            if license_rule.position_id.id == exp.position_id.id:
+                                if license_rule.cost > cost:
+                                    cost = license_rule.cost
                 self.env['career.employee.history'].create(
                     {'employee_id': employeeId,
+                     'cost': cost,
                      'license_instance_id': license_instance.id})
-                employee_quota = self.env['career.employee.history'].search_count(
-                    [('license_instance_id', '=', license_instance.id)])
+                for employeeHistory in self.env['career.employee.history'].search(
+                        [('license_instance_id', '=', license_instance.id)]):
+                    employee_quota += employeeHistory.cost
                 if employee_quota > license_instance.license_id.employee:
                     self.deactivateLicense(companyId)
         return True
