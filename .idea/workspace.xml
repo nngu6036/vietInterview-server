@@ -37,8 +37,8 @@
       <file leaf-file-name="company.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/company.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="399" column="40" selection-start-line="399" selection-start-column="40" selection-end-line="399" selection-end-column="40" />
+            <state relative-caret-position="532">
+              <caret line="423" column="47" selection-start-line="423" selection-start-column="47" selection-end-line="423" selection-end-column="47" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -677,13 +677,6 @@
       <option name="presentableId" value="Default" />
       <updated>1464594794783</updated>
     </task>
-    <task id="LOCAL-00013" summary="Fix resetpass">
-      <created>1470303926509</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1470303926509</updated>
-    </task>
     <task id="LOCAL-00014" summary="Fix resetpass">
       <created>1470303952562</created>
       <option name="number" value="00014" />
@@ -1020,7 +1013,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472204306299</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Update search employee">
+      <created>1472206818854</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1472206818854</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1067,7 +1067,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change link in email to https://vietinterview.com/#/career_detail?careertab=interviews" />
     <MESSAGE value="Add videoUrl to employee profile" />
     <MESSAGE value="Add createCandidate name" />
     <MESSAGE value="Add inviteCandidate name" />
@@ -1092,7 +1091,8 @@
     <MESSAGE value="Reformat file" />
     <MESSAGE value="consumeEmployee by cost" />
     <MESSAGE value="Change getLicenseStatistics employee quota count" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change getLicenseStatistics employee quota count" />
+    <MESSAGE value="Update search employee" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update search employee" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1425,8 +1425,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/company.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="399" column="40" selection-start-line="399" selection-start-column="40" selection-end-line="399" selection-end-column="40" />
+        <state relative-caret-position="532">
+          <caret line="423" column="47" selection-start-line="423" selection-start-column="47" selection-end-line="423" selection-end-column="47" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>

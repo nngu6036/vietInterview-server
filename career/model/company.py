@@ -396,11 +396,11 @@ class CompanyUser(models.Model):
                         if int(options['categoryId']) == int(catid):
                             categoryID_match = True
                             break
-                    if exp.position_id == options['positionId']:
+                    if int(exp.position_id) == int(options['positionId']):
                         positionID_match = True
                     if categoryID_match and positionID_match:
                         break
-                if categoryID_match or positionID_match:
+                if categoryID_match and positionID_match:
                     employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                          'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
                                          'categoryIds': e.experience_ids.ids})
@@ -420,7 +420,7 @@ class CompanyUser(models.Model):
             if options['positionId'] and not options['categoryId']:
                 positionID_match = False
                 for exp in e.experience_ids:
-                    if exp.position_id == options['positionId']:
+                    if int(exp.position_id) == int(options['positionId']):
                         positionID_match = True
                     if positionID_match:
                         break
