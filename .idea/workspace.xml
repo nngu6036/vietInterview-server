@@ -4,8 +4,7 @@
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" afterPath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/employee.py" afterPath="$PROJECT_DIR$/career/model/employee.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employee.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="employee.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/employee.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="212">
-              <caret line="174" column="60" selection-start-line="174" selection-start-column="60" selection-end-line="174" selection-end-column="60" />
+              <caret line="189" column="115" selection-start-line="189" selection-start-column="115" selection-end-line="189" selection-end-column="115" />
               <folding />
             </state>
           </provider>
@@ -108,7 +107,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employeeapi.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="employeeapi.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1173">
@@ -152,9 +151,9 @@
         <option value="$PROJECT_DIR$/career/report/html_template.xml" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
         <option value="$PROJECT_DIR$/career/model/company.py" />
-        <option value="$PROJECT_DIR$/career/model/employee.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
+        <option value="$PROJECT_DIR$/career/model/employee.py" />
       </list>
     </option>
   </component>
@@ -693,13 +692,6 @@
       <option name="presentableId" value="Default" />
       <updated>1464594794783</updated>
     </task>
-    <task id="LOCAL-00007" summary="Reset password ok">
-      <created>1470294440709</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1470294440709</updated>
-    </task>
     <task id="LOCAL-00008" summary="Reformat employee model">
       <created>1470295112892</created>
       <option name="number" value="00008" />
@@ -1036,7 +1028,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472190336834</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Fix API not return list on list with single item">
+      <created>1472192345064</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1472192345064</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1083,7 +1082,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add API /admin/company/renewlicense" />
     <MESSAGE value="updateCompanyUser add password" />
     <MESSAGE value="Add API DELETE admin/company/user" />
     <MESSAGE value="Fix renewLicense" />
@@ -1108,7 +1106,8 @@
     <MESSAGE value="Add API /employer/employee/contactinfo" />
     <MESSAGE value="Change employee to @api.multi" />
     <MESSAGE value="Fix admin api not return list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix admin api not return list" />
+    <MESSAGE value="Fix API not return list on list with single item" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix API not return list on list with single item" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1416,14 +1415,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/employee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="174" column="60" selection-start-line="174" selection-start-column="60" selection-end-line="174" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1436,6 +1427,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1173">
           <caret line="105" column="51" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/model/employee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="189" column="115" selection-start-line="189" selection-start-column="115" selection-end-line="189" selection-end-column="115" />
           <folding />
         </state>
       </provider>
