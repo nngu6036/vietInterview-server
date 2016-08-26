@@ -21,6 +21,7 @@ class WorkExperience(models.Model):
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
     cat_ids = fields.Many2many('career.job_category', string="Job category")
+    position_id = fields.Many2one('career.job_position', string='Job position')
     description = fields.Text(string="Description")
     current = fields.Boolean(string='Is current')
     country_id = fields.Many2one('res.country', string="Country ")
@@ -29,12 +30,12 @@ class WorkExperience(models.Model):
 
     @api.multi
     def updateWorkExperience(self, vals):
-        self.ensure_one()
+        
         catIdList = vals['categoryIdList']
         self.write( {'title': vals['title'], 'employer': vals['employer'], 'start_date': vals['startDate'],
              'end_date': vals['endDate'], 'current': vals['current'], 'cat_ids': [(6, 0, catIdList)],
              'country_id': int(vals['countryId']), 'province_id': int(vals['provinceId']),
-             'description': vals['description']})
+             'description': vals['description'], 'position_id': int(vals['positionId'])})
         return True
 
     @api.multi
@@ -56,7 +57,7 @@ class EducationHistory(models.Model):
 
     @api.multi
     def updateEducationHistory(self, vals):
-        self.ensure_one()
+        
         self.write(
             {'program': vals['program'], 'institute': vals['institute'],
              'complete_date': vals['finishDate'], 'status': vals['status'],
@@ -80,7 +81,7 @@ class Certificate(models.Model):
 
     @api.multi
     def updateCertificate(self, vals):
-        self.ensure_one()
+        
         self.write({'title': vals['title'], 'issuer': vals['issuer'],
                                                                       'issue_date': vals['issueDate']})
         return True
@@ -171,7 +172,7 @@ class EmployeeUser(models.Model):
                             'endDate': exp.end_date,
                             'current': exp.current, 'categoryIdList': list(exp.cat_ids.ids),
                             'countryId': exp.country_id.id, 'provinceId': exp.province_id.id,
-                            'description': exp.description})
+                            'description': exp.description, 'positionId': exp.position_id.id})
         return expList
 
     @api.multi
@@ -185,8 +186,8 @@ class EmployeeUser(models.Model):
                                                          'current': vals['current'],
                                                          'cat_ids': [(6, 0, catIdList)],
                                                          'country_id': 'countryId' in vals and int(vals['countryId']),
-                                                         'province_id': 'provinceId' in vals and int(
-                                                             vals['provinceId']),
+                                                         'province_id': 'provinceId' in vals and int(vals['provinceId']),
+                                                         'position_id': 'positionId' in vals and int(vals['positionId']),
                                                          'employee_id': self.id})
         return exp.id
 

@@ -71,7 +71,10 @@ def workExperience(employee):
     try:
          if request.method == 'GET':
             expList  = employee.getWorkExperience()
-            return jsonify(expList=expList)
+            if type(expList) is list:
+                return jsonify(expList=expList)
+            else:
+                return jsonify(expList=[expList])
          if request.method == 'POST':
             exp  = json.loads(request.values['exp'])
             expId = employee.addWorkExperience(exp)
@@ -97,7 +100,10 @@ def certificate(employee):
     try:
          if request.method == 'GET':
             certList  = employee.getCertificate()
-            return jsonify(certList=certList)
+            if type(certList) is list:
+                return jsonify(certList=certList)
+            else:
+                return jsonify(certList=[certList])
          if request.method == 'POST':
             cert  = json.loads(request.values['cert'])
             certId = employee.addCertificate(cert)
@@ -123,7 +129,10 @@ def educationHistory(employee):
     try:
          if request.method == 'GET':
             eduList  = employee.getEducationHistory()
-            return jsonify(eduList=eduList)
+            if type(eduList) is list:
+                return jsonify(eduList=eduList)
+            else:
+                return jsonify(eduList=[eduList])
          if request.method == 'POST':
             edu  = json.loads(request.values['edu'])
             eduId = employee.addEducationHistory(edu)
@@ -150,7 +159,10 @@ def document(employee):
     try:
          if request.method == 'GET':
             docList  = employee.getDocument()
-            return jsonify(docList=docList)
+            if type(docList) is list:
+                return jsonify(docList=docList)
+            else:
+                return jsonify(docList=[docList])
          if request.method == 'POST':
             doc  = json.loads(request.values['doc'])
             base64FileData  = doc['filedata']
@@ -179,7 +191,10 @@ def application(employee):
     try:
          if request.method == 'GET':
             applicationList  = employee.getApplicantHistory()
-            return jsonify(applicationList=applicationList)
+            if type(applicationList) is list:
+                return jsonify(applicationList=applicationList)
+            else:
+                return jsonify(applicationList=[applicationList])
     except Exception as exc:
         print(exc)
         print 'Application history error '
