@@ -388,20 +388,47 @@ class CompanyUser(models.Model):
             if options['provinceId']:
                 domain.append(('state_id', '=', int(options['provinceId'])))
         for e in self.env['career.employee'].search(domain):
-            if options['categoryId']:
+            if options['categoryId'] and options['positionId']:
+                categoryID_match = False
+                positionID_match = False
+                for exp in e.experience_ids:
+                    for catid in exp.cat_ids.ids:
+                        if int(options['categoryId']) == int(catid):
+                            categoryID_match = True
+                            break
+                    if exp.position_id == options['positionId']:
+                        positionID_match = True
+                    if categoryID_match and positionID_match:
+                        break
+                if categoryID_match or positionID_match:
+                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
+                                         'categoryIds': e.experience_ids.ids})
+            if options['categoryId'] and not options['positionId']:
                 categoryID_match = False
                 for exp in e.experience_ids:
                     for catid in exp.cat_ids.ids:
                         if int(options['categoryId']) == int(catid):
                             categoryID_match = True
-                            break;
+                            break
                     if categoryID_match:
-                        break;
+                        break
                 if categoryID_match:
                     employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                         'countryId': e.partner_id.country_id.id,
+                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
                                          'categoryIds': e.experience_ids.ids})
-            else:
+            if options['positionId'] and not options['categoryId']:
+                positionID_match = False
+                for exp in e.experience_ids:
+                    if exp.position_id == options['positionId']:
+                        positionID_match = True
+                    if positionID_match:
+                        break
+                if positionID_match:
+                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
+                                         'categoryIds': e.experience_ids.ids})
+            if not options['positionId'] and not options['categoryId']:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id,
                                      'categoryIds': e.experience_ids.ids})
