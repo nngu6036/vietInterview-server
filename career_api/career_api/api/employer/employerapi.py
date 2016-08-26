@@ -380,7 +380,7 @@ def employee(employer):
     try:
          employeeId  = int(request.values['employeeId'])
          if request.method == 'GET':
-            employeeDetail  = employer.getEmployeeDetail(employeeId)
+            employeeDetail  = employer.getEmployeeDetailNoContact(employeeId)
             return jsonify(result=True,employeeDetail=employeeDetail)
     except Exception as exc:
         print(exc)
@@ -394,7 +394,7 @@ def employeeContactInfo(employer):
     try:
          employeeId  = int(request.values['employeeId'])
          if request.method == 'GET':
-            employeeDetail  = employer.getEmployeeContact(employeeId)
+            employeeDetail  = employer.getEmployeeDetailWithContact(employeeId)
             return jsonify(result=True,employeeDetail=employeeDetail)
     except Exception as exc:
         print(exc)

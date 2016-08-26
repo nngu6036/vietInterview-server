@@ -435,7 +435,23 @@ class CompanyUser(models.Model):
         return employeeList
 
     @api.one
-    def getEmployeeDetail(self, employeeId):
+    def getEmployeeDetailNoContact(self, employeeId):
+        for employee in self.env['career.employee'].browse(employeeId):
+            employeeDetail = {'name':employee.user_id.name,'email':'*'}
+            employeeDetail['profile'] = employee.getProfile()
+            employeeDetail['expList'] = employee.getWorkExperience()
+            employeeDetail['eduList'] = employee.getEducationHistory()
+            employeeDetail['certList'] = employee.getCertificate()
+            employeeDetail['docList'] = employee.getDocument()
+            employeeDetail['profile']['email']='*'
+            employeeDetail['profile']['mobile'] = '*'
+            employeeDetail['profile']['phone'] = '*'
+            return employeeDetail
+        else:
+            return False
+
+    @api.one
+    def getEmployeeDetailWithContact(self, employeeId):
         license_service = self.env['career.license_service']
         if not license_service.validateLicense(self.company_id.id):
             print "License error ", self.company_id.name
