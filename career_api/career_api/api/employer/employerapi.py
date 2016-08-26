@@ -388,6 +388,20 @@ def employee(employer):
         print request.values
         return jsonify(result=False)
 
+@app.route('/employer/employee/contactinfo', methods=['GET'],endpoint='employer-employee-contactinfo')
+@employer_session
+def employeeContactInfo(employer):
+    try:
+         employeeId  = int(request.values['employeeId'])
+         if request.method == 'GET':
+            employeeDetail  = employer.getEmployeeContact(employeeId)
+            return jsonify(result=True,employeeDetail=employeeDetail)
+    except Exception as exc:
+        print(exc)
+        print 'Employee error '
+        print request.values
+        return jsonify(result=False)
+
 @app.route('/employer/employee/search', methods=['GET'],endpoint='employer-employee-search')
 @employer_session
 def employeeSearch(employer):
