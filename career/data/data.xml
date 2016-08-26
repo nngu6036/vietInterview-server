@@ -14,34 +14,212 @@
             <field name="name">Bronze</field>
             <field name="assignment">5</field>
             <field name="email">20</field>
+            <field name="employee">20</field>
             <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.silver_license">
             <field name="name">Silver</field>
             <field name="assignment">10</field>
             <field name="email">40</field>
+            <field name="employee">40</field>
             <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.gold_license">
             <field name="name">Gold</field>
             <field name="assignment">25</field>
             <field name="email">80</field>
+            <field name="employee">80</field>
             <field name="validity">180</field>
         </record>
         <record model="career.license" id="career.platnium_license">
             <field name="name">Platnium</field>
             <field name="assignment">100</field>
             <field name="email">50000</field>
+            <field name="employee">50000</field>
             <field name="validity">360</field>
         </record>
         <record model="career.license" id="career.trial_license">
             <field name="name">Trial</field>
             <field name="assignment">5</field>
             <field name="email">10</field>
+            <field name="employee">10</field>
             <field name="validity">30</field>
         </record>
-
-
+        <record model="career.license_rule" id="career.license_bronze_rule_1">
+            <field name="name">Rule for Bronze license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.bronze_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_bronze_rule_2">
+            <field name="name">Rule for Bronze license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.bronze_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_bronze_rule_3">
+            <field name="name">Rule for Bronze license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.bronze_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_bronze_rule_4">
+            <field name="name">Rule for Bronze license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.bronze_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_bronze_rule_5">
+            <field name="name">Rule for Bronze license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.bronze_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
+         <record model="career.license_rule" id="career.license_silver_rule_1">
+            <field name="name">Rule for Silver license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.silver_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_silver_rule_2">
+            <field name="name">Rule for Silver license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.silver_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_silver_rule_3">
+            <field name="name">Rule for Silver license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.silver_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_silver_rule_4">
+            <field name="name">Rule for Silver license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.silver_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_silver_rule_5">
+            <field name="name">Rule for Silver license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.silver_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
+        <record model="career.license_rule" id="career.license_gold_rule_1">
+            <field name="name">Rule for Gold license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.gold_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_gold_rule_2">
+            <field name="name">Rule for Gold license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.gold_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_gold_rule_3">
+            <field name="name">Rule for Gold license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.gold_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_gold_rule_4">
+            <field name="name">Rule for Gold license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.gold_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_gold_rule_5">
+            <field name="name">Rule for Gold license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.gold_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
+        <record model="career.license_rule" id="career.license_platnium_rule_1">
+            <field name="name">Rule for Platnium license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.platnium_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_platnium_rule_2">
+            <field name="name">Rule for Platnium license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.platnium_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_platnium_rule_3">
+            <field name="name">Rule for Platnium license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.platnium_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_platnium_rule_4">
+            <field name="name">Rule for Platnium license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.platnium_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_platnium_rule_5">
+            <field name="name">Rule for Platnium license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.platnium_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
+        <record model="career.license_rule" id="career.license_trial_rule_1">
+            <field name="name">Rule for Trial license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_trial_rule_2">
+            <field name="name">Rule for Trial license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_trial_rule_3">
+            <field name="name">Rule for Trial license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_trial_rule_4">
+            <field name="name">Rule for Trial license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_trial_rule_5">
+            <field name="name">Rule for Trial license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
     </data>
 
 </openerp>

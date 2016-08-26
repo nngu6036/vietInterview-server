@@ -95,8 +95,8 @@ def chat(message):
 	print 'chat', chat_message
 	socketio.emit('chatEvent',{'text':chat_message['text'],'memberId':chat_message['memberId']},room=chat_message['meetingId'],namespace='/conference')
 
-@socketio.on('file', namespace='/conference')
-def image(message):
-	image_message =  message['image']
-	print 'image', image_message
-	socketio.emit('imageEvent',{'image':image_message['image'],'memberId':image_message['memberId']},room=image_message['meetingId'],namespace='/conference')
+@socketio.on('whiteboard', namespace='/conference')
+def whiteboard(message):
+	wb_message =  message['data']
+	print 'obj', wb_message
+	socketio.emit('whiteboardEvent',{'object':wb_message['object'],'event':wb_message['event'],'memberId':wb_message['memberId']},room=wb_message['meetingId'],namespace='/conference')

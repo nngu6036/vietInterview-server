@@ -12,6 +12,14 @@ class CompanyProfile(models.Model):
 
     description = fields.Char(string="Description")
 
+class LicenseRule(models.Model):
+    _name = 'career.license_rule'
+
+    name = fields.Char(string='Name', required=True)
+    cost = fields.Integer(string='Cost per action on entry')
+    position_id = fields.Many2one('career.job_position',string='Job position')
+    license_id = fields.Many2one('career.license',string='License')
+    type = fields.Selection([('view', 'View action')], default='view')
 
 class License(models.Model):
     _name = 'career.license'
@@ -21,6 +29,7 @@ class License(models.Model):
     email = fields.Integer(string='Email limit')
     employee = fields.Integer(string='Employee view limit')
     validity = fields.Integer(string='Validity period')
+    rule_ids = fields.One2many('career.license_rule', 'license_id', 'License rule')
 
     @api.model
     def createLicense(self, vals):
@@ -77,6 +86,8 @@ class LicenseEmployeeHistory(models.Model):
     _name = 'career.employee.history'
 
     employee_id = fields.Many2one('career.employee', string='Employee ')
+    position_id = fields.Many2one('career.job_position', string='Employee position ')
+    cost = fields.Integer( string='View cost ')
     company_id = fields.Many2one('res.company', related='employer_id.company_id')
     employer_id = fields.Many2one('career.employer', string='Employer user')
     license_instance_id = fields.Many2one('career.license_instance', string='Applied license')

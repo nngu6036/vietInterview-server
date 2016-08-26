@@ -151,6 +151,7 @@ class ConferenceMember(models.Model):
             for candidate_member in self.env['career.conference_member'].search( [('member_id', '=', candidateMemberId), ('meeting_id', '=', self.meeting_id)]):
                 for applicant in self.env[candidate_member.rec_model].browse(candidate_member.rec_id):
                     assessmentResult['candidateId'] = applicant.id
+                    assessmentResult['answerList'] = {}
                     return employer.submitAssessment(assessmentResult)
         return False
 
