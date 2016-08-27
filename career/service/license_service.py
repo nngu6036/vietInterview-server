@@ -71,14 +71,13 @@ class LicenseService(osv.AbstractModel):
                             if license_rule.position_id.id == exp.position_id.id:
                                 if license_rule.cost > cost:
                                     cost = license_rule.cost
-                self.env['career.employee.history'].create(
-                    {'employee_id': employeeId,
+                self.env['career.employee.history'].create({'employee_id': employeeId,
                      'cost': cost,
                      'license_instance_id': license_instance.id})
                 for employeeHistory in self.env['career.employee.history'].search(
                         [('license_instance_id', '=', license_instance.id)]):
                     employee_quota += employeeHistory.cost
-                if employee_quota > license_instance.license_id.employee:
+                if employee_quota > license_instance.license_id.point:
                     self.deactivateLicense(companyId)
         return True
 

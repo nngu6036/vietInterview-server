@@ -10,40 +10,61 @@
         <record model="res.groups" id="career.employee_group">
             <field name="name">Employee group</field>
         </record>
+        <record model="career.license_category" id="career.license_category_full_package">
+            <field name="name">Full-package</field>
+            <field name="code">FULL</field>
+        </record>
+        <record model="career.license_category" id="career.license_category_search_package">
+            <field name="name">Search-package</field>
+            <field name="code">SEARCH</field>
+        </record>
         <record model="career.license" id="career.bronze_license">
             <field name="name">Bronze</field>
             <field name="assignment">5</field>
             <field name="email">20</field>
-            <field name="employee">20</field>
+            <field name="point">20</field>
             <field name="validity">180</field>
+            <field name="cat_id" ref="career.license_category_full_package"/>
         </record>
         <record model="career.license" id="career.silver_license">
             <field name="name">Silver</field>
             <field name="assignment">10</field>
             <field name="email">40</field>
-            <field name="employee">40</field>
+            <field name="point">40</field>
             <field name="validity">180</field>
+            <field name="cat_id" ref="career.license_category_full_package"/>
         </record>
         <record model="career.license" id="career.gold_license">
             <field name="name">Gold</field>
             <field name="assignment">25</field>
             <field name="email">80</field>
-            <field name="employee">80</field>
+            <field name="point">80</field>
             <field name="validity">180</field>
+            <field name="cat_id" ref="career.license_category_full_package"/>
         </record>
         <record model="career.license" id="career.platnium_license">
             <field name="name">Platnium</field>
             <field name="assignment">100</field>
             <field name="email">50000</field>
-            <field name="employee">50000</field>
+            <field name="point">50000</field>
             <field name="validity">360</field>
+            <field name="cat_id" ref="career.license_category_full_package"/>
         </record>
         <record model="career.license" id="career.trial_license">
             <field name="name">Trial</field>
             <field name="assignment">5</field>
             <field name="email">10</field>
-            <field name="employee">10</field>
+            <field name="point">10</field>
             <field name="validity">30</field>
+            <field name="cat_id" ref="career.license_category_full_package"/>
+        </record>
+        <record model="career.license" id="career.saerch_license">
+            <field name="name">Search</field>
+            <field name="assignment">0</field>
+            <field name="email">0</field>
+            <field name="point">10</field>
+            <field name="validity">90</field>
+            <field name="cat_id" ref="career.license_category_search_package"/>
         </record>
         <record model="career.license_rule" id="career.license_bronze_rule_1">
             <field name="name">Rule for Bronze license</field>
@@ -218,6 +239,42 @@
             <field name="type">view</field>
             <field name="cost">3</field>
             <field name='license_id' ref='career.trial_license'/>
+            <field name='position_id' ref='career.job_position_4'/>
+        </record>
+
+        <record model="career.license_rule" id="career.license_search_rule_1">
+            <field name="name">Rule for Search license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.search_license'/>
+            <field name='position_id' ref='career.job_position_1'/>
+        </record>
+        <record model="career.license_rule" id="career.license_search_rule_2">
+            <field name="name">Rule for Search license</field>
+            <field name="type">view</field>
+            <field name="cost">1</field>
+            <field name='license_id' ref='career.search_license'/>
+            <field name='position_id' ref='career.job_position_5'/>
+        </record>
+        <record model="career.license_rule" id="career.license_search_rule_3">
+            <field name="name">Rule for Search license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.search_license'/>
+            <field name='position_id' ref='career.job_position_2'/>
+        </record>
+        <record model="career.license_rule" id="career.license_search_rule_4">
+            <field name="name">Rule for Search license</field>
+            <field name="type">view</field>
+            <field name="cost">2</field>
+            <field name='license_id' ref='career.search_license'/>
+            <field name='position_id' ref='career.job_position_3'/>
+        </record>
+        <record model="career.license_rule" id="career.license_search_rule_5">
+            <field name="name">Rule for Search license</field>
+            <field name="type">view</field>
+            <field name="cost">3</field>
+            <field name='license_id' ref='career.search_license'/>
             <field name='position_id' ref='career.job_position_4'/>
         </record>
     </data>

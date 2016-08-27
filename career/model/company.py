@@ -12,6 +12,13 @@ class CompanyProfile(models.Model):
 
     description = fields.Char(string="Description")
 
+class LicenseCategpry(models.Model):
+    _name = 'career.license_category'
+
+    name = fields.Char(string='Name', required=True)
+    code = fields.Char(string='License category code')
+
+
 class LicenseRule(models.Model):
     _name = 'career.license_rule'
 
@@ -19,7 +26,7 @@ class LicenseRule(models.Model):
     cost = fields.Integer(string='Cost per action on entry')
     position_id = fields.Many2one('career.job_position',string='Job position')
     license_id = fields.Many2one('career.license',string='License')
-    type = fields.Selection([('view', 'View action')], default='view')
+    type = fields.Selection([('view', 'View employee action')], default='view')
 
 class License(models.Model):
     _name = 'career.license'
@@ -27,14 +34,15 @@ class License(models.Model):
     name = fields.Char(string='Name', required=True)
     assignment = fields.Integer(string='Assignment limit')
     email = fields.Integer(string='Email limit')
-    employee = fields.Integer(string='Employee view limit')
+    point = fields.Integer(string='Point limit')
     validity = fields.Integer(string='Validity period')
+    cat_id = fields.Many2one('career.license_category', string='License category')
     rule_ids = fields.One2many('career.license_rule', 'license_id', 'License rule')
 
     @api.model
     def createLicense(self, vals):
         license = self.env['career.license'].create(
-            {'name': vals['name'], 'email': int(vals['email']), 'assignment': int(vals['assignment']),
+            {'name': vals['name'], 'email': int(vals['email']), 'point': int(vals['point']),'assignment': int(vals['assignment']),
              'validity': int(vals['validity'])})
         return license.id
 
@@ -42,7 +50,7 @@ class License(models.Model):
     def getLicense(self):
         licenses = self.env['career.license'].search([])
         licenseList = [
-            {'id': l.id, 'name': l.name, 'email': l.email, 'assignment': l.assignment, 'validity': l.validity,
+            {'id': l.id, 'name': l.name,'point':l.point, 'email': l.email, 'assignment': l.assignment, 'validity': l.validity,
              'createDate': l.create_date} for l in licenses]
         return licenseList
 
@@ -82,7 +90,7 @@ class LicenseEmailHistory(models.Model):
     employer_id = fields.Many2one('career.employer', string='Employer user')
     license_instance_id = fields.Many2one('career.license_instance', string='Applied license')
 
-class LicenseEmployeeHistory(models.Model):
+class LicenseViewEmployeeHistory(models.Model):
     _name = 'career.employee.history'
 
     employee_id = fields.Many2one('career.employee', string='Employee ')
@@ -554,19 +562,20 @@ class Conpany(models.Model):
     @api.one
     def getLicenseStatistic(self):
         stats = {'email': 0, 'license': False}
-        employee_quota = 0
+        remain_point = 0
         if self.license_instance_id:
             stats['email'] = self.env['career.email.history'].search_count(
                 [('license_instance_id', '=', self.license_instance_id.id)])
             for employeeHistory in self.env['career.employee.history'].search(
                 [('license_instance_id', '=', self.license_instance_id.id)]):
-                employee_quota += employeeHistory.cost
-            stats['employee'] = employee_quota
+                remain_point += employeeHistory.cost
+            stats['point'] = remain_point
             stats['license'] = {'name': self.license_instance_id.license_id.name,
                                 'email': self.license_instance_id.license_id.email,
                                 'assignment': self.license_instance_id.license_id.assignment,
-                                'employee': self.license_instance_id.license_id.employee,
+                                'point': self.license_instance_id.license_id.point,
                                 'expireDate': self.license_instance_id.expire_date,
-                                'state': self.license_instance_id.state}
+                                'state': self.license_instance_id.state,
+                                'code':self.license_instance_id.license_id.cat_id.code}
         return stats
 
