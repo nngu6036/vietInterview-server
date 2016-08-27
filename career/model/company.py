@@ -396,84 +396,47 @@ class CompanyUser(models.Model):
             if options['provinceId']:
                 domain.append(('state_id', '=', int(options['provinceId'])))
         for e in self.env['career.employee'].search(domain):
-            if options['categoryId'] and options['positionId']:
-                categoryID_match = False
-                positionID_match = False
+            categoryId =  int(options['categoryId']) if 'categoryId' in options and options['categoryId']!='' else False
+            positionId = int(options['positionId']) if 'positionId' in options  and options['positionId']!='' else False
+            latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,order='start_date desc')
+            if positionId:
+                if not latest_exp or not latest_exp.position_id:
+                    continue
+                if positionId != latest_exp[0].position_id.id:
+                    continue
+            match = False
+            if categoryId:
                 for exp in e.experience_ids:
-                    for catid in exp.cat_ids.ids:
-                        if int(options['categoryId']) == int(catid):
-                            categoryID_match = True
-                            break
-                    if int(exp.position_id) == int(options['positionId']):
-                        positionID_match = True
-                    if categoryID_match and positionID_match:
+                    if categoryId in exp.cat_ids.ids:
+                        match = True
                         break
-                if categoryID_match and positionID_match:
-                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
-                                         'categoryIds': e.experience_ids.ids})
-            if options['categoryId'] and not options['positionId']:
-                categoryID_match = False
-                for exp in e.experience_ids:
-                    for catid in exp.cat_ids.ids:
-                        if int(options['categoryId']) == int(catid):
-                            categoryID_match = True
-                            break
-                    if categoryID_match:
-                        break
-                if categoryID_match:
-                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
-                                         'categoryIds': e.experience_ids.ids})
-            if options['positionId'] and not options['categoryId']:
-                positionID_match = False
-                for exp in e.experience_ids:
-                    if int(exp.position_id) == int(options['positionId']):
-                        positionID_match = True
-                    if positionID_match:
-                        break
-                if positionID_match:
-                    employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                         'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
-                                         'categoryIds': e.experience_ids.ids})
-            if not options['positionId'] and not options['categoryId']:
+            if not categoryId or match:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                     'countryId': e.partner_id.country_id.id,
+                                     'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
                                      'categoryIds': e.experience_ids.ids})
         return employeeList
 
     @api.one
-    def getEmployeeDetailNoContact(self, employeeId):
+    def getEmployeeDetail(self, employeeId):
         for employee in self.env['career.employee'].browse(employeeId):
-            employeeDetail = {'name':employee.user_id.name,'email':''}
-            employeeDetail['profile'] = employee.getProfile()
-            employeeDetail['expList'] = employee.getWorkExperience()
-            employeeDetail['eduList'] = employee.getEducationHistory()
-            employeeDetail['certList'] = employee.getCertificate()
-            employeeDetail['docList'] = []
-            employeeDetail['profile']['email']=''
-            employeeDetail['profile']['mobile'] = ''
-            employeeDetail['profile']['phone'] = ''
-            return employeeDetail
-        else:
-            return False
-
-    @api.one
-    def getEmployeeDetailWithContact(self, employeeId):
-        license_service = self.env['career.license_service']
-        if not license_service.validateLicense(self.company_id.id):
-            print "License error ", self.company_id.name
-            return False
-        for employee in self.env['career.employee'].browse(employeeId):
-            employeeDetail = {'name':employee.user_id.name,'email':employee.user_id.email}
+            employeeDetail = {'name': employee.user_id.name}
             employeeDetail['profile'] = employee.getProfile()
             employeeDetail['expList'] = employee.getWorkExperience()
             employeeDetail['eduList'] = employee.getEducationHistory()
             employeeDetail['certList'] = employee.getCertificate()
             employeeDetail['docList'] = employee.getDocument()
-            license_service.consumeEmployee(self.company_id.id,employeeId)
+            employeeDetail['viewed'] = self.env['career.employee.history'].search_count([('employee_id','=',employeeId),('company_id','=',self.company_id.id)]) >0
             return employeeDetail
         return False
+
+    @api.one
+    def viewContactInfo(self, employeeId):
+        license_service = self.env['career.license_service']
+        if not license_service.validateLicense(self.company_id.id):
+            print "License error ", self.company_id.name
+            return False
+        license_service.consumeEmployee(self.company_id.id,self.id,employeeId)
+        return True
 
 class Conpany(models.Model):
     _name = 'res.company'
@@ -561,7 +524,7 @@ class Conpany(models.Model):
 
     @api.one
     def getLicenseStatistic(self):
-        stats = {'email': 0, 'license': False}
+        stats = {'email': 0, 'point':0,'license': False}
         remain_point = 0
         if self.license_instance_id:
             stats['email'] = self.env['career.email.history'].search_count(

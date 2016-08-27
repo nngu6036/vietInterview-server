@@ -376,11 +376,11 @@ def endConference(employer):
 
 @app.route('/employer/employee/', methods=['GET'],endpoint='employer-employee')
 @employer_session
-def employee(employer):
+def employeeInfo(employer):
     try:
          employeeId  = int(request.values['employeeId'])
          if request.method == 'GET':
-            employeeDetail  = employer.getEmployeeDetailNoContact(employeeId)
+            employeeDetail  = employer.getEmployeeDetail(employeeId)
             return jsonify(result=True,employeeDetail=employeeDetail)
     except Exception as exc:
         print(exc)
@@ -388,17 +388,17 @@ def employee(employer):
         print request.values
         return jsonify(result=False)
 
-@app.route('/employer/employee/contactinfo', methods=['GET'],endpoint='employer-employee-contactinfo')
+@app.route('/employer/employee/viewcontact', methods=['GET'],endpoint='employer-employee-viewcontact')
 @employer_session
-def employeeContactInfo(employer):
+def employeeViewContactInfo(employer):
     try:
          employeeId  = int(request.values['employeeId'])
          if request.method == 'GET':
-            employeeDetail  = employer.getEmployeeDetailWithContact(employeeId)
+            employeeDetail  = employer.viewContactInfo(employeeId)
             return jsonify(result=True,employeeDetail=employeeDetail)
     except Exception as exc:
         print(exc)
-        print 'Employee error '
+        print 'Employee contact info error '
         print request.values
         return jsonify(result=False)
 

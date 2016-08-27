@@ -58,7 +58,7 @@
             <field name="validity">30</field>
             <field name="cat_id" ref="career.license_category_full_package"/>
         </record>
-        <record model="career.license" id="career.saerch_license">
+        <record model="career.license" id="career.search_license">
             <field name="name">Search</field>
             <field name="assignment">0</field>
             <field name="email">0</field>

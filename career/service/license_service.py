@@ -59,20 +59,20 @@ class LicenseService(osv.AbstractModel):
         return True
 
     @api.model
-    def consumeEmployee(self, companyId, employeeId):
+    def consumeEmployee(self, companyId, employerId,employeeId):
         cost = 0
         employee_quota = 0
         for company in self.env['res.company'].browse(companyId):
             license_instance = company.license_instance_id
             if license_instance:
                 for employee in self.env['career.employee'].browse(employeeId):
-                    for exp in employee.experience_ids:
+                    for exp in employee.experience_ids.sorted(key=lambda r: r.start_date):
                         for license_rule in license_instance.license_id.rule_ids:
                             if license_rule.position_id.id == exp.position_id.id:
                                 if license_rule.cost > cost:
                                     cost = license_rule.cost
                 self.env['career.employee.history'].create({'employee_id': employeeId,
-                     'cost': cost,
+                     'cost': cost,'employer_id':employerId,
                      'license_instance_id': license_instance.id})
                 for employeeHistory in self.env['career.employee.history'].search(
                         [('license_instance_id', '=', license_instance.id)]):
