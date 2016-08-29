@@ -1,7 +1,7 @@
 import json
 
 from career_api.proxy import Session,admin_service, license_obj, company_obj,company_user_obj,license_service,assignment_obj,user_obj
-from career_api.proxy import admin_session
+from career_api.proxy import admin_session, work_exp_obj, certificate_obj, edu_hist_obj, document_obj
 from flask import jsonify, request
 import base64
 from career_api import app
