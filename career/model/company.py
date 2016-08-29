@@ -412,8 +412,8 @@ class CompanyUser(models.Model):
                         break
             if not categoryId or match:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                     'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
-                                     'categoryIds': e.experience_ids.ids})
+                                     'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
+                                     'categoryIds': list(latest_exp.cat_ids.ids)})
         return employeeList
 
     @api.one
