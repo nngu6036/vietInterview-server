@@ -395,10 +395,12 @@ class CompanyUser(models.Model):
                 domain.append(('country_id', '=', int(options['countryId'])))
             if options['provinceId']:
                 domain.append(('state_id', '=', int(options['provinceId'])))
+        categoryId = int(options['categoryId']) if 'categoryId' in options and options['categoryId'] != '' else False
+        positionId = int(options['positionId']) if 'positionId' in options and options['positionId'] != '' else False
+        keyword = int(options['keyword']) if 'keyword' in options and options['keyword'] != '' else False
         for e in self.env['career.employee'].search(domain):
-            categoryId =  int(options['categoryId']) if 'categoryId' in options and options['categoryId']!='' else False
-            positionId = int(options['positionId']) if 'positionId' in options  and options['positionId']!='' else False
-            latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,order='start_date desc')
+            latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,
+                                                                   order='start_date desc')
             if positionId:
                 if not latest_exp or not latest_exp.position_id:
                     continue
@@ -408,6 +410,12 @@ class CompanyUser(models.Model):
             if categoryId:
                 for exp in e.experience_ids:
                     if categoryId in exp.cat_ids.ids:
+                        match = True
+                        break
+            if match and keyword:
+                match = False
+                for exp in e.experience_ids:
+                    if keyword in exp.title or keyword in exp.employer or keyword in exp.description:
                         match = True
                         break
             if not categoryId or match:
