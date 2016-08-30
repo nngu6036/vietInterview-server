@@ -397,7 +397,7 @@ class CompanyUser(models.Model):
                 domain.append(('state_id', '=', int(options['provinceId'])))
         categoryId = int(options['categoryId']) if 'categoryId' in options and options['categoryId'] != '' else False
         positionId = int(options['positionId']) if 'positionId' in options and options['positionId'] != '' else False
-        keyword = int(options['keyword']) if 'keyword' in options and options['keyword'] != '' else False
+        keyword = options['keyword'] if 'keyword' in options and options['keyword'] != '' else False
         for e in self.env['career.employee'].search(domain):
             latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,
                                                                    order='start_date desc')
@@ -414,10 +414,13 @@ class CompanyUser(models.Model):
                         break
             if match and keyword:
                 match = False
-                for exp in e.experience_ids:
-                    if keyword in exp.title or keyword in exp.employer or keyword in exp.description:
-                        match = True
-                        break
+                if keyword in e.user_id.partner_id.email:
+                    match = True
+                if not match:
+                    for exp in e.experience_ids:
+                        if keyword in exp.title or keyword in exp.employer or keyword in exp.description:
+                            match = True
+                            break
             if not categoryId or match:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
