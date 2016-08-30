@@ -401,13 +401,15 @@ class CompanyUser(models.Model):
         for e in self.env['career.employee'].search(domain):
             latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,
                                                                    order='start_date desc')
-            if positionId:
+            match = True
+            if match and positionId:
                 if not latest_exp or not latest_exp.position_id:
                     continue
                 if positionId != latest_exp[0].position_id.id:
                     continue
-            match = False
-            if categoryId:
+                match = True
+            if match and categoryId:
+                match = False
                 for exp in e.experience_ids:
                     if categoryId in exp.cat_ids.ids:
                         match = True
@@ -418,10 +420,11 @@ class CompanyUser(models.Model):
                     match = True
                 if not match:
                     for exp in e.experience_ids:
-                        if keyword in exp.title or keyword in exp.employer or keyword in exp.description:
+                        if keyword.lower() in exp.title.lower() or keyword.lower() in exp.employer.lower()\
+                                or keyword.lower() in exp.description.lower():
                             match = True
                             break
-            if not categoryId or match:
+            if match:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
                                      'categoryIds': list(latest_exp.cat_ids.ids)})
