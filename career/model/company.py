@@ -12,11 +12,24 @@ class CompanyProfile(models.Model):
 
     description = fields.Char(string="Description")
 
-class LicenseCategpry(models.Model):
+class LicenseCategory(models.Model):
     _name = 'career.license_category'
 
     name = fields.Char(string='Name', required=True)
     code = fields.Char(string='License category code')
+
+    @api.model
+    def createLicenseCategory(self, vals):
+        licenseCategory = self.env['career.license_category'].create(
+            {'name': vals['name'], 'code': vals['code']})
+        return licenseCategory.id
+
+    @api.model
+    def getLicenseCategory(self):
+        licenseCategories = self.env['career.license_category'].search([])
+        licenseCategoryList = [
+            {'id': l.id, 'name': l.name, 'code': l.code} for l in licenseCategories]
+        return licenseCategoryList
 
 
 class LicenseRule(models.Model):
@@ -43,7 +56,7 @@ class License(models.Model):
     def createLicense(self, vals):
         license = self.env['career.license'].create(
             {'name': vals['name'], 'email': int(vals['email']), 'point': int(vals['point']),'assignment': int(vals['assignment']),
-             'validity': int(vals['validity'])})
+             'validity': int(vals['validity']), 'cat_id': int(vals['categoryId'])})
         return license.id
 
     @api.model
@@ -51,7 +64,7 @@ class License(models.Model):
         licenses = self.env['career.license'].search([])
         licenseList = [
             {'id': l.id, 'name': l.name,'point':l.point, 'email': l.email, 'assignment': l.assignment, 'validity': l.validity,
-             'createDate': l.create_date} for l in licenses]
+             'createDate': l.create_date, 'categoryId': l.cat_id.id} for l in licenses]
         return licenseList
 
 

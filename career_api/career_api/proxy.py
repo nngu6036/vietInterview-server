@@ -38,6 +38,7 @@ license_service = mainInstance.model('career.license_service')
 mail_service = mainInstance.model('career.mail_service')
 
 license_obj = mainInstance.model('career.license')
+license_category_obj = mainInstance.model('career.license_category')
 license_instance_obj = mainInstance.model('career.license_instance')
 assessment_obj = mainInstance.model('hr.evaluation.interview')
 job_cat_obj = mainInstance.model('career.job_category')
