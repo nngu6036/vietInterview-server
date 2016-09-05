@@ -346,13 +346,13 @@ class CompanyUser(models.Model):
                 return interview.getInterviewQuestion()
         return False
 
-    @api.model
+    @api.one
     def updateInterviewQuestion(self, jQuestions):
         for jQuestion in jQuestions:
             self.env['survey.question'].browse(int(jQuestion['id'])).updateInterviewQuestion(jQuestion)
         return True
 
-    @api.model
+    @api.one
     def removeInterviewQuestion(self, jIds):
         for id in jIds:
             self.env['survey.question'].browse(id).removeInterviewQuestion()
