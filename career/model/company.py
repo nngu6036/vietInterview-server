@@ -12,11 +12,24 @@ class CompanyProfile(models.Model):
 
     description = fields.Char(string="Description")
 
-class LicenseCategpry(models.Model):
+class LicenseCategory(models.Model):
     _name = 'career.license_category'
 
     name = fields.Char(string='Name', required=True)
     code = fields.Char(string='License category code')
+
+    @api.model
+    def createLicenseCategory(self, vals):
+        licenseCategory = self.env['career.license_category'].create(
+            {'name': vals['name'], 'code': vals['code']})
+        return licenseCategory.id
+
+    @api.model
+    def getLicenseCategory(self):
+        licenseCategories = self.env['career.license_category'].search([])
+        licenseCategoryList = [
+            {'id': l.id, 'name': l.name, 'code': l.code} for l in licenseCategories]
+        return licenseCategoryList
 
 
 class LicenseRule(models.Model):
@@ -43,7 +56,7 @@ class License(models.Model):
     def createLicense(self, vals):
         license = self.env['career.license'].create(
             {'name': vals['name'], 'email': int(vals['email']), 'point': int(vals['point']),'assignment': int(vals['assignment']),
-             'validity': int(vals['validity'])})
+             'validity': int(vals['validity']), 'cat_id': int(vals['categoryId'])})
         return license.id
 
     @api.model
@@ -51,7 +64,7 @@ class License(models.Model):
         licenses = self.env['career.license'].search([])
         licenseList = [
             {'id': l.id, 'name': l.name,'point':l.point, 'email': l.email, 'assignment': l.assignment, 'validity': l.validity,
-             'createDate': l.create_date} for l in licenses]
+             'createDate': l.create_date, 'categoryId': l.cat_id.id} for l in licenses]
         return licenseList
 
 
@@ -397,25 +410,39 @@ class CompanyUser(models.Model):
                 domain.append(('country_id', '=', int(options['countryId'])))
             if options['provinceId']:
                 domain.append(('state_id', '=', int(options['provinceId'])))
+        categoryId = int(options['categoryId']) if 'categoryId' in options and options['categoryId'] != '' else False
+        positionId = int(options['positionId']) if 'positionId' in options and options['positionId'] != '' else False
+        keyword = options['keyword'] if 'keyword' in options and options['keyword'] != '' else False
         for e in self.env['career.employee'].search(domain):
-            categoryId =  int(options['categoryId']) if 'categoryId' in options and options['categoryId']!='' else False
-            positionId = int(options['positionId']) if 'positionId' in options  and options['positionId']!='' else False
-            latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,order='start_date desc')
-            if positionId:
+            latest_exp = self.env['career.work_experience'].search([('employee_id','=',e.id)],offset=0,limit=1,
+                                                                   order='start_date desc')
+            match = True
+            if match and positionId:
                 if not latest_exp or not latest_exp.position_id:
                     continue
                 if positionId != latest_exp[0].position_id.id:
                     continue
-            match = False
-            if categoryId:
+                match = True
+            if match and categoryId:
+                match = False
                 for exp in e.experience_ids:
                     if categoryId in exp.cat_ids.ids:
                         match = True
                         break
-            if not categoryId or match:
+            if match and keyword:
+                match = False
+                if keyword in e.user_id.partner_id.email:
+                    match = True
+                if not match:
+                    for exp in e.experience_ids:
+                        if keyword.lower() in exp.title.lower() or keyword.lower() in exp.employer.lower()\
+                                or keyword.lower() in exp.description.lower():
+                            match = True
+                            break
+            if match:
                 employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
-                                     'countryId': e.partner_id.country_id.id, 'positionID': options['positionId'],
-                                     'categoryIds': e.experience_ids.ids})
+                                     'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
+                                     'categoryIds': list(latest_exp.cat_ids.ids)})
         return employeeList
 
     @api.one
