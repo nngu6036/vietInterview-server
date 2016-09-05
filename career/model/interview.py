@@ -366,6 +366,7 @@ class Interview(models.Model):
         questions = self.env['survey.question'].search([('survey_id','=',self.id)])
         questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'prepare':q.prepare,'videoUrl':q.videoUrl,
                          'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]
+        print questionList
         return questionList
 
 
