@@ -234,10 +234,12 @@ class CompanyUser(models.Model):
             for interview in self.env['survey.survey'].browse(interviewId):
                 for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
-                        self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                        if not self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject):
+                            return False
                     if interview.mode == 'conference':
                         self.scheduleMeeting(candidate,jsCandidate['schedule'])
-                        self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
+                        if not self.env['career.mail_service'].sendConferenceInvitation(candidate, subject):
+                            return False
         return True
 
 
@@ -346,13 +348,13 @@ class CompanyUser(models.Model):
                 return interview.getInterviewQuestion()
         return False
 
-    @api.model
+    @api.one
     def updateInterviewQuestion(self, jQuestions):
         for jQuestion in jQuestions:
             self.env['survey.question'].browse(int(jQuestion['id'])).updateInterviewQuestion(jQuestion)
         return True
 
-    @api.model
+    @api.one
     def removeInterviewQuestion(self, jIds):
         for id in jIds:
             self.env['survey.question'].browse(id).removeInterviewQuestion()

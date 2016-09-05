@@ -243,7 +243,8 @@ class Interview(models.Model):
         for jQuestion in jQuestions:
             page = self.env['survey.page'].create({'title': 'Single Page', 'survey_id': self.id})
             question = self.env['survey.question'].create(
-                {'question': jQuestion['title'], 'response': int(jQuestion['response']),
+                {'question': jQuestion['title'],
+                 'response': int(jQuestion['response']) if 'response' in jQuestions else False,
                  'retry': int(jQuestion['retry']) if 'retry' in jQuestions else False,
                  'videoUrl': jQuestion['videoUrl'],
                  'prepare': int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
@@ -388,8 +389,10 @@ class InterviewQuestion(models.Model):
 
     @api.one
     def updateInterviewQuestion(self, vals):
+        print vals
         self.write(
-            {'question': vals['title'], 'response': int(vals['response']),
+            {'question': vals['title'],
+             'response': int(vals['response']) if 'response' in vals else False,
              'retry': int(vals['retry']) if 'retry' in vals else False,
              'videoUrl': vals['videoUrl'],
              'prepare': int(vals['prepare']) if 'prepare' in vals else False,

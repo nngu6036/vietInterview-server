@@ -88,3 +88,17 @@ def signal(message,*args):
 	if signal_message['type']=='answer':
 		signal_message['type'] = 'answerEvent'
 		socketio.emit('signal',signal_message,room=signal_message['meetingId'],namespace='/conference')
+
+
+@socketio.on('chat', namespace='/conference')
+def chat(message):
+	chat_message =  message['data']
+	print 'chat', chat_message
+	socketio.emit('chatEvent',{'text':chat_message['text'],'memberId':chat_message['memberId']},room=chat_message['meetingId'],namespace='/conference')
+
+
+@socketio.on('whiteboard', namespace='/conference')
+def whiteboard(message):
+	wb_message =  message['data']
+	print 'obj', wb_message
+	socketio.emit('whiteboardEvent',{'object':wb_message['object'],'event':wb_message['event'],'memberId':wb_message['memberId']},room=wb_message['meetingId'],namespace='/conference')

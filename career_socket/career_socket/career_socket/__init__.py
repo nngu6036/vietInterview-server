@@ -17,7 +17,5 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
-import conference_api
-import chatapi
-import whiteboardapi
+import interview_api
 
