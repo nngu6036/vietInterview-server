@@ -14,7 +14,7 @@
             <field name="name">Interview invitation</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Interview invitation</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -24,7 +24,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">
             <p align="justify">
             ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">HDSaison Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
             </p>
             </td></tr>
@@ -61,7 +61,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a> <br>
        Thank you,<br><br>
        ${object.company_id.name}
 
@@ -98,7 +98,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -135,7 +135,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a> <br>
        Xin cảm ơn,<br><br>
        ${object.company_id.name}
 
@@ -169,7 +169,7 @@
             <field name="name">Interview invitation</field>
             <field name="model_id" ref="career.model_career_conference_member"/>
             <field name="subject">Interview invitation</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.conference_id.applicant_id.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -179,7 +179,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -214,7 +214,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a> <br>
        Thank you,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -251,7 +251,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -286,7 +286,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a> <br>
        Xin cảm ơn,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -318,7 +318,7 @@
             <field name="name">Interview reminder</field>
             <field name="model_id" ref="career.model_career_conference_member"/>
             <field name="subject">${object.conference_id.applicant_id.company_id.name} video interview reminder</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.conference_id.applicant_id.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -331,7 +331,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -354,7 +354,7 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">This is a courtesy message from ${object.conference_id.applicant_id.company_id.name} to make sure you got your email invite for the ${object.conference_id.interview_id.job_id.name} video interview; it may have ended up in your bulk-mail or junk e-mail folder.<br><br>
             Once you have located the email, please make sure you have a webcam and microphone setup ready to perform the interview in your own time.<br><br>
-            If you are unable to complete the interview for any reason please contact us at <a href="mailto:info@vietinterview.com">info@vietinterview.com</a>  for assistance.<br><br>
+            If you are unable to complete the interview for any reason please contact us at <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a>  for assistance.<br><br>
             </td></tr>
 
        Thank you,<br><br>
@@ -397,7 +397,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -420,7 +420,7 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Đây là email từ ${object.conference_id.applicant_id.company_id.name} để chắc chắn rằng bạn nhận được email mời phỏng vấn cho vị trí: ${object.conference_id.interview_id.job_id.name}; Nó có thể ở trong thư mục xã hội hoặc quảng cáo trong hòm thư của bạn.<br><br>
             Một khi bạn đã tìm được email, hãy chắc chắn rằng máy tính của bạn có webcam, microphone và kết nối internet để sẵn sàng thực hiện cuộc phỏng vấn trong thời gian riêng của bạn.<<br><br>
-            Nếu bạn không thể hoàn thành cuộc phỏng vấn với lý do nào đó, xin vui lòng liên hệ với chúng tôi để được giúp đỡ theo email <a href="mailto:info@vietinterview.com">info@vietinterview.com</a>  for assistance.<br><br>
+            Nếu bạn không thể hoàn thành cuộc phỏng vấn với lý do nào đó, xin vui lòng liên hệ với chúng tôi để được giúp đỡ theo email <a href="mailto:thongtin@hdsaison.com.vn">thongtin@hdsaison.com.vn</a>  for assistance.<br><br>
             </td></tr>
 
 
@@ -468,7 +468,7 @@
             <field name="name">Interview thank you</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Thankyou letter</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -479,7 +479,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -545,7 +545,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -622,8 +622,8 @@
             <field name="name">New job notification</field>
             <field name="model_id" ref="hr_recruitment.model_hr_job"/>
             <field name="subject">New job notification</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
-            <field name="email_to" >VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_to" >HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html" >
              <![CDATA[
@@ -632,7 +632,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -660,7 +660,7 @@
             <field name="name">Job approval notification</field>
             <field name="model_id" ref="hr_recruitment.model_hr_job"/>
             <field name="subject">Job approval notification</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to" >${object.company_id.partner_id.email}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html" >
@@ -670,7 +670,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -697,7 +697,7 @@
             <field name="name">Reset account password</field>
             <field name="model_id" ref="career.model_career_otk"/>
             <field name="subject">Reset password instruction</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">HDSaison&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.email}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -708,7 +708,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -732,7 +732,7 @@
 
 
        Please forgot this email if you haven't sent request for password recovery,<br><br>
-       VietInterview
+       HDSaison
 
             </td></tr>
           </tbody></table>
@@ -770,7 +770,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="http://www.hdsaison.com.vn/templates/hdf/images/hdf-logo.png" align="center">
           </td>
         </tr>
         <tr>
@@ -794,7 +794,7 @@
 
 
        Vui lòng bỏ qua email nay nếu bạn không gửi yêu cầu phục hồi mật khẩu<br><br>
-       VietInterview
+       HDSaison
 
             </td></tr>
           </tbody></table>
