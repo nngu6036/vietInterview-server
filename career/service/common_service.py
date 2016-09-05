@@ -46,7 +46,10 @@ class CommonService(osv.AbstractModel):
     @api.model
     def getCompanyInfo(self,assignmentId):
         for assignment in self.env['hr.job'].browse(assignmentId):
-            return {'id': assignment.company_id.id, 'name': assignment.company_id.name, 'image': assignment.company_id.logo or False}
+            return {'id': assignment.company_id.id, 'name': assignment.company_id.name,
+                    'image': assignment.company_id.logo or False,
+                    'description': assignment.company_id.partner_id.description,
+                    'videoUrl': assignment.company_id.partner_id.videoUrl}
 
     @api.model
     def searchEmployee(self, email):
