@@ -30,6 +30,8 @@ def question(applicant):
     try:
          if request.method == 'GET':
             questionList = applicant.interview_id.getInterviewQuestion()
+            if not isinstance(questionList, list):
+                questionList = [questionList]
             return jsonify(result=True,questionList=questionList)
     except Exception as exc:
         print(exc)

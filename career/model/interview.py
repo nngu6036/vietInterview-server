@@ -253,14 +253,8 @@ class Interview(models.Model):
             questionIds.append(question.id)
         return questionIds
 
-    @api.multi
-    def getInterviewQuestion(self):
-        self.ensure_one()
-        questions = self.env['survey.question'].search([('survey_id', '=', self.id)])
-        questionList = [
-            {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry, 'videoUrl': q.videoUrl,
-             'source': q.source, 'type': q.mode, 'order': q.sequence, 'prepare': q.prepare} for q in questions]
-        return questionList
+
+
 
     @api.multi
     def getInterviewResponse(self):
@@ -356,7 +350,6 @@ class Interview(models.Model):
             candidate = self.env['hr.applicant'].create(
                 {'name': vals['name'] or vals['email'], 'email_from': vals['email'], 'job_id': self.job_id.id, 'interview_id': self.id,
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
-        print candidate
         return candidate
 
     @api.multi
