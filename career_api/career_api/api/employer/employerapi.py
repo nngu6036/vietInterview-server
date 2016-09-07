@@ -416,3 +416,18 @@ def employeeSearch(employer):
         print 'Employee search error '
         print request.values
         return jsonify(result=False)
+
+@app.route('/employer/candidate', methods=['GET'],endpoint='employer-candidate')
+@employer_session
+def allCandidate(employer):
+    try:
+        if request.method == 'GET':
+            candidateList  = employer.getAllCandidate()
+            if type(candidateList) is list:
+                return jsonify(result=True,candidateList=candidateList)
+            return jsonify(result=True, candidateList=[candidateList])
+    except Exception as exc:
+        print(exc)
+        print 'Candidate error '
+        print request.values
+        return jsonify(result=False)
