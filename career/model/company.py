@@ -346,6 +346,16 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
+    def getAllCandidate(self):
+        candidateList=[]
+        for interview in self.env['survey.survey'].browse():
+            if interview.job_id.company_id.id == self.company_id.id:
+                candidateList.append(interview.getCandidate())
+        if candidateList:
+            return candidateList
+        return False
+
+    @api.one
     def addInterviewQuestion(self, interviewId,jQuestions):
         for interview in self.env['survey.survey'].browse(interviewId):
             if interview.job_id.company_id.id == self.company_id.id:
