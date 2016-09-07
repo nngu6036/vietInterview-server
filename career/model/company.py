@@ -348,10 +348,13 @@ class CompanyUser(models.Model):
     @api.one
     def getAllCandidate(self):
         candidateList = []
-        for interview in self.env['survey.survey'].browse():
+        for interview in self.env['survey.survey'].search([('status', '=', 'published')]):
+            print interview
             if interview.job_id.company_id.id == self.company_id.id:
-                candidateList.append(interview.getCandidate())
-                candidateList[len(candidateList)]['jobId'] = interview.job_id
+                candidates = interview.getCandidate()
+                for candidate in candidates:
+                    candidate['jobId'] = interview.job_id
+                    candidateList.append(candidate)
         if candidateList:
             return candidateList
         return False
