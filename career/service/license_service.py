@@ -90,3 +90,13 @@ class LicenseService(osv.AbstractModel):
                                                                            expiryDdate.year, expiryDdate.month,
                                                                            expiryDdate.day)})
         return self.env['res.company'].browse(companyId).write({'license_instance_id': license_instance.id,})
+
+    @api.one
+    def addLicense(self, companyId, licenseId):
+        license = self.env['career.license'].browse(int(licenseId))
+        expiryDdate = date.today() + timedelta(days=license.validity)
+        license_instance = self.env['career.license_instance'].create({'license_id': license.id,
+                                                                       'expire_date': '%d-%d-%d ' % (
+                                                                           expiryDdate.year, expiryDdate.month,
+                                                                           expiryDdate.day)})
+        return self.env['res.company'].browse(companyId).write({'license_instance_id': license_instance.id,})
