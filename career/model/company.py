@@ -498,7 +498,11 @@ class Conpany(models.Model):
         license_instance = self.env['career.license_instance'].create({'license_id': license.id,
                                                                        'expire_date': '%d-%d-%d ' % (
                                                                            expiryDdate.year, expiryDdate.month,
-                                                                           expiryDdate.day)})
+                                                                           expiryDdate.day), 'email': license.email,
+                                                                       'point': license.point,
+                                                                       'assignment': license.assignment,
+                                                                       'cat_id': license.cat_id,
+                                                                       'rule_ids': license.rule_ids})
         company = self.env['res.company'].create(
             {'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
              'license_instance_id': license_instance.id})
