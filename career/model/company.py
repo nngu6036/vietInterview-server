@@ -71,6 +71,11 @@ class License(models.Model):
 class LicenseInstance(models.Model):
     _name = 'career.license_instance'
 
+    assignment = fields.Integer(string='Assignment limit')
+    email = fields.Integer(string='Email limit')
+    point = fields.Integer(string='Point limit')
+    cat_id = fields.Many2one('career.license_category', string='License category')
+    rule_ids = fields.One2many('career.license_rule', 'license_id', 'License rule')
     license_id = fields.Many2one('career.license', string="License")
     expire_date = fields.Date(string="Expired date")
     effect_date = fields.Date(string="Effective date ")

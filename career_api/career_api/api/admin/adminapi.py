@@ -113,6 +113,24 @@ def renewlicense(session):
         print request.values
         return jsonify(result=False)
 
+
+@app.route('/admin/company/addlicense', methods=['PUT'], endpoint='admin-company-addlicense')
+@admin_session
+def addlicense(session):
+    try:
+        companyId = int(request.values['companyId'])
+        licenseId = int(request.values['licenseId'])
+        if license_service.get(int(licenseId)).addLicense(companyId, licenseId):
+            return jsonify(result=True)
+        else:
+            return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Company add-license error'
+        print request.values
+        return jsonify(result=False)
+
+
 @app.route('/admin/company/user', methods=['GET', 'PUT', 'POST', 'DELETE'], endpoint='admin-company-user')
 @admin_session
 def companyUser(session):
