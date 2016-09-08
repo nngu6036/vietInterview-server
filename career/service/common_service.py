@@ -51,14 +51,3 @@ class CommonService(osv.AbstractModel):
                     'description': assignment.company_id.partner_id.description,
                     'videoUrl': assignment.company_id.partner_id.videoUrl}
 
-    @api.model
-    def searchEmployee(self, email):
-        employees = self.env['career.employee'].search([('login', '=', email)])
-        employeeList = [{'id': e.id, 'name': e.user_id.name, 'email': e.user_id.login,
-                         'profile': e.getProfile(),
-                         'expList': e.getWorkExperience(),
-                         'eduList': e.getEducationHistory(),
-                         'certList': e.getCertificate(),
-                         'docList': e.getDocument(),
-                         } for e in employees]
-        return employeeList

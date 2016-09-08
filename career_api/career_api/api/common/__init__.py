@@ -197,20 +197,3 @@ def assessment():
         print 'Assessment error '
         print request.values
         return jsonify(result=False)
-
-
-@app.route('/common/employee', methods=['GET'],endpoint='common-employee')
-def findCandidate():
-    try:
-         email = request.values['email']
-         if request.method == 'GET':
-            employeeProfile  = common_service.searchEmployee(email)
-            if employeeProfile:
-                return jsonify(result=True,employeeList=employeeProfile)
-            else:
-                return jsonify(result=False)
-    except Exception as exc:
-        print(exc)
-        print 'Search employee error '
-        print request.values
-        return jsonify(result=False)

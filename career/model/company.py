@@ -457,7 +457,7 @@ class CompanyUser(models.Model):
                             match = True
                             break
             if match:
-                employeeList.append({'id': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
+                employeeList.append({'employeeId': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
                                      'categoryIds': list(latest_exp.cat_ids.ids)})
         return employeeList
@@ -483,6 +483,18 @@ class CompanyUser(models.Model):
             return False
         license_service.consumeEmployee(self.company_id.id,self.id,employeeId)
         return True
+
+    @api.one
+    def searchEmployeeByEmail(self, email):
+        employee = [{'employeeId': e.id, 'name': e.user_id.name, 'email': e.user_id.login,
+                         'profile': e.getProfile(),
+                         'expList': e.getWorkExperience(),
+                         'eduList': e.getEducationHistory(),
+                         'certList': e.getCertificate(),
+                         'docList': e.getDocument(),
+                        'viewed': self.env['career.employee.history'].search_count([('employee_id', '=', e.id), ('company_id', '=', self.company_id.id)]) > 0
+                         } for e in self.env['career.employee'].search([('login', '=', email)])]
+        return employee
 
 class Conpany(models.Model):
     _name = 'res.company'

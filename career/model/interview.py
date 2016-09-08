@@ -299,11 +299,14 @@ class Interview(models.Model):
                 if conference.applicant_id.id == applicant.id:
                     candidate['schedule'] = conference.schedule
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
+                candidate['employeeId'] = employee.id
                 candidate['profile'] = employee.getProfile()
                 candidate['expList'] = employee.getWorkExperience()
                 candidate['eduList'] = employee.getEducationHistory()
                 candidate['certList'] = employee.getCertificate()
                 candidate['docList'] = employee.getDocument()
+                candidate['viewed'] = self.env['career.employee.history'].search_count(
+                    [('employee_id', '=', employee.id), ('company_id', '=', self.job_id.company_id.id)]) > 0
             candidateList.append(candidate)
         return candidateList
 

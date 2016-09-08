@@ -431,3 +431,20 @@ def allCandidate(employer):
         print 'Candidate error '
         print request.values
         return jsonify(result=False)
+
+@app.route('/employer/employee/searchByEmail', methods=['GET'],endpoint='employer-employee-search-email')
+@employer_session
+def searchEmployeeByEmail(employer):
+    try:
+         email = request.values['email']
+         if request.method == 'GET':
+            employeeProfile  = employer.searchEmployeeByEmail(email)
+            if employeeProfile:
+                return jsonify(result=True,employeeProfile=employeeProfile)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Search employee error '
+        print request.values
+        return jsonify(result=False)
