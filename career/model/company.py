@@ -353,7 +353,7 @@ class CompanyUser(models.Model):
                 candidates = interview.getCandidate()
                 for candidate in candidates:
                     candidate['jobId'] = interview.job_id.id
-                    candidate['jobTitle'] = interview.job_id.title
+                    candidate['jobName'] = interview.job_id.name
                     candidateList.append(candidate)
         if candidateList:
             return candidateList
