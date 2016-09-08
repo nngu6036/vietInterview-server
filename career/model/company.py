@@ -584,9 +584,9 @@ class Conpany(models.Model):
                 remain_point += employeeHistory.cost
             stats['point'] = remain_point
             stats['license'] = {'name': self.license_instance_id.license_id.name,
-                                'email': self.license_instance_id.license_id.email,
-                                'assignment': self.license_instance_id.license_id.assignment,
-                                'point': self.license_instance_id.license_id.point,
+                                'email': self.license_instance_id.email,
+                                'assignment': self.license_instance_id.assignment,
+                                'point': self.license_instance_id.point,
                                 'expireDate': self.license_instance_id.expire_date,
                                 'state': self.license_instance_id.state,
                                 'code':self.license_instance_id.license_id.cat_id.code}
