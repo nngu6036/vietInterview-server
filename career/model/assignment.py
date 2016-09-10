@@ -110,6 +110,8 @@ class Assignment(models.Model):
     @api.multi
     def action_open(self):
          self.ensure_one()
+         if not self.isEnabled():
+             return False
          if self.write({'status': 'published'}):
              return True
          return False
