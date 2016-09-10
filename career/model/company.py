@@ -513,7 +513,7 @@ class Conpany(models.Model):
                                                                            expiryDdate.day), 'email': license.email,
                                                                        'point': license.point,
                                                                        'assignment': license.assignment,
-                                                                       'cat_id': license.cat_id,
+                                                                       'cat_id': license.cat_id.id,
                                                                        'rule_ids': license.rule_ids})
         company = self.env['res.company'].create(
             {'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,

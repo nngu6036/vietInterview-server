@@ -24,6 +24,7 @@ class AdminService(osv.AbstractModel):
 
     @api.model
     def createAssignment(self,companyId, vals):
+        catIdList = vals['categoryIdList']
         address = self.env['res.partner'].create({'name': vals['name'], 'type': 'contact',
                                                   'country_id': 'countryId' in vals and int(vals['countryId']),
                                                   'state_id': 'provinceId' in vals and int(vals['provinceId']),
@@ -31,7 +32,7 @@ class AdminService(osv.AbstractModel):
         assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
                                                 'deadline': vals['deadline'], 'company_id': companyId,
                                                 'requirements': vals['requirements'] or False,
-                                                'category_id': 'categoryId' in vals and int(vals['categoryId']),
+                                                'category_ids': [(6, 0, catIdList)] or False,
                                                 'position_id': 'positionId' in vals and int(vals['positionId']),
                                                 'address_id': address.id, 'state': 'open'})
         self.approveAssignment(assignment.id)
