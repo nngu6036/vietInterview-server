@@ -94,8 +94,8 @@ def eduLevel():
 def searchJob():
   try:
     if request.method == 'POST':
-      keyword = request.values['keyword']
-      option = json.loads(request.values['option'])
+      keyword = request.values['keyword'] if 'keyword' in request.values else False
+      option = json.loads(request.values['option']) if 'option' in request.values else False
       jobList = common_service.searchJob(keyword, option)
       return jsonify(jobList=jobList)
   except Exception as exc:
