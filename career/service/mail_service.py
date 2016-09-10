@@ -65,7 +65,7 @@ class MailService(osv.AbstractModel):
             email_template = self.env.ref('career.interview_thankyou_email_template')
             if not email_template:
                 return False
-            candidate = self.env['hr.applicant'].search([('email_from','=',email),('job_id','=',interview.job_id.id)])
+            candidate = self.env['hr.applicant'].search([('email_from','=',email),('interview_id','=',inteviewId)])
             if not candidate:
                 return False
             self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True,False,{'lang':lang})

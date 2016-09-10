@@ -112,7 +112,7 @@ class Assignment(models.Model):
          self.ensure_one()
          if not self.isEnabled():
              return False
-         if self.write({'status': 'published'}):
+         if self.write({'state':'recruit','status': 'published'}):
              return True
          return False
 
@@ -120,6 +120,6 @@ class Assignment(models.Model):
     @api.multi
     def action_close(self):
         self.ensure_one()
-        if  self.write({'status': 'closed'}):
+        if  self.write({'state':'open','status': 'closed'}):
             return True
         return False
