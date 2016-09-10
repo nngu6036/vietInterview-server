@@ -38,9 +38,11 @@ class Applicant(models.Model):
     @api.one
     def stopInterview(self):
         if self.response_id.state == 'new' or self.response_id.state == 'skip':
+            print self.response_id.state
             self.response_id.write({'state': 'done'})
             self.env['career.mail_service'].sendInterviewThankyou(self.interview_id.id, self.email_from)
             return True
+        print self.response_id.state
         return False
 
 

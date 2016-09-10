@@ -5,16 +5,16 @@
             <t t-call="career.html_container">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                        <table style="width:100.0%;background-color:#1cb2fb">
+                        <table style="width:100.0%;background-color:#ff2d00">
                             <tr>
                                 <td style="padding:15.0pt 15.0pt 15.0pt 15.0pt">
                                     <div style="text-align:center;">
                                         <table style="border:0px;margin-left:auto; margin-right:auto; ">
                                             <tr>
                                                 <td style="padding:5px ;text-align:center">
-                                                    <a href="https://vietinterview.com">
+                                                    <a href="https://homecredit.vn">
                                                         <img style="height:50px"
-                                                             src="https://vietinterview.com/images/logo.png"
+                                                             src="http://www.homecredit.vn/img/logo-hc2016-main.png"
                                                              align="center">
                                                         </img>
                                                     </a>
