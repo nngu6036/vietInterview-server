@@ -246,8 +246,8 @@ class Interview(models.Model):
             page = self.env['survey.page'].create({'title': 'Single Page', 'survey_id': self.id})
             question = self.env['survey.question'].create(
                 {'question': jQuestion['title'],
-                 'response': int(jQuestion['response']) if 'response' in jQuestions else False,
-                 'retry': int(jQuestion['retry']) if 'retry' in jQuestions else False,
+                 'response': int(jQuestion['response']) if 'response' in jQuestion else False,
+                 'retry': int(jQuestion['retry']) if 'retry' in jQuestion else False,
                  'videoUrl': jQuestion['videoUrl'],
                  'prepare': int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
                  'source': jQuestion['source'], 'mode': jQuestion['type'], 'page_id': page.id,
