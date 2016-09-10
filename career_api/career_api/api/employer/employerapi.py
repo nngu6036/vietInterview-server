@@ -419,10 +419,10 @@ def employeeSearch(employer):
 
 @app.route('/employer/candidate', methods=['GET'],endpoint='employer-candidate')
 @employer_session
-def allCandidate(employer):
+def getCandidate(employer):
     try:
         if request.method == 'GET':
-            candidateList  = employer.getAllCandidate()
+            candidateList  = employer.getCandidate()
             if type(candidateList) is list:
                 return jsonify(result=True,candidateList=candidateList)
             return jsonify(result=True, candidateList=[candidateList])

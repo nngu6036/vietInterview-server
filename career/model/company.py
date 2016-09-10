@@ -351,7 +351,7 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def getAllCandidate(self):
+    def getCandidate(self):
         candidateList = []
         for interview in self.env['survey.survey'].search([('status', '=', 'published')]):
             if interview.job_id.company_id.id == self.company_id.id:
