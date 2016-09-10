@@ -1,13 +1,19 @@
 import  erppeek
 from data import  *
 
-client = erppeek.Client('http://192.168.1.200:8069', 'career', 'admin', '123456')
+client = erppeek.Client('http://demo.vietinterview.com:8069', 'career', 'admin', '123456')
 #client = erppeek.Client('http://10.158.7.18:8069', 'career', 'admin', '123456')
-for job in client.model('hr.job').browse([]):
-    if job.survey_id:
-        job.survey_id.write({'job_id':job.id,'mode':'video','round':1})
-        job.survey_id.write({'status': 'published'})
-for candidate in  client.model('hr.applicant').browse([]):
-    candidate.write({'interview_id':candidate.survey.id})
-
+input = client.model('survey.user_input').get([('token','=',CODE)])
+print input.state
+input.write({'state':'new'})
+#jobs = client.model('hr.job').browse([])
+#jobs.write({'status':'published'})
+#for job in client.model('hr.job').browse([('name','=','test')]):
+#    print job
+    #job.write({'state':'recruit'})
+#    print job.isEnabled()
+applicant = client.model('hr.applicant').get([('input_token', '=', CODE)])
+print applicant.interview_id
+print applicant.interview_id.job_id
+print applicant.interview_id.job_id.status
 

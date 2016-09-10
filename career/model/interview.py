@@ -38,7 +38,6 @@ class Applicant(models.Model):
     @api.one
     def stopInterview(self):
         if self.response_id.state == 'new' or self.response_id.state == 'skip':
-            print self.response_id.state
             self.response_id.write({'state': 'done'})
             self.env['career.mail_service'].sendInterviewThankyou(self.interview_id.id, self.email_from)
             return True
@@ -59,16 +58,13 @@ class Applicant(models.Model):
 
     @api.one
     def attachDocument(self, file_name, file_location, comment):
-        applicants = self.env['hr.applicant'].search([('email_from', '=', self.response_id.email)])
-        if applicants:
-            applicant = applicants[0]
-            assignment = applicant.job_id
-            if assignment and assignment.status == 'published' and assignment.survey_id:
-                self.env['ir.attachment'].create({'name': comment, 'description': comment,
-                                                  'res_model': 'hr.applicant', 'res_id': applicant[0].id,
-                                                  'company_id': assignment.company_id.id, 'type': 'binary',
-                                                  'store_fname': file_location, 'datas_fname': file_name})
-                return True
+        assignment = self.job_id
+        if assignment and assignment.status == 'published' and self.interview_id:
+            self.env['ir.attachment'].create({'name': comment, 'description': comment,
+                                              'res_model': 'hr.applicant', 'res_id': self.id,
+                                              'company_id': assignment.company_id.id, 'type': 'binary',
+                                              'store_fname': file_location, 'datas_fname': file_name})
+            return True
         return False
 
 class ConferenceMember(models.Model):
@@ -101,8 +97,6 @@ class ConferenceMember(models.Model):
                     info['moderator'] = {'name': member.name, 'role': member.role, 'memberId': member.member_id,
                                          'meetingId': member.meeting_id}
                     questions = self.env['survey.question'].search([('survey_id', '=', self.conference_id.interview_id.id)])
-                    print self.conference_id.interview_id.id
-                    print questions
                     info['questionList'] = [
                         {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry,
                          'prepare': q.prepare, 'videoUrl': q.videoUrl, 'source': q.source,
@@ -321,9 +315,6 @@ class Interview(models.Model):
     @api.multi
     def action_open(self):
         self.ensure_one()
-        print self.status
-        print self.job_id.status
-        print self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')])
         if self.status != 'published' and self.job_id.status == 'published' and not self.env['survey.survey'].search([('job_id', '=', self.job_id.id), ('status', '=', 'published')]):
             self.write({'status': 'published'})
             return True
@@ -367,7 +358,6 @@ class Interview(models.Model):
         questions = self.env['survey.question'].search([('survey_id','=',self.id)])
         questionList = [{'id':q.id,'title':q.question,'response':q.response,'retry':q.retry,'prepare':q.prepare,'videoUrl':q.videoUrl,
                          'source':q.source,'type':q.mode,'order':q.sequence} for q in questions]
-        print questionList
         return questionList
 
 
@@ -384,7 +374,6 @@ class InterviewQuestion(models.Model):
 
     @api.one
     def updateInterviewQuestion(self, vals):
-        print vals
         self.write(
             {'question': vals['title'],
              'response': int(vals['response']) if 'response' in vals else False,
