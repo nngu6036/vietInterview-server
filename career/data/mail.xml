@@ -46,7 +46,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">HOME CREDIT Website</a><br>
+            For tips on video interviewing, please go to <a href="https://www.homecredit.vn">HOME CREDIT Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
@@ -118,8 +118,8 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career">HOME CREDIT Website</a><br>
-            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
+            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://www.homecredit.vn">HOME CREDIT Website</a><br>
+            Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã sẵn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
             <tr>
@@ -210,7 +210,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@homecredit.vn</a> <br>
        Thank you,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -282,7 +282,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@homecredit.vn">info@homecredit.vn</a> <br>
        Xin cảm ơn,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -416,7 +416,7 @@
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Đây là email từ ${object.conference_id.applicant_id.company_id.name} để chắc chắn rằng bạn nhận được email mời phỏng vấn cho vị trí: ${object.conference_id.interview_id.job_id.name}; Nó có thể ở trong thư mục xã hội hoặc quảng cáo trong hòm thư của bạn.<br><br>
             Một khi bạn đã tìm được email, hãy chắc chắn rằng máy tính của bạn có webcam, microphone và kết nối internet để sẵn sàng thực hiện cuộc phỏng vấn trong thời gian riêng của bạn.<<br><br>
-            Nếu bạn không thể hoàn thành cuộc phỏng vấn với lý do nào đó, xin vui lòng liên hệ với chúng tôi để được giúp đỡ theo email <a href="mailto:info@vietinterview.com">info@vietinterview.com</a>  for assistance.<br><br>
+            Nếu bạn không thể hoàn thành cuộc phỏng vấn với lý do nào đó, xin vui lòng liên hệ với chúng tôi để được giúp đỡ theo email <a href="mailto:info@homecredit.vn">info@homecredit.vn</a>  for assistance.<br><br>
             </td></tr>
 
 
