@@ -42,7 +42,6 @@ class Applicant(models.Model):
             self.response_id.write({'state': 'done'})
             self.env['career.mail_service'].sendInterviewThankyou(self.interview_id.id, self.email_from)
             return True
-        print self.response_id.state
         return False
 
 
