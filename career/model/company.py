@@ -351,18 +351,21 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def getAllCandidate(self):
+    def getCandidate(self):
         candidateList = []
-        for interview in self.env['survey.survey'].search([('status', '=', 'published')]):
-            if interview.job_id.company_id.id == self.company_id.id:
-                candidates = interview.getCandidate()
-                for candidate in candidates:
-                    candidate['jobId'] = interview.job_id.id
-                    candidate['jobName'] = interview.job_id.name
-                    candidateList.append(candidate)
-        if candidateList:
-            return candidateList
-        return False
+        for applicant in self.env['hr.applicant'].search([('company_id','=',self.company_id.id)]):
+            candidate = {}
+            candidate['jobId'] = applicant.job_id.id
+            candidate['jobName'] = applicant.job_id.name
+            for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
+                candidate['employeeId'] = employee.id
+                candidate['profile'] = employee.getProfile()
+                candidate['expList'] = employee.getWorkExperience()
+                candidate['eduList'] = employee.getEducationHistory()
+                candidate['certList'] = employee.getCertificate()
+                candidate['docList'] = employee.getDocument()
+            candidateList.append(candidate)
+        return candidateList
 
     @api.one
     def addInterviewQuestion(self, interviewId,jQuestions):

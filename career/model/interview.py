@@ -350,13 +350,21 @@ class Interview(models.Model):
         if not user_input:
             user_input = self.env['survey.user_input'].create({'survey_id': self.id, 'deadline': self.job_id.deadline,
                                                                'type': 'link', 'state': 'new', 'email': vals['email']})
-        candidate = self.env['hr.applicant'].search(
-            [('email_from', '=', vals['email']), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
+        createNew = False
+        candidate = self.env['hr.applicant'].search([('email_from', '=', vals['email'])])
         if not candidate:
+            candidate = self.env['hr.applicant'].search(
+                [('email_from', '=', vals['email']), '|', ('survey', '=', self.id), ('interview_id', '=', self.id)])
+            if candidate:
+                candidate.write({'interview_id':self.id})
+            else:
+                createNew = True
+        else:
+            createNew = True
+        if createNew:
             candidate = self.env['hr.applicant'].create(
                 {'name': vals['name'] or vals['email'], 'email_from': vals['email'], 'job_id': self.job_id.id, 'interview_id': self.id,
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
-        print candidate
         return candidate
 
     @api.multi
