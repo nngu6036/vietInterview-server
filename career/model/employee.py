@@ -250,8 +250,7 @@ class EmployeeUser(models.Model):
             if assignment.isEnabled():
                 if not assignment.survey_ids:
                     candidate = self.env['hr.applicant'].search(
-                        [('email_from', '=', self.user_id.login), ('job_id', '=', assignment.id),
-                         ('interview_id', '=', survey.id)])
+                        [('email_from', '=', self.user_id.login), ('job_id', '=', assignment.id)])
                     if not candidate:
                         self.env['hr.applicant'].create(
                             {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
