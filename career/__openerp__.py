@@ -24,10 +24,10 @@
 
     # always loaded
     'data': [
+        'data/job.xml',
         'data/data.xml',
         'data/assessment.xml',
         'data/question_bank.xml',
-        'data/job.xml',
         'data/install.xml',
         'data/mail.xml',
         'data/location.xml',
