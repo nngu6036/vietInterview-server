@@ -4,6 +4,9 @@
         <record model="res.groups" id="career.admin_group">
             <field name="name">Administrator group</field>
         </record>
+        <record model="res.groups" id="career.cc_group">
+            <field name="name">Call center group</field>
+        </record>
         <record model="res.groups" id="career.employer_group">
             <field name="name">Employer group</field>
         </record>
