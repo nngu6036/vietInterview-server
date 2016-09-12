@@ -1,7 +1,8 @@
 import json
 from werkzeug.utils import secure_filename
-from career_api.proxy import Session,admin_service, license_obj, company_obj,company_user_obj,license_service,assignment_obj,user_obj
-from career_api.proxy import admin_session, work_exp_obj, certificate_obj, edu_hist_obj, document_obj, license_category_obj
+from career_api.proxy import Session,admin_service, license_obj, company_obj,company_user_obj,license_service
+from career_api.proxy import admin_session, work_exp_obj, certificate_obj, edu_hist_obj, document_obj
+from career_api.proxy import assignment_obj,user_obj, license_category_obj, admin_obj
 from flask import jsonify, request
 import base64
 from career_api import app
@@ -29,15 +30,15 @@ def login():
 def account(session):
     try:
         if request.method == 'GET':
-            adminList = admin_service.getAdmins()
+            adminList = admin_obj.getAdmins()
             return jsonify(result=True, companyList=adminList)
         if request.method == 'PUT':
             admin = json.loads(request.values['admin'])
-            admin_service.updateAdmin(admin)
+            admin_obj.updateAdmin(admin)
             return jsonify(result=True)
         if request.method == 'POST':
             admin = json.loads(request.values['admin'])
-            adminId = admin_service.createAdmin(admin)
+            adminId = admin_obj.createAdmin(admin)
             if adminId:
                 return jsonify(result=True, employerId=adminId)
             else:

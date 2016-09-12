@@ -22,6 +22,5 @@ class Admin(models.Model):
             user = self.env['res.users'].create(
                 {'login': login, 'password': password, 'name': login, 'notify_email': 'none',
                  'email': login, 'groups_id': [(6, 0, [admin_group.id, hr_group.id, survey_group.id, man_group.id])]})
-            employee = self.env['career.employee'].create({'user_id': user.id})
-            return employee.id
+            return user.id
         return False
