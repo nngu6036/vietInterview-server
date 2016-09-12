@@ -36,12 +36,17 @@ class Admin(models.Model):
     @api.model
     def getAdmins(self):
         adminList = []
+        admin = {}
         users = self.env['res.users'].search()
         admin_group = self.env.ref('career.admin_group')
         cc_group = self.env.ref('career.cc_group')
         for user in users:
-            if admin_group.id in user.groups_id.ids or cc_group.id in user.groups_id.ids:
+            admin['role'] = False
+            if admin_group.id in user.groups_id.ids:
+                admin['role'] = admin_group.name
+            if cc_group.id in user.groups_id.ids:
+                admin['role'] = cc_group.name
+            if admin['role']:
                 admin['login'] = user.login
-                admin['role'] = user.groups_id.name
-                return True
-        return False
+                adminList.append(admin)
+        return adminList
