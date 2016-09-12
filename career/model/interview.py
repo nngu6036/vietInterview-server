@@ -209,7 +209,8 @@ class Interview(models.Model):
 
 	@api.model
 	def create(self, vals):
-		vals['round'] = self.env['survey.survey'].search_count([('job_id', '=', vals['job_id'])]) + 1
+		if 'job_id' in vals:
+			vals['round'] = self.env['survey.survey'].search_count([('job_id', '=', vals['job_id'])]) + 1
 		interview = super(Interview, self).create(vals)
 		return interview
 
