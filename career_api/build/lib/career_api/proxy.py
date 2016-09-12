@@ -38,6 +38,7 @@ license_service = mainInstance.model('career.license_service')
 mail_service = mainInstance.model('career.mail_service')
 
 license_obj = mainInstance.model('career.license')
+license_category_obj = mainInstance.model('career.license_category')
 license_instance_obj = mainInstance.model('career.license_instance')
 assessment_obj = mainInstance.model('hr.evaluation.interview')
 job_cat_obj = mainInstance.model('career.job_category')
@@ -57,6 +58,7 @@ document_obj = mainInstance.model('ir.attachment')
 conference_member_obj = mainInstance.model('career.conference_member')
 company_user_obj = mainInstance.model('career.employer')
 user_obj = mainInstance.model('career.employee')
+admin_obj = mainInstance.model('res.users')
 applicant_obj = mainInstance.model('hr.applicant')
 
 # decorator
