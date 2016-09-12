@@ -24,6 +24,31 @@ def login():
         return jsonify(result=False)
 
 
+@app.route('/admin/account', methods=['GET', 'PUT', 'POST'], endpoint='admin-account')
+@admin_session
+def account(session):
+    try:
+        if request.method == 'GET':
+            adminList = admin_service.getAdmins()
+            return jsonify(result=True, companyList=adminList)
+        if request.method == 'PUT':
+            admin = json.loads(request.values['admin'])
+            admin_service.updateAdmin(admin)
+            return jsonify(result=True)
+        if request.method == 'POST':
+            admin = json.loads(request.values['admin'])
+            adminId = admin_service.createAdmin(admin)
+            if adminId:
+                return jsonify(result=True, employerId=adminId)
+            else:
+                return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Admin account error '
+        print request.values
+        return jsonify(result=False)
+
+
 @app.route('/admin/account/logout', methods=['POST'], endpoint='admin-logout')
 def logout():
     try:
