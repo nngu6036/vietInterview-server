@@ -96,10 +96,7 @@ def searchJob():
     if request.method == 'POST':
       keyword = request.values['keyword'] if 'keyword' in request.values else False
       option = json.loads(request.values['option']) if 'option' in request.values else False
-      start = request.values['start'] if 'start' in request.values else None
-      offset = request.values['offset'] if 'offset' in request.values else None
-      count = request.values['count'] if 'count' in request.values else None
-      jobList = common_service.searchJob(keyword, option,start,offset,count)
+      jobList = common_service.searchJob(keyword, option)
       return jsonify(jobList=jobList)
   except Exception as exc:
     print(exc)
@@ -134,18 +131,6 @@ def resetPass():
         print request.values
         return jsonify(result=False)
 
-@app.route('/common/candidate', methods=['GET'],endpoint='common-candidate')
-def findCandidate():
-    try:
-         assignmentId  = int(request.values['assignmentId'])
-         if request.method == 'GET':
-            employeeList  = common_service.searchPotentialCandidate(assignmentId)
-            return jsonify(result=True,employeeList=employeeList)
-    except Exception as exc:
-        print(exc)
-        print 'Potential candidate error '
-        print request.values
-        return jsonify(result=False)
 
 @app.route('/common/company', methods=['GET'],endpoint='employee-company')
 def company():
