@@ -1,7 +1,7 @@
 
 #URL='http://127.0.0.1:5000/'
 #URL='http://192.168.1.200/api/'
-URL='https://vietinterview.com/api/'
+URL='https://demo.vietinterview.com/api/'
 ACCOUNT = 'admin'
 PASS = '123456'
 TOKEN = 'LK452V44I2M30X306HHGNI94'

@@ -131,18 +131,6 @@ def resetPass():
         print request.values
         return jsonify(result=False)
 
-@app.route('/common/candidate', methods=['GET'],endpoint='common-candidate')
-def findCandidate():
-    try:
-         assignmentId  = int(request.values['assignmentId'])
-         if request.method == 'GET':
-            employeeList  = common_service.searchPotentialCandidate(assignmentId)
-            return jsonify(result=True,employeeList=employeeList)
-    except Exception as exc:
-        print(exc)
-        print 'Potential candidate error '
-        print request.values
-        return jsonify(result=False)
 
 @app.route('/common/company', methods=['GET'],endpoint='employee-company')
 def company():

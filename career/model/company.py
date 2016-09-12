@@ -139,8 +139,6 @@ class CompanyUser(models.Model):
 												  'country_id': 'countryId' in vals and int(vals['countryId']),
 												  'state_id': 'provinceId' in vals and int(vals['provinceId']),
 												  'company_id': self.user_id.company_id.id})
-		print vals
-		print vals['positionId']
 		assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
 												'deadline': vals['deadline'], 'company_id': self.user_id.company_id.id,
 												'requirements': vals['requirements'] or False,

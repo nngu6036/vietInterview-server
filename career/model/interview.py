@@ -50,14 +50,11 @@ class Applicant(models.Model):
 
 	@api.one
 	def attachDocument(self, file_name, file_location, comment):
-		assignment = self.job_id
-		if assignment and assignment.status == 'published' and assignment.survey_id:
-			self.env['ir.attachment'].create({'name': comment, 'description': comment,
-											  'res_model': 'hr.applicant', 'res_id': self.id,
-											  'company_id': assignment.company_id.id, 'type': 'binary',
-											  'store_fname': file_location, 'datas_fname': file_name})
-			return True
-		return False
+		self.env['ir.attachment'].create({'name': comment, 'description': comment,
+										  'res_model': 'hr.applicant', 'res_id': self.id,
+										  'company_id': self.company_id.id, 'type': 'binary',
+										  'store_fname': file_location, 'datas_fname': file_name})
+		return True
 
 
 class ConferenceMember(models.Model):
