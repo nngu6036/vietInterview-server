@@ -94,5 +94,3 @@ class OTK(models.Model):
     _sql_constraints = [
         ('token_unique', 'unique (token)', 'The token must be unique within an application!')
     ]
-
-
