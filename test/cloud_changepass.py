@@ -1,9 +1,9 @@
 
 import erppeek
 
-account = 'thang.tran@vietinterview.com'
+account = 'homecredit'
 passwd = '123456'
-URL = 'http://vietinterview.com:8069'
+URL = 'http://demo.vietinterview.com:8069'
 
 #client = erppeek.Client('http://cloud.emaerp.vn:8069', 'ema', 'admin', '123456')
 client = erppeek.Client(URL, 'career', 'admin', '123456')
