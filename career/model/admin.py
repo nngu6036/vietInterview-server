@@ -37,7 +37,7 @@ class Admin(models.Model):
     def getAdmins(self):
         adminList = []
         admin = {}
-        users = self.env['res.users'].search()
+        users = self.env['res.users'].search([])
         admin_group = self.env.ref('career.admin_group')
         cc_group = self.env.ref('career.cc_group')
         for user in users:
@@ -48,5 +48,6 @@ class Admin(models.Model):
                 admin['role'] = cc_group.name
             if admin['role']:
                 admin['login'] = user.login
+                admin['id'] = user.id
                 adminList.append(admin)
         return adminList
