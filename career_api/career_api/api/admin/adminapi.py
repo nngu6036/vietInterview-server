@@ -14,7 +14,7 @@ def login():
     try:
         login = request.values['login']
         password = request.values['password']
-        role = request.values['role']
+        role = request.values['role'] if 'role' in request.values else False
         if not role:
             token = Session.start(login, password, 'admin')
             if token:
