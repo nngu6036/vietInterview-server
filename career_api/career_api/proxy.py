@@ -65,7 +65,7 @@ applicant_obj = mainInstance.model('hr.applicant')
 def admin_session(func):
     def func_wrapper():
         token = request.values['token']
-        session = Session.resume(token, ['admin'])
+        session = Session.resume(token, ['admin', 'cc'])
         return func(session)
     return func_wrapper
 
