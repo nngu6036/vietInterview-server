@@ -33,7 +33,7 @@ class CompanyUser(models.Model):
 
     @api.one
     def updateCompanyUser(self, vals):
-        self.user_id.write({'name': vals['name']})
+        self.user_id.write({'name': vals['name'], 'password': vals['password']})
         return True
 
     @api.one
