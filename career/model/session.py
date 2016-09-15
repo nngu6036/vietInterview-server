@@ -88,6 +88,7 @@ class OTK(models.Model):
     @api.model
     def create(self, vals):
         vals['token'] = util.id_generator(24)
+        vals['date_expired'] = (date.today() + timedelta(days=1)).strftime('%Y-%m-%d')
         otk = super(OTK, self).create(vals)
         return otk
 
