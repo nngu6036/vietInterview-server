@@ -244,7 +244,7 @@ class EmployeeUser(models.Model):
         return False
 
     @api.multi
-    def applyJob(self, assignmentId):
+    def applyJob(self, assignmentId, letter):
         self.ensure_one()
         for assignment in self.env['hr.job'].browse(assignmentId):
             if assignment.isEnabled():
@@ -252,9 +252,10 @@ class EmployeeUser(models.Model):
                     candidate = self.env['hr.applicant'].search(
                         [('email_from', '=', self.user_id.login), ('job_id', '=', assignment.id)])
                     if not candidate:
-                        self.env['hr.applicant'].create(
+                        applicant_id = self.env['hr.applicant'].create(
                             {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
-                             'company_id': assignment.company_id.id})
+                             'company_id': assignment.company_id.id, 'letter': letter})
+                        self.env['career.mail_service'].sendCoverLetter(applicant_id.id)
                     return True
                 for survey in assignment.survey_ids:
                     if survey.status == 'published':
@@ -268,10 +269,11 @@ class EmployeeUser(models.Model):
                             [('email_from', '=', self.user_id.login), ('job_id', '=', assignment.id),
                              ('interview_id', '=', survey.id)])
                         if not candidate:
-                            self.env['hr.applicant'].create(
+                            applicant_id = self.env['hr.applicant'].create(
                                 {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
                                  'company_id': assignment.company_id.id, 'response_id': user_input.id,
-                                 'interview_id': survey.id})
+                                 'interview_id': survey.id, 'letter': letter})
+                            self.env['career.mail_service'].sendCoverLetter(applicant_id.id)
                         return True
         return False
 
