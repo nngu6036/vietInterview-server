@@ -5,10 +5,10 @@ import json
 # do POST
 url = URL + 'admin/company/user'
 print url
-user = dict(name='User3',email='nem3@gmail.com',
+user = dict(name='HD Saison',email='hdsaison',
                password='123456')
 user = json.dumps(user)
-values = dict(user=user, companyId=24,token=TOKEN)
+values = dict(user=user, companyId=5,token=TOKEN)
 data = urllib.urlencode(values)
 req = urllib2.Request(url, data)
 rsp = urllib2.urlopen(req)

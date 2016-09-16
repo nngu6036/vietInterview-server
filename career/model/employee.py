@@ -11,7 +11,7 @@ class UserProfile(models.Model):
 
     gender = fields.Char(string="Gender")
     videoUrl = fields.Char(string="Video URL")
-
+    description = fields.Char(string="Description")
 
 class WorkExperience(models.Model):
     _name = 'career.work_experience'

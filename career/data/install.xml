@@ -1,5 +1,9 @@
 <openerp>
     <data>
+        <record model="ir.config_parameter" id="career.company_url">
+            <field name="key">company.url</field>
+            <field name="value">https://vietinterview.com</field>
+        </record>
         <function model="career.career" name="install"/>
     </data>
 

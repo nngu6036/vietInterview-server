@@ -14,7 +14,7 @@
             <field name="name">Interview invitation</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Interview invitation</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">${object.company_id.name}&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -24,7 +24,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -46,14 +46,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            For tips on video interviewing, please go to <a href="${object.company_id.website}/#/career">${object.company_id.name} Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/interview?code=${object.response_id.token}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.company_id.website}/#/interview?code=${object.response_id.token}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Interview
         </a><br><br>
     </center>
@@ -96,7 +96,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -118,14 +118,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://demo.vietinterview.com/#/career">${object.company_id.name} Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/interview?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.company_id.website}/#/interview?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Bắt đầu phỏng vấn
         </a><br><br>
     </center>
@@ -165,7 +165,7 @@
             <field name="name">Interview invitation</field>
             <field name="model_id" ref="career.model_career_conference_member"/>
             <field name="subject">Interview invitation</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">${object.conference_id.applicant_id.company_id.name}&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.conference_id.applicant_id.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -175,7 +175,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -197,14 +197,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on :${object.conference_id.interview_id.job_id.name} interview.<br>
-            For tips on conference interviewing, please go to <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            For tips on conference interviewing, please go to <a href="${object.conference_id.applicant_id.company_id.website}/#/career">${object.conference_id.applicant_id.company_id.name} Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.conference_id.schedule}. When you are ready, click the "Start conference" button to start.
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.conference_id.applicant_id.company_id.website}/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Conference
         </a><br><br>
     </center>
@@ -247,7 +247,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -269,14 +269,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau :${object.conference_id.interview_id.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="https://vietinterview.com/#/career">VietInterview Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="${object.conference_id.applicant_id.company_id.website}/#/career">${object.conference_id.applicant_id.company_id.name} Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn trực tuyến, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Cuộc phỏng vấn sẽ bắt đầu vào lúc ${object.conference_id.schedule}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="https://vietinterview.com/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.conference_id.applicant_id.company_id.website}/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Bắt đầu phỏng vấn
         </a><br><br>
     </center>
@@ -313,8 +313,8 @@
         <record model="email.template" id="career.interview_reminder_email_template">
             <field name="name">Interview reminder</field>
             <field name="model_id" ref="career.model_career_conference_member"/>
-            <field name="subject">${object.conference_id.applicant_id.company_id.name} video interview reminder</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="subject">${object.conference_id.applicant_id.company_id.name}  interview reminder</field>
+            <field name="email_from">${object.conference_id.applicant_id.company_id.name}&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.conference_id.applicant_id.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -327,7 +327,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -393,7 +393,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -464,7 +464,7 @@
             <field name="name">Interview thank you</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Thankyou letter</field>
-            <field name="email_from">VietInterview&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_from">${object.company_id.name}&lt;contact@vietinterview.com&gt;</field>
             <field name="email_to">${object.email_from}</field>
             <field name="mail_server_id" ref="career.career_smtp_host"/>
             <field name="body_html">
@@ -475,7 +475,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -541,7 +541,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -623,7 +623,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -661,7 +661,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -699,7 +699,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -718,7 +718,7 @@
 
 
             <tr><td>
-            <a href="https://vietinterview.com/#/reset_pass?token=${object.token}">Reset password link</a>
+            <a href="${object.company_id.website}/#/reset_pass?token=${object.token}">Reset password link</a>
             </td></tr>
 
 
@@ -761,7 +761,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="https://vietinterview.com/images/logo.png" align="center">
+            <img height=50px src="data:image/png;base64,${object.company_id.logo}" align="center">
           </td>
         </tr>
         <tr>
@@ -780,7 +780,7 @@
 
 
             <tr><td>
-            <a href="https://vietinterview.com/#/api/account/resetPass?token=${object.token}">Tạo mật khẩu mới</a>
+            <a href="${object.company_id.website}/#/api/account/resetPass?token=${object.token}">Tạo mật khẩu mới</a>
             </td></tr>
 
 

@@ -3,14 +3,6 @@ from datetime import date, timedelta
 
 from openerp import models, fields, api
 
-
-class CompanyProfile(models.Model):
-    _name = 'res.partner'
-    _inherit = 'res.partner'
-
-    description = fields.Char(string="Description")
-
-
 class LicenseCategory(models.Model):
     _name = 'career.license_category'
 
@@ -131,6 +123,7 @@ class Conpany(models.Model):
 
     @api.model
     def createCompany(self, vals):
+        default_url = self.env['ir.config_parameter'].get_param('company.url')
         license = self.env['career.license'].browse(int(vals['licenseId']))
         expiryDdate = date.today() + timedelta(days=license.validity)
         license_instance = self.env['career.license_instance'].create({'license_id': license.id,
@@ -143,6 +136,7 @@ class Conpany(models.Model):
                                                                        'rule_ids': license.rule_ids})
         company = self.env['res.company'].create(
             {'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
+             'website': vals['url'] if 'url' in vals else default_url,
              'license_instance_id': license_instance.id})
         company.partner_id.write({'email': vals['email']})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name': 'Assessment', 'company_id': company.id})
@@ -154,7 +148,8 @@ class Conpany(models.Model):
 
     @api.one
     def updateCompany(self, vals):
-        self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
+        self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
+                    'website': vals['url'] if 'url' in vals else False})
         self.partner_id.write({'email': vals['email'], 'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
                                'description': vals['description'] if 'description' in vals else False})
         return True
@@ -163,7 +158,7 @@ class Conpany(models.Model):
     def getCompany(self):
         main_compnay = self.env.ref('base.main_company')
         companys = self.env['res.company'].search([('id', '!=', main_compnay.id)])
-        companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False, 'videoUrl': c.partner_id.videoUrl,
+        companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False,'url':c.website, 'videoUrl': c.partner_id.videoUrl,
                         'licenseId': c.license_instance_id.license_id.id if c.license_instance_id else False,
                         'license': c.license_instance_id.license_id.name if c.license_instance_id else False,
                         'licenseExpire': c.expire_date if c.license_instance_id else False, 'email': c.partner_id.email}
