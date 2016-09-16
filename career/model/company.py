@@ -151,7 +151,15 @@ class Conpany(models.Model):
         self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
                     'website': vals['url'] if 'url' in vals else False})
         self.partner_id.write({'email': vals['email'], 'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
-                               'description': vals['description'] if 'description' in vals else False})
+                               'description': vals['description'] if 'description' in vals else False,
+                               'street': vals['street'] if 'street' in vals else None,
+                               'street2': vals['street2'] if 'street2' in vals else None,
+                               'city': vals['city'] if 'city' in vals else None,
+                               'zip': vals['zip'] if 'zip' in vals else None,
+                               'country_id': int(vals['countryId']) if 'countryId' in vals else None,
+                               'state_id': int(vals['stateId']) if 'stateId' in vals else None,
+                               'vat': vals['vat'] if 'vat' in vals else None,
+                               'phone': vals['phone'] if 'phone' in vals else None})
         return True
 
     @api.model

@@ -47,7 +47,11 @@ class CompanyUser(models.Model):
     def getCompanyInfo(self):
         return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False,
                 'email': self.company_id.partner_id.email, 'videoUrl': self.company_id.partner_id.videoUrl,
-                'description': self.company_id.partner_id.description}
+                'description': self.company_id.partner_id.description, 'street': self.company_id.partner_id.street,
+                'street2': self.company_id.partner_id.street2, 'zip': self.company_id.partner_id.zip,
+                'city': self.company_id.partner_id.city, 'stateId': self.company_id.partner_id.state_id.id,
+                'countryId': self.company_id.partner_id.country_id.id, 'vat': self.company_id.partner_id.vat,
+                'phone': self.company_id.partner_id.phone}
 
     @api.one
     def createInterview(self, assignmentId, vals):
@@ -354,12 +358,21 @@ class CompanyUser(models.Model):
             if match:
                 employeeList.append({'employeeId': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
-                                     'categoryIds': list(latest_exp.cat_ids.ids)})
+                                     'categoryIds': list(latest_exp.cat_ids.ids),
+                                     'viewed': self.env['career.employee.history'].search_count(
+                                         [('employee_id', '=', e.id),
+                                         ('company_id', '=', self.company_id.id)]) > 0})
         return employeeList
 
     @api.one
     def getEmployeeDetail(self, employeeId):
         for employee in self.env['career.employee'].browse(employeeId):
+            cost = 0
+            for exp in employee.experience_ids.sorted(key=lambda r: r.start_date):
+                for license_rule in self.company_id.license_instance_id.license_id.rule_ids:
+                    if license_rule.position_id.id == exp.position_id.id:
+                        if license_rule.cost > cost:
+                            cost = license_rule.cost
             employeeDetail = {'name': employee.user_id.name}
             employeeDetail['profile'] = employee.getProfile()
             employeeDetail['expList'] = employee.getWorkExperience()
@@ -368,6 +381,7 @@ class CompanyUser(models.Model):
             employeeDetail['docList'] = employee.getDocument()
             employeeDetail['viewed'] = self.env['career.employee.history'].search_count(
                 [('employee_id', '=', employeeId), ('company_id', '=', self.company_id.id)]) > 0
+            employeeDetail['cost'] = cost
             return employeeDetail
         return False
 
