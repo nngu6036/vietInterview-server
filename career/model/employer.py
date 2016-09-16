@@ -47,7 +47,11 @@ class CompanyUser(models.Model):
     def getCompanyInfo(self):
         return {'id': self.company_id.id, 'name': self.company_id.name, 'image': self.company_id.logo or False,
                 'email': self.company_id.partner_id.email, 'videoUrl': self.company_id.partner_id.videoUrl,
-                'description': self.company_id.partner_id.description}
+                'description': self.company_id.partner_id.description, 'street': self.company_id.partner_id.street,
+                'street2': self.company_id.partner_id.street2, 'zip': self.company_id.partner_id.zip,
+                'city': self.company_id.partner_id.city, 'stateId': self.company_id.partner_id.state_id.id,
+                'countryId': self.company_id.partner_id.country_id.id, 'vat': self.company_id.partner_id.vat,
+                'phone': self.company_id.partner_id.phone}
 
     @api.one
     def createInterview(self, assignmentId, vals):
