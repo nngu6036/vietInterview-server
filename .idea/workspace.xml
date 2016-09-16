@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +27,7 @@
       <file leaf-file-name="adminapi.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2873">
+            <state relative-caret-position="3026">
               <caret line="178" column="45" selection-start-line="178" selection-start-column="43" selection-end-line="178" selection-end-column="45" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -39,7 +39,7 @@
       <file leaf-file-name="company.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/company.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
+            <state relative-caret-position="2822">
               <caret line="166" column="84" selection-start-line="166" selection-start-column="84" selection-end-line="166" selection-end-column="84" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -51,7 +51,7 @@
       <file leaf-file-name="employee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/employee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
+            <state relative-caret-position="184">
               <caret line="152" column="14" selection-start-line="152" selection-start-column="8" selection-end-line="152" selection-end-column="14" />
               <folding />
             </state>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employerapi.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
+      <file leaf-file-name="employeeapi.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1960">
-              <caret line="472" column="36" selection-start-line="472" selection-start-column="36" selection-end-line="472" selection-end-column="36" />
+            <state relative-caret-position="253">
+              <caret line="211" column="45" selection-start-line="211" selection-start-column="45" selection-end-line="211" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -83,7 +83,7 @@
       <file leaf-file-name="license_service.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/service/license_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
+            <state relative-caret-position="1037">
               <caret line="65" column="58" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
               <folding />
             </state>
@@ -105,7 +105,7 @@
       <file leaf-file-name="proxy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="952">
+            <state relative-caret-position="986">
               <caret line="58" column="55" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="55" />
               <folding>
                 <element signature="e#48#62#0" expanded="true" />
@@ -148,7 +148,6 @@
         <option value="$PROJECT_DIR$/career/model/interview.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/common/__init__.py" />
         <option value="$PROJECT_DIR$/career/report/html_template.xml" />
-        <option value="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
         <option value="$PROJECT_DIR$/career/service/license_service.py" />
         <option value="$PROJECT_DIR$/career_socket/career_socket/career_socket/__init__.py" />
         <option value="$PROJECT_DIR$/career_socket/career_socket/deploy/demo/fabfile.py" />
@@ -166,6 +165,7 @@
         <option value="$PROJECT_DIR$/career/model/employer.py" />
         <option value="$PROJECT_DIR$/career/model/company.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
+        <option value="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
       </list>
     </option>
   </component>
@@ -200,6 +200,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -365,6 +366,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="employee" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VietInterviewServer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VietInterviewServer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="career_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="career_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -439,7 +466,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1011,9 +1037,9 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15756631" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.49375975" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29646698" sideWeight="0.5210608" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29601228" sideWeight="0.52418095" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.49687988" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29646698" sideWeight="0.47893915" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29601228" sideWeight="0.47581902" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960998" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33486944" sideWeight="0.48439938" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20046802" sideWeight="0.5083682" order="2" side_tool="true" content_ui="tabs" />
@@ -1223,13 +1249,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career_socket/career_socket/career_socket/conference_api.py" />
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="91" column="38" selection-start-line="91" selection-start-column="38" selection-end-line="91" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1333,7 +1352,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
+        <state relative-caret-position="986">
           <caret line="58" column="55" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="55" />
           <folding>
             <element signature="e#48#62#0" expanded="true" />
@@ -1361,7 +1380,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2873">
+        <state relative-caret-position="3026">
           <caret line="178" column="45" selection-start-line="178" selection-start-column="43" selection-end-line="178" selection-end-column="45" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -1369,21 +1388,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/career/model/company.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2822">
+          <caret line="166" column="84" selection-start-line="166" selection-start-column="84" selection-end-line="166" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/service/license_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="65" column="58" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
+        <state relative-caret-position="184">
           <caret line="152" column="14" selection-start-line="152" selection-start-column="8" selection-end-line="152" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/company.py">
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="166" column="84" selection-start-line="166" selection-start-column="84" selection-end-line="166" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="134">
+          <caret line="271" column="13" selection-start-line="271" selection-start-column="12" selection-end-line="271" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1397,18 +1432,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/service/license_service.py">
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="65" column="58" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1960">
-          <caret line="472" column="36" selection-start-line="472" selection-start-column="36" selection-end-line="472" selection-end-column="36" />
+        <state relative-caret-position="253">
+          <caret line="211" column="45" selection-start-line="211" selection-start-column="45" selection-end-line="211" selection-end-column="45" />
           <folding />
         </state>
       </provider>
