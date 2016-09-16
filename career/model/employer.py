@@ -354,7 +354,10 @@ class CompanyUser(models.Model):
             if match:
                 employeeList.append({'employeeId': e.id, 'name': e.name, 'provinceId': e.partner_id.state_id.id,
                                      'countryId': e.partner_id.country_id.id, 'positionID': latest_exp.position_id.ids,
-                                     'categoryIds': list(latest_exp.cat_ids.ids)})
+                                     'categoryIds': list(latest_exp.cat_ids.ids),
+                                     'viewed': self.env['career.employee.history'].search_count(
+                                         [('employee_id', '=', e.id),
+                                         ('company_id', '=', self.company_id.id)]) > 0})
         return employeeList
 
     @api.one
