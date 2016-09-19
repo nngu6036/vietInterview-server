@@ -60,7 +60,7 @@ class LicenseService(osv.AbstractModel):
 
     @api.model
     def consumeEmployee(self, companyId, employerId,employeeId):
-        cost = 0
+        cost = 1
         employee_quota = 0
         for company in self.env['res.company'].browse(companyId):
             license_instance = company.license_instance_id
