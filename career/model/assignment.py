@@ -42,8 +42,8 @@ class Assignment(models.Model):
     deadline = fields.Date(string="Application deadline")
     category_ids = fields.Many2many('career.job_category', string="Category List")
     position_id = fields.Many2one('career.job_position', string="Position")
-    country_id = fields.Many2one(string='Country', related='address_id.country_id')
-    province_id = fields.Many2one(string='Province ', related='address_id.state_id')
+    country_id = fields.Many2one('res.country', string="Country ")
+    province_id = fields.Many2one('res.country.state', string="Province ")
     survey_ids = fields.One2many('survey.survey', 'job_id', string="Interview rounds")
 
     @api.multi
