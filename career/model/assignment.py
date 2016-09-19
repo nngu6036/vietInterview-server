@@ -42,8 +42,8 @@ class Assignment(models.Model):
     deadline = fields.Date(string="Application deadline")
     category_ids = fields.Many2many('career.job_category', string="Category List")
     position_id = fields.Many2one('career.job_position', string="Position")
-    country_id = fields.Many2one(string='Country', related='address_id.country_id')
-    province_id = fields.Many2one(string='Province ', related='address_id.state_id')
+    country_id = fields.Many2one( string="Country ",related='address_id.country_id')
+    province_id = fields.Many2one( string="Province ",related='address_id.state_id')
     survey_ids = fields.One2many('survey.survey', 'job_id', string="Interview rounds")
 
     @api.multi
@@ -80,7 +80,7 @@ class Assignment(models.Model):
                           'requirements': vals['requirements'],
                           'category_ids': [(6, 0, catIdList)] or False,
                           'position_id': int(vals['positionId']) or False,
-                    'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
+                    'country_id': int(vals['countryId']) or False, 'province_id': int(vals['provinceId']) or False})
         return True
 
     @api.multi
