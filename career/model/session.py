@@ -54,6 +54,10 @@ class Session(models.Model):
             admin_group = self.env.ref('career.admin_group')
             if admin_group.id in user.groups_id.ids:
                 return True
+        if role == 'cc':
+            cc_group = self.env.ref('career.cc_group')
+            if cc_group.id in user.groups_id.ids:
+                return True
         if role == 'employer':
             employer_group = self.env.ref('career.employer_group')
             if employer_group.id in user.groups_id.ids:
@@ -84,11 +88,10 @@ class OTK(models.Model):
     @api.model
     def create(self, vals):
         vals['token'] = util.id_generator(24)
+        vals['date_expired'] = (date.today() + timedelta(days=1)).strftime('%Y-%m-%d')
         otk = super(OTK, self).create(vals)
         return otk
 
     _sql_constraints = [
         ('token_unique', 'unique (token)', 'The token must be unique within an application!')
     ]
-
-

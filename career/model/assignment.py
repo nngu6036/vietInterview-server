@@ -79,8 +79,8 @@ class Assignment(models.Model):
         self.write({'deadline': vals['deadline'], 'description': vals['description'], 'name': vals['name'],
                           'requirements': vals['requirements'],
                           'category_ids': [(6, 0, catIdList)] or False,
-                          'position_id': int(vals['positionId']) or False})
-        self.address_id.write({'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
+                          'position_id': int(vals['positionId']) or False,
+                    'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
         return True
 
     @api.multi

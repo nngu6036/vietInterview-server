@@ -58,13 +58,14 @@ document_obj = mainInstance.model('ir.attachment')
 conference_member_obj = mainInstance.model('career.conference_member')
 company_user_obj = mainInstance.model('career.employer')
 user_obj = mainInstance.model('career.employee')
+admin_obj = mainInstance.model('res.users')
 applicant_obj = mainInstance.model('hr.applicant')
 
 # decorator
 def admin_session(func):
     def func_wrapper():
         token = request.values['token']
-        session = Session.resume(token, ['admin'])
+        session = Session.resume(token, ['admin', 'cc'])
         return func(session)
     return func_wrapper
 

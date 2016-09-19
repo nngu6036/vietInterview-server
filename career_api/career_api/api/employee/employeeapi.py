@@ -207,8 +207,9 @@ def application(employee):
 def applyJob(employee):
     try:
          if request.method == 'POST':
-            assignmentId = int( request.values['assignmentId'])
-            result = employee.applyJob(assignmentId)
+            assignmentId = int(request.values['assignmentId'])
+            letter = request.values['letter']
+            result = employee.applyJob(assignmentId, letter)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)

@@ -1,14 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
         <record model="res.groups" id="career.admin_group">
-            <field name="name">Administrator group</field>
+            <field name="name">admin</field>
+            <field name="comment">Administrator group</field>
+        </record>
+        <record model="res.groups" id="career.cc_group">
+            <field name="name">cc</field>
+            <field name="comment">Call center group</field>
         </record>
         <record model="res.groups" id="career.employer_group">
-            <field name="name">Employer group</field>
+            <field name="name">employer</field>
+            <field name="comment">Employer group</field>
         </record>
         <record model="res.groups" id="career.employee_group">
-            <field name="name">Employee group</field>
+            <field name="name">employee</field>
+            <field name="comment">Employee group</field>
         </record>
         <record model="career.license_category" id="career.license_category_full_package">
             <field name="name">Full-package</field>

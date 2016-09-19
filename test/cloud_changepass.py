@@ -1,7 +1,7 @@
 
 import erppeek
 
-account = 'thang.tran@vietinterview.com'
+account = 'test'
 passwd = '123456'
 URL = 'http://vietinterview.com:8069'
 

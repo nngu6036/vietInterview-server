@@ -18,29 +18,38 @@ class CommonService(osv.AbstractModel):
 
 
     @api.model
-    def searchJob(self,keyword,options):
+    def searchJob(self,keyword,options,start=1,length=100,count=False):
         assignmentList = []
         domain = [('state','=','recruit')]
-        if options:
-            if options['countryId']:
-                domain.append(('country_id','=',int(options['countryId'])))
-            if options['provinceId']:
-                domain.append(('province_id','=',int(options['provinceId'])))
-            if options['positionId']:
-                domain.append(('position_id','=',int(options['positionId'])))
+        countryId = options['countryId'] if options and options['countryId'] else False
+        provinceId = options['provinceId'] if options and options['provinceId'] else False
+        positionId = options['positionId'] if options and options['positionId'] else False
+        categoryId = options['categoryId'] if options and options['categoryId'] else False
+        if countryId:
+            domain.append(('country_id','=',int(options['countryId'])))
+        if provinceId:
+            domain.append(('province_id','=',int(options['provinceId'])))
+        if positionId:
+            domain.append(('position_id','=',int(options['positionId'])))
 
         if keyword:
             domain.append('|')
             domain.append(('description','like',keyword))
             domain.append(('name','like',keyword))
+        totalTal  = 0
+        if count:
+            for a in self.env['hr.job'].search(domain, limit=length, offset=start):
+                if categoryId and a.category_ids and not categoryId in a.category_ids.ids:
+                    continue
+                totalTal = totalTal +1
 
-        for a in self.env['hr.job'].search(domain):
-            if options['categoryId'] and a.category_ids and not int(options['categoryId']) in a.category_ids.ids:
+        for a in self.env['hr.job'].search(domain,limit=length,offset=start):
+            if categoryId and a.category_ids and not categoryId in a.category_ids.ids:
                 continue
             assignmentList.append({'id':a.id,'name':a.name,'description':a.description,'deadline':a.deadline,'status':a.status,
                                'countryId':a.country_id.id, 'provinceId':a.province_id.id,'requirements':a.requirements,
-                               'categoryIdList':list(a.category_ids.ids), 'positionId':a.position_id.id} )
-        return assignmentList
+                               'categoryIdList':list(a.category_ids.ids), 'positionId':a.position_id.id,'company':a.company_id.name} )
+        return {'assignmentList':assignmentList,'total':totalTal}
 
 
     @api.model
