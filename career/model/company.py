@@ -120,6 +120,7 @@ class Conpany(models.Model):
 
     license_instance_id = fields.Many2one('career.license_instance', string='License')
     expire_date = fields.Date(string='License expire date', related='license_instance_id.expire_date')
+    url = fields.Char(string='Company URL', related='partner_id.url')
 
     @api.model
     def createCompany(self, vals):

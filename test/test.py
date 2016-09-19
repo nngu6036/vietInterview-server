@@ -6,7 +6,7 @@ client = erppeek.Client('http://10.158.7.18:8069', 'career', 'admin', '123456')
 #companys = client.model('res.company').browse([])
 #companys.write({'website':'https://vietinterview.com'})
 companys = client.model('res.company').browse([])
-companys.write({'website':'https://vietinterview.com'})
+companys.write({'url':'https://vietinterview.com'})
 
 
 
