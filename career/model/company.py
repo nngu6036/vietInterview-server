@@ -137,7 +137,7 @@ class Conpany(models.Model):
                                                                        'rule_ids': license.rule_ids})
         company = self.env['res.company'].create(
             {'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
-             'website': vals['url'] if 'url' in vals else default_url,
+             'url': vals['url'] if 'url' in vals else default_url,
              'license_instance_id': license_instance.id})
         company.partner_id.write({'email': vals['email']})
         hr_eval_plan = self.env['hr_evaluation.plan'].create({'name': 'Assessment', 'company_id': company.id})
@@ -150,7 +150,7 @@ class Conpany(models.Model):
     @api.one
     def updateCompany(self, vals):
         self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
-                    'website': vals['url'] if 'url' in vals else False})
+                    'url': vals['url'] if 'url' in vals else False})
         self.partner_id.write({'email': vals['email'], 'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
                                'description': vals['description'] if 'description' in vals else False,
                                'street': vals['street'] if 'street' in vals else None,
