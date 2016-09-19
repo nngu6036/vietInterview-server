@@ -24,7 +24,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.website}/images/logow.png" align="center">
+            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -46,14 +46,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
-            For tips on video interviewing, please go to <a href="${object.company_id.website}/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
+            For tips on video interviewing, please go to <a href="${object.company_id.url}/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="${object.company_id.website}/#/interview?code=${object.response_id.token}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.company_id.url}/#/interview?code=${object.response_id.token}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Interview
         </a><br><br>
     </center>
@@ -96,7 +96,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.website}/images/logow.png" align="center">
+            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -125,7 +125,7 @@
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="${object.company_id.website}/#/interview?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.company_id.url}/#/interview?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Bắt đầu phỏng vấn
         </a><br><br>
     </center>
@@ -175,7 +175,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.website}/images/logow.png" align="center">
+            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -197,14 +197,14 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on :${object.conference_id.interview_id.job_id.name} interview.<br>
-            For tips on conference interviewing, please go to <a href="${object.conference_id.applicant_id.company_id.website}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} Website</a><br>
+            For tips on conference interviewing, please go to <a href="${object.conference_id.applicant_id.company_id.url}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} url</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.conference_id.schedule}. When you are ready, click the "Start conference" button to start.
 
             </td></tr>
             <tr>
              <td  style="padding-top:20px">
     <center>
-        <a href="${object.conference_id.applicant_id.company_id.website}/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+        <a href="${object.conference_id.applicant_id.company_id.url}/#/conference?meetingId=${object.meeting_id}&memberId=${object.member_id}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
             Start Conference
         </a><br><br>
     </center>
