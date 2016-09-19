@@ -19,7 +19,7 @@ class CompanyUser(models.Model):
         catIdList = vals['categoryIdList']
         address = self.env['res.partner'].create({'name': vals['name'], 'type': 'contact',
                                                   'country_id': 'countryId' in vals and int(vals['countryId']),
-                                                  'state_id': 'provinceId' in vals and int(vals['provinceId']),
+                                                  'province_id': 'provinceId' in vals and int(vals['provinceId']),
                                                   'company_id': self.user_id.company_id.id})
         assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
                                                 'deadline': vals['deadline'], 'company_id': self.user_id.company_id.id,
