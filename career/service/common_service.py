@@ -18,7 +18,7 @@ class CommonService(osv.AbstractModel):
 
 
     @api.model
-    def searchJob(self,keyword,options,start=1,offset=100,count=False):
+    def searchJob(self,keyword,options,start=1,length=100,count=False):
         assignmentList = []
         domain = [('state','=','recruit')]
         countryId = options['countryId'] if options and options['countryId'] else False
@@ -38,12 +38,12 @@ class CommonService(osv.AbstractModel):
             domain.append(('name','like',keyword))
         totalTal  = 0
         if count:
-            for a in self.env['hr.job'].search(domain, limit=count, offset=offset):
+            for a in self.env['hr.job'].search(domain, limit=length, offset=start):
                 if categoryId and a.category_ids and not categoryId in a.category_ids.ids:
                     continue
                 totalTal = totalTal +1
 
-        for a in self.env['hr.job'].search(domain,limit=count,offset=offset):
+        for a in self.env['hr.job'].search(domain,limit=length,offset=start):
             if categoryId and a.category_ids and not categoryId in a.category_ids.ids:
                 continue
             assignmentList.append({'id':a.id,'name':a.name,'description':a.description,'deadline':a.deadline,'status':a.status,
