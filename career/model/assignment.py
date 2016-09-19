@@ -80,7 +80,7 @@ class Assignment(models.Model):
                           'requirements': vals['requirements'],
                           'category_ids': [(6, 0, catIdList)] or False,
                           'position_id': int(vals['positionId']) or False,
-                    'country_id': int(vals['countryId']) or False, 'state_id': int(vals['provinceId']) or False})
+                    'country_id': int(vals['countryId']) or False, 'province_id': int(vals['provinceId']) or False})
         return True
 
     @api.multi

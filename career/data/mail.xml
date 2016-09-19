@@ -118,7 +118,7 @@
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
-            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://demo.vietinterview.com/#/career">${object.company_id.name} Website</a><br>
+            Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="${object.company_id.website}/#/career">${object.company_id.name} Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
             </td></tr>
@@ -175,7 +175,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.website}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.website}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -247,7 +247,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.website}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.website}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
