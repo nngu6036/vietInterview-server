@@ -149,8 +149,7 @@ class Conpany(models.Model):
 
     @api.one
     def updateCompany(self, vals):
-        self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False,
-                    'url': vals['url'] if 'url' in vals else False})
+        self.write({'name': vals['name'], 'logo': vals['image'] if 'image' in vals else False})
         self.partner_id.write({'email': vals['email'], 'videoUrl': vals['videoUrl'] if 'videoUrl' in vals else False,
                                'description': vals['description'] if 'description' in vals else False,
                                'street': vals['street'] if 'street' in vals else None,

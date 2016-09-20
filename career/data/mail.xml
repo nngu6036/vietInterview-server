@@ -175,7 +175,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -247,7 +247,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -327,7 +327,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -393,7 +393,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="${object.conference_id.applicant_id.company_id.url}/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
