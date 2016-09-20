@@ -699,7 +699,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -718,7 +718,7 @@
 
 
             <tr><td>
-            <a href="${object.company_id.url}/#/reset_pass?token=${object.token}">Reset password link</a>
+            <a href="https://vietinterview.com/#/reset_pass?token=${object.token}">Reset password link</a>
             </td></tr>
 
 
@@ -761,7 +761,7 @@
       <table style="width:100%;border-spacing:0">
         <tbody><tr>
           <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
-            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
           </td>
         </tr>
         <tr>
@@ -780,7 +780,7 @@
 
 
             <tr><td>
-            <a href="${object.company_id.url}/#/api/account/resetPass?token=${object.token}">Tạo mật khẩu mới</a>
+            <a href="https://vietinterview.com/#/api/account/resetPass?token=${object.token}">Tạo mật khẩu mới</a>
             </td></tr>
 
 
