@@ -32,7 +32,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.company_id.name} would like you to complete a video interview </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.company_id.name} would like you to complete a video interview </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -43,9 +43,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
             For tips on video interviewing, please go to <a href="${object.company_id.url}/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
@@ -59,7 +59,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
        Thank you,<br><br>
        ${object.company_id.name}
 
@@ -104,7 +104,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn video </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn video </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -115,9 +115,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
@@ -131,7 +131,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
        Xin cảm ơn,<br><br>
        ${object.company_id.name}
 
@@ -183,7 +183,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.conference_id.applicant_id.company_id.name} would like you to complete a conference interview </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.conference_id.applicant_id.company_id.name} would like you to complete a conference interview </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -194,9 +194,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on :${object.conference_id.interview_id.job_id.name} interview.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on :${object.conference_id.interview_id.job_id.name} interview.<br>
             For tips on conference interviewing, please go to <a href="${object.conference_id.applicant_id.company_id.url}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} url</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.conference_id.schedule}. When you are ready, click the "Start conference" button to start.
 
@@ -210,7 +210,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
        Thank you,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -255,7 +255,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.conference_id.applicant_id.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn trực tuyến </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.conference_id.applicant_id.company_id.name} muốn bạn hoàn thành một cuộc phỏng vấn trực tuyến </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -266,9 +266,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào ${object.conference_id.applicant_id.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau :${object.conference_id.interview_id.job_id.name}.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau :${object.conference_id.interview_id.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="${object.conference_id.applicant_id.company_id.url}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} url</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn trực tuyến, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Cuộc phỏng vấn sẽ bắt đầu vào lúc ${object.conference_id.schedule}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
@@ -282,7 +282,7 @@
     </center>
   </td>
         </tr>
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
        Xin cảm ơn,<br><br>
        ${object.conference_id.applicant_id.company_id.name}
 
@@ -335,7 +335,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">${object.conference_id.applicant_id.company_id.name} Video interview reminder</td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.conference_id.applicant_id.company_id.name} Video interview reminder</td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -346,9 +346,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">This is a courtesy message from ${object.conference_id.applicant_id.company_id.name} to make sure you got your email invite for the ${object.conference_id.interview_id.job_id.name} video interview; it may have ended up in your bulk-mail or junk e-mail folder.<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">This is a courtesy message from ${object.conference_id.applicant_id.company_id.name} to make sure you got your email invite for the ${object.conference_id.interview_id.job_id.name} video interview; it may have ended up in your bulk-mail or junk e-mail folder.<br><br>
             Once you have located the email, please make sure you have a webcam and microphone setup ready to perform the interview in your own time.<br><br>
             If you are unable to complete the interview for any reason please contact us at <a href="mailto:info@vietinterview.com">info@vietinterview.com</a>  for assistance.<br><br>
             </td></tr>
@@ -401,7 +401,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Nhắc nhở cuộc phỏng vấn video ${object.conference_id.applicant_id.company_id.name}</td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Nhắc nhở cuộc phỏng vấn video ${object.conference_id.applicant_id.company_id.name}</td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -412,9 +412,9 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Xin chào ${object.conference_id.applicant_id.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Xin chào ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Đây là email từ ${object.conference_id.applicant_id.company_id.name} để chắc chắn rằng bạn nhận được email mời phỏng vấn cho vị trí: ${object.conference_id.interview_id.job_id.name}; Nó có thể ở trong thư mục xã hội hoặc quảng cáo trong hòm thư của bạn.<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Đây là email từ ${object.conference_id.applicant_id.company_id.name} để chắc chắn rằng bạn nhận được email mời phỏng vấn cho vị trí: ${object.conference_id.interview_id.job_id.name}; Nó có thể ở trong thư mục xã hội hoặc quảng cáo trong hòm thư của bạn.<br><br>
             Một khi bạn đã tìm được email, hãy chắc chắn rằng máy tính của bạn có webcam, microphone và kết nối internet để sẵn sàng thực hiện cuộc phỏng vấn trong thời gian riêng của bạn.<<br><br>
             Nếu bạn không thể hoàn thành cuộc phỏng vấn với lý do nào đó, xin vui lòng liên hệ với chúng tôi để được giúp đỡ theo email <a href="mailto:info@vietinterview.com">info@vietinterview.com</a>  for assistance.<br><br>
             </td></tr>
@@ -483,7 +483,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Thank you for completing your ${object.company_id.name} video interview </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Thank you for completing your ${object.company_id.name} video interview </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -494,13 +494,13 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Hello ${object.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">You have successfully completed your video interview for ${object.job_id.name}. ${object.company_id.name} will get in touch with you shortly.<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">You have successfully completed your video interview for ${object.job_id.name}. ${object.company_id.name} will get in touch with you shortly.<br><br>
 
             </td></tr>
 
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Please do not reply to this email. If you have any questions regarding the next steps in the selection process, contact ${object.company_id.name} directly. <br><br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Please do not reply to this email. If you have any questions regarding the next steps in the selection process, contact ${object.company_id.name} directly. <br><br>
 
        Thank you,<br><br>
        ${object.company_id.name}
@@ -549,7 +549,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Cảm ơn bạn đã hoàn thành cuộc phỏng vấn của ${object.company_id.name} </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Cảm ơn bạn đã hoàn thành cuộc phỏng vấn của ${object.company_id.name} </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -560,13 +560,13 @@
           <table style="width:100%">
               <tbody>
 
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px"> Xin chào  ${object.name}<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào  ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Bạn đã hoàn thành cuộc phỏng vấn video cho vị trí sau ${object.job_id.name}. ${object.company_id.name} sẽ liên lạc với bạn trong thời gian ngắn nhất.<br><br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Bạn đã hoàn thành cuộc phỏng vấn video cho vị trí sau ${object.job_id.name}. ${object.company_id.name} sẽ liên lạc với bạn trong thời gian ngắn nhất.<br><br>
 
             </td></tr>
 
-       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:left;line-height:21px">Xin đừng trả lơi thư này. Nếu bạn có bất kỳ câu hỏi liên quan đến các bước tiếp theo trong quá trình lựa chọn ứng viên, Xin hãy liên lạc trực tiếp với ${object.company_id.name}. <br><br>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Xin đừng trả lơi thư này. Nếu bạn có bất kỳ câu hỏi liên quan đến các bước tiếp theo trong quá trình lựa chọn ứng viên, Xin hãy liên lạc trực tiếp với ${object.company_id.name}. <br><br>
 
        Cảm ơn,<br><br>
        ${object.company_id.name}
@@ -631,7 +631,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Job ${object.name} has been posted by ${object.company_id.name}. </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Job ${object.name} has been posted by ${object.company_id.name}. </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -669,7 +669,7 @@
             <center style="padding-top:30px">
               <table style="width:50%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Job ${object.name} has been approved. </td>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Job ${object.name} has been approved. </td>
                 </tr>
                  <tr>
     <td style="padding-top:27px"></td>
@@ -846,7 +846,7 @@
             <center style="padding-top:30px">
               <table style="width:90%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:left">Hello ${object.company_id.name}, </ br>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Hello ${object.company_id.name}, </ br>
                    Your assignment (${object.job_id.name}) has a new applicant from ${object.name}.
                    Please login to your account at vietinterview.com for more applicant's information</ br>
                    Bellow is his/her cover letter:
