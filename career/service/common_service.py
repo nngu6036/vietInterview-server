@@ -16,9 +16,8 @@ class CommonService(osv.AbstractModel):
     _name = 'career.common_service'
 
 
-
     @api.model
-    def searchJob(self,keyword,options,start=1,length=100,count=False):
+    def searchJob(self,keyword,options,start=None,length=None,count=False):
         assignmentList = []
         domain = [('state','=','recruit')]
         countryId = options['countryId'] if options and options['countryId'] else False
