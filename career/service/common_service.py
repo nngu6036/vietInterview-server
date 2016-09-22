@@ -33,8 +33,8 @@ class CommonService(osv.AbstractModel):
 
         if keyword:
             domain.append('|')
-            domain.append(('description','like',keyword))
-            domain.append(('name','like',keyword))
+            domain.append(('description','ilike',keyword))
+            domain.append(('name','ilike',keyword))
         totalTal  = 0
         if count:
             for a in self.env['hr.job'].search(domain, limit=length, offset=start):

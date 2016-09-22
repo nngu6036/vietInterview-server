@@ -37,8 +37,8 @@
       <file leaf-file-name="common_service.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/service/common_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -884,13 +884,6 @@
       <option name="presentableId" value="Default" />
       <updated>1464594794783</updated>
     </task>
-    <task id="LOCAL-00063" summary="Update search employee">
-      <created>1472207627307</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1472207627307</updated>
-    </task>
     <task id="LOCAL-00064" summary="Spit to getEmployeeDetailNoContact &amp; WithContact">
       <created>1472208643241</created>
       <option name="number" value="00064" />
@@ -1227,7 +1220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1474454154344</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="Fix common service searchJob">
+      <created>1474514292230</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1474514292230</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1274,7 +1274,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add admin_obj" />
     <MESSAGE value="Reformat company" />
     <MESSAGE value="Code refactor company, employer" />
     <MESSAGE value="Edit /admin/account/login add role" />
@@ -1299,7 +1298,8 @@
     <MESSAGE value="Fix apply job api" />
     <MESSAGE value="Mail format justified" />
     <MESSAGE value="Fix employer createAssignment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix employer createAssignment" />
+    <MESSAGE value="Fix common service searchJob" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix common service searchJob" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.7680723" />
   </component>
   <component name="XDebuggerManager">
@@ -1674,8 +1674,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/service/common_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="238">
+          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
           <folding />
         </state>
       </provider>
