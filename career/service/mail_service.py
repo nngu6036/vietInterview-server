@@ -98,10 +98,11 @@ class MailService(osv.AbstractModel):
         return self.pool.get('email.template').send_mail(cr, uid, template.id, otk.id, True)
 
     @api.model
-    def sendCoverLetter(self, applicantId):
+    def sendCoverLetter(self, applicant):
         cr, uid, context = self.env.args
+        lang = util.lang_resolver(applicant.interview_id.language)
         email_template = self.env.ref('career.job_cover_letter_email_template')
         if not email_template:
             return False
-        self.pool.get('email.template').send_mail(cr, uid, email_template.id, applicantId, True, False, )
+        self.pool.get('email.template').send_mail(cr, uid, email_template.id, applicant.id, True, False, {'lang':lang})
         return True
