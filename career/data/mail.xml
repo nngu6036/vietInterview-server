@@ -846,9 +846,9 @@
             <center style="padding-top:30px">
               <table style="width:90%;border-spacing:0">
                 <tbody><tr>
-                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Hello ${object.company_id.name}, </ br>
-                   Your assignment (${object.job_id.name}) has a new applicant from ${object.name}.
-                   Please login to your account at vietinterview.com for more applicant's information</ br>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Hello ${object.company_id.name}, <br>
+                   Your assignment ${object.job_id.name} has a new applicant from ${object.name}.
+                   Please login to your account at vietinterview.com for more applicant's information<br>
                    Bellow is his/her cover letter:
                    </td>
                 </tr>
@@ -865,6 +865,59 @@
 
                 ]]>
                 </field>
+        </record>
+
+        <record model='ir.translation' id='career.job_cover_letter_email_template_subject_vi'>
+            <field name='name'>email.template,subject</field>
+            <field name='res_id' ref="career.job_cover_letter_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>Ứng viên mới ứng tuyển</field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
+
+        <record model='ir.translation' id='career.job_cover_letter_email_template_vi'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.job_cover_letter_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                 <![CDATA[
+<div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="https://vietinterview.com/images/logow.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:90%;border-spacing:0">
+                <tbody><tr>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Xin chào ${object.company_id.name}, <br>
+                   Vị trí công việc ${object.job_id.name} có ứng viên mới ứng tuyển ${object.name}.
+                   Xin hãy đăng nhập vào vietinterview.com để xem thông tin chi tiết hơn<br>
+                   Dưới đây là nội dung thư ứng tuyển của ứng viên (nếu có):
+                   </td>
+                </tr>
+                 <tr>
+            <td style="padding-top:27px">
+            ${object.letter}
+            </td>
+            </tr>
+
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+                ]]>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
         </record>
 
     </data>
