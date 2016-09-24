@@ -14,7 +14,7 @@ class Career(osv.AbstractModel):
         root_user.write({'groups_id':[(4,admin_group.id)]})
         company = self.env.ref('base.main_company')
         company.write({'name':'Administrator'})
-
+        self.env['ir.config_parameter'].set_param('web.base.url','http://localhost:8069')
         # Set up cron task
         now = datetime.now()
         tomorrow = now.replace(hour=0, minute=0, second=1, microsecond=0)

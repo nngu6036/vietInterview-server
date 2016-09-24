@@ -7,7 +7,7 @@ client = erppeek.Client('http://demo.vietinterview.com:8069', 'career', 'admin',
 
 #print user.company_id.url
 for job in  client.model('hr.job').browse([]):
-	print job.isEnabled()
+	print job.status, job.state
 
 #job.write({'status':'published'})
 
