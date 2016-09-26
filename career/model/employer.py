@@ -248,12 +248,16 @@ class CompanyUser(models.Model):
 
     @api.one
     def getCandidate(self, start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
         candidateList = []
         total = 0
         if count:
-            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id)])
-        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id)], limit=int(length),
-                                                         offset=int(start), order='create_date desc'):
+            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id),
+                                                           ('user_id', '!=', None)])
+        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id),
+                                                          ('user_id', '!=', None)], limit=length,
+                                                         offset=start, order='create_date desc'):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
