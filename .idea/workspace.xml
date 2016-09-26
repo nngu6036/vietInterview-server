@@ -77,8 +77,8 @@
       <file leaf-file-name="employee.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/model/employee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="258" column="57" selection-start-line="258" selection-start-column="57" selection-end-line="258" selection-end-column="57" />
+            <state relative-caret-position="315">
+              <caret line="276" column="80" selection-start-line="276" selection-start-column="80" selection-end-line="276" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -612,13 +612,6 @@
       <option name="presentableId" value="Default" />
       <updated>1464594794783</updated>
     </task>
-    <task id="LOCAL-00070" summary="Add getCompanyInfo description and videoUrl">
-      <created>1472535572551</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1472535572551</updated>
-    </task>
     <task id="LOCAL-00071" summary="Update search employee by keywords">
       <created>1472540624224</created>
       <option name="number" value="00071" />
@@ -955,7 +948,14 @@
       <option name="project" value="LOCAL" />
       <updated>1474877213761</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="Fix employee apply job, add user_id">
+      <created>1474884230978</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1474884230978</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1003,7 +1003,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix updateCompanyUser" />
     <MESSAGE value="Add employer/employee/search viewed" />
     <MESSAGE value="Add cost to getEmployeeDetail (employer/employee)" />
     <MESSAGE value="Add address, phone, vat to company" />
@@ -1028,7 +1027,8 @@
     <MESSAGE value="Add employer getCandidate start, length and count" />
     <MESSAGE value="Fix common searchJob start, length and count" />
     <MESSAGE value="Change default count to false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change default count to false" />
+    <MESSAGE value="Fix employee apply job, add user_id" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix employee apply job, add user_id" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.7680723" />
   </component>
   <component name="XDebuggerManager">
@@ -1430,8 +1430,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="258" column="57" selection-start-line="258" selection-start-column="57" selection-end-line="258" selection-end-column="57" />
+        <state relative-caret-position="315">
+          <caret line="276" column="80" selection-start-line="276" selection-start-column="80" selection-end-line="276" selection-end-column="80" />
           <folding />
         </state>
       </provider>
