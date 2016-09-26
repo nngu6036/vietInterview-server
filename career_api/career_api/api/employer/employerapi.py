@@ -446,7 +446,7 @@ def getCandidate(employer):
         if request.method == 'GET':
             offset = request.values['offset'] if 'offset' in request.values else None
             length = request.values['length'] if 'length' in request.values else None
-            count = request.values['count'] if 'count' in request.values else True
+            count = request.values['count'] if 'count' in request.values else False
             candidateList = employer.getCandidate(offset, length, count)
             if candidateList:
                 return jsonify(candidateList)
