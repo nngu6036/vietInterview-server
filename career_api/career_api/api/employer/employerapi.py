@@ -444,10 +444,10 @@ def employeeSearch(employer):
 def getCandidate(employer):
     try:
         if request.method == 'GET':
-            start = request.values['start'] if 'start' in request.values else None
+            offset = request.values['offset'] if 'offset' in request.values else None
             length = request.values['length'] if 'length' in request.values else None
             count = request.values['count'] if 'count' in request.values else True
-            candidateList = employer.getCandidate(start, length, count)
+            candidateList = employer.getCandidate(offset, length, count)
             if candidateList:
                 return jsonify(candidateList)
             return jsonify(result=False)

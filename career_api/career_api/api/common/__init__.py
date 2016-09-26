@@ -96,7 +96,10 @@ def searchJob():
     if request.method == 'POST':
       keyword = request.values['keyword'] if 'keyword' in request.values else False
       option = json.loads(request.values['option']) if 'option' in request.values else False
-      jobList = common_service.searchJob(keyword, option)
+      offset = request.values['offset'] if 'offset' in request.values else None
+      length = request.values['length'] if 'length' in request.values else None
+      count = request.values['count'] if 'count' in request.values else True
+      jobList = common_service.searchJob(keyword, option, offset, length, count)
       return jsonify(jobList=jobList)
   except Exception as exc:
     print(exc)
