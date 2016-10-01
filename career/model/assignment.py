@@ -37,8 +37,7 @@ class Assignment(models.Model):
     _inherit = 'hr.job'
 
     status = fields.Selection(
-        [('initial', 'Initial status'), ('published', 'Published status'), ('closed', 'Closed status')],
-        default='initial')
+        [('initial', 'Initial status'), ('published', 'Published status'), ('closed', 'Closed status')])
     deadline = fields.Date(string="Application deadline")
     category_ids = fields.Many2many('career.job_category', string="Category List")
     position_id = fields.Many2one('career.job_position', string="Position")

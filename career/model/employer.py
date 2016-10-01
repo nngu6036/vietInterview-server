@@ -247,9 +247,17 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def getCandidate(self):
+    def getCandidate(self, start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
         candidateList = []
-        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id)]):
+        total = 0
+        if count:
+            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id),
+                                                           ('user_id', '!=', None)])
+        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id),
+                                                          ('user_id', '!=', None)], limit=length,
+                                                         offset=start, order='create_date desc'):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
@@ -261,7 +269,7 @@ class CompanyUser(models.Model):
                 candidate['certList'] = employee.getCertificate()
                 candidate['docList'] = employee.getDocument()
             candidateList.append(candidate)
-        return candidateList
+        return {'result': True, 'candidateList': candidateList, 'total': total}
 
     @api.one
     def addInterviewQuestion(self, interviewId, jQuestions):

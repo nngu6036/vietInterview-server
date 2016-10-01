@@ -255,7 +255,8 @@ class EmployeeUser(models.Model):
                     if not candidate:
                         applicant_id = self.env['hr.applicant'].create(
                             {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
-                             'company_id': assignment.company_id.id, 'letter': letter})
+                             'company_id': assignment.company_id.id, 'letter': letter,
+                             'user_id': self.user_id.id})
                         self.env['career.mail_service'].sendCoverLetter(applicant_id)
                     return True
                 for survey in assignment.survey_ids:
@@ -273,7 +274,7 @@ class EmployeeUser(models.Model):
                             applicant_id = self.env['hr.applicant'].create(
                                 {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
                                  'company_id': assignment.company_id.id, 'response_id': user_input.id,
-                                 'interview_id': survey.id, 'letter': letter})
+                                 'interview_id': survey.id, 'letter': letter, 'user_id': self.user_id.id})
                             self.env['career.mail_service'].sendCoverLetter(applicant_id)
                         return True
         return False

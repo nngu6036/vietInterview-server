@@ -74,7 +74,7 @@ class LicenseInstance(models.Model):
     expire_date = fields.Date(string="Expired date")
     effect_date = fields.Date(string="Effective date ")
     state = fields.Selection([('initial', 'Initial state'), ('suspend', 'Suspended state'), ('active', 'Active state'),
-                              ('closed', 'Closed state')], default='initial')
+                              ('closed', 'Closed state')])
     email_history_ids = fields.One2many('career.email.history', 'license_instance_id', 'Email history')
 
     @api.multi
