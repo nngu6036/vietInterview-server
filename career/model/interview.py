@@ -31,6 +31,12 @@ class Applicant(models.Model):
         return False
 
     @api.one
+    def getInterviewScore(self):
+        if self.response_id.state != 'done':
+            return 0
+        return self.response_id.quizz_score * 100 / len(self.response_id.user_input_line_ids)
+
+    @api.one
     def stopInterview(self):
         if self.response_id.state == 'new' or self.response_id.state == 'skip':
             self.response_id.write({'state': 'done'})
@@ -320,6 +326,8 @@ class Interview(models.Model):
             candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
                          'shortlist': applicant.shortlist,
                          'round':applicant.interview_id.round,
+                         'score': applicant.getInterviewScore(),
+                         'pass':applicant.getInterviewScore() >= self.benchmark,
                          'invited': True if self.env['career.email.history'].search([('survey_id', '=', self.id),
                                                                                      ('email', '=',
                                                                                       applicant.email_from)]) else False}
