@@ -30,7 +30,6 @@ class Session(object):
 
 mainInstance = erppeek.Client(app.config['ERP_SERVER_URL'], app.config['ERP_DB'], app.config['ERP_DB_USER'],
                               app.config['ERP_DB_PASS'])
-
 admin_service = mainInstance.model('career.admin_service')
 common_service = mainInstance.model('career.common_service')
 account_service = mainInstance.model('career.account_service')

@@ -34,6 +34,22 @@ class MailService(osv.AbstractModel):
         license_service.consumeEmail(candidate.id)
         return True
 
+    @api.model
+    def sendQuizInterviewInvitation(self, candidate, subject):
+        cr, uid, context = self.env.args
+        interview = candidate.interview_id
+        lang = util.lang_resolver(interview.language)
+        email_template = self.env.ref('career.quiz_invitation_email_template')
+        if not email_template:
+            return False
+        email_template.write({'subject': subject})
+        license_service = self.env['career.license_service']
+        if not license_service.validateLicense(candidate.company_id.id):
+            print "License error ", candidate.company_id.name
+            return False
+        self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True, False, {'lang': lang})
+        license_service.consumeEmail(candidate.id)
+        return True
 
     @api.model
     def sendConferenceInvitation(self,candidate,subject):

@@ -24,6 +24,10 @@ class Career(osv.AbstractModel):
             {'name': 'DAILY_TASK', 'interval_number': 1, 'interval_type': 'days', 'numbercall': -1,
              'model': 'career.career_task', 'function': 'runDaily', 'nextcall': next_call})
 
+        for job in self.env['hr.job'].search([('status','=','published')]):
+            if not job.isEnabled():
+                job.write({'status':'closed'})
+
 
 
 class CronTask(osv.AbstractModel):

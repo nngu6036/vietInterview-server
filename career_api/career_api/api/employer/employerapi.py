@@ -230,7 +230,6 @@ def interviewQuestion(employer):
         print request.values
         return jsonify(result=False)
 
-
 @app.route('/employer/assignment/interview/invite', methods=['POST'], endpoint='employer-assignment-interview-invite')
 @employer_session
 def invitation(employer):

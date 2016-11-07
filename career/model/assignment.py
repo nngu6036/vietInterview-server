@@ -48,8 +48,8 @@ class Assignment(models.Model):
     @api.multi
     def isEnabled(self):
         self.ensure_one()
-        if self.state != 'recruit':
-            return False
+        #if self.state != 'recruit':
+        #    return False
         if not self.deadline:
             return True
         deadline = datetime.datetime.strptime(self.deadline, "%Y-%m-%d")
@@ -96,13 +96,7 @@ class Assignment(models.Model):
         self.ensure_one()
         interviewList = []
         for interview in self.survey_ids:
-            interviewList.append({'id': interview.id, 'name': interview.title,
-                                  'response': interview.response,
-                                  'retry': interview.retry, 'introUrl': interview.introUrl,
-                                  'exitUrl': interview.exitUrl,
-                                  'aboutUsUrl': interview.aboutUsUrl, 'language': interview.language,
-                                  'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
-                                  'mode': interview.mode, 'status': interview.status})
+            interviewList.append(interview.getInterview())
         return interviewList
 
 

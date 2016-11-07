@@ -8,9 +8,9 @@ import base64
 
 
 
-@app.route('/interview', methods=['GET'],endpoint='interview')
+@app.route('/quiz', methods=['GET'],endpoint='quiz')
 @interview_session
-def interview(applicant):
+def quiz(applicant):
     try:
          if request.method == 'GET':
             interview = applicant.interview_id.getInterview()
@@ -19,12 +19,12 @@ def interview(applicant):
             return jsonify(result=True,interview=interview,history=history,candidate=candidate)
     except Exception as exc:
         print(exc)
-        print 'Candidate interview error '
+        print 'Quiz interview error '
         print request.values
         return jsonify(result=False)
 
 
-@app.route('/interview/question', methods=['GET'],endpoint='interview-question')
+@app.route('/quiz/question', methods=['GET'],endpoint='quiz-question')
 @interview_session
 def question(applicant):
     try:
@@ -35,12 +35,12 @@ def question(applicant):
             return jsonify(result=True,questionList=questionList)
     except Exception as exc:
         print(exc)
-        print 'Interview question error '
+        print 'Quiz question error '
         print request.values
         return jsonify(result=False)
 
 
-@app.route('/interview/start', methods=['POST'],endpoint='interview-start')
+@app.route('/quiz/start', methods=['POST'],endpoint='quiz-start')
 @interview_session
 def startInterview(applicant):
     try:
@@ -49,11 +49,11 @@ def startInterview(applicant):
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Interview start error '
+        print 'Quiz start error '
         print request.values
         return jsonify(result=False)
 
-@app.route('/interview/finish', methods=['POST'],endpoint='interview-finish')
+@app.route('/quiz/finish', methods=['POST'],endpoint='quiz-finish')
 @interview_session
 def finishInterview(applicant):
     try:
@@ -62,44 +62,24 @@ def finishInterview(applicant):
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Interview start error '
+        print 'Quiz stop error '
         print request.values
         return jsonify(result=False)
 
 
 
-@app.route('/interview/answer', methods=['POST'],endpoint='interview-answer')
+@app.route('/quiz/answer', methods=['POST'],endpoint='quiz-answer')
 @interview_session
 def submitAnswer(applicant):
     try:
          if request.method == 'POST':
             questionId  = int(request.values['questionId'])
-            videoUrl = request.values['videoUrl']
-            result  = applicant.submitInterviewAnswer(questionId,videoUrl)
+            optionId = int(request.values['optionId'])
+            result  = applicant.submitQuizAnswer(questionId,optionId)
             return jsonify(result=result)
     except Exception as exc:
         print(exc)
-        print 'Interview answer error '
+        print 'Quiz answer error '
         print request.values
         return jsonify(result=False)
 
-
-@app.route('/interview/document', methods=['POST'],endpoint='interview-document')
-@interview_session
-def attachDocument(applicant):
-    try:
-         if request.method == 'POST':
-            base64FileData  = request.values['file']
-            filename = request.values['filename']
-            comment = request.values['comment']
-            fileData = base64.urlsafe_b64decode(base64FileData.encode('UTF-8'))
-            server_fname = os.path.join(app.config['FILE_UPLOAD_FOLDER'],  '%s%s' %( datetime.datetime.now().strftime('%S%M%H%m%d%Y') , secure_filename(filename)))
-            with open(server_fname, 'wb') as theFile:
-                theFile.write(fileData)
-            result  = applicant.attachDocument(filename,server_fname,comment)
-            return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Attach document error '
-        print request.values
-        return jsonify(result=False)

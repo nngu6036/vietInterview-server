@@ -50,6 +50,19 @@ class Applicant(models.Model):
         return False
 
     @api.one
+    def submitQuizAnswer(self, questionId, optionId):
+        if self.response_id.state == 'skip':
+            self.response_id.write({'state': 'skip'})
+            option = self.env['survey.label'].browse(optionId)
+            self.env['survey.user_input_line'].create({'user_input_id': self.response_id.id, 'question_id': questionId,
+                                                       'skipped': False,
+                                                       'answer_type': 'suggestion',
+                                                       'value_suggested': optionId,
+                                                       'quizz_mark':option.quizz_mark})
+            return True
+        return False
+
+    @api.one
     def attachDocument(self, file_name, file_location, comment):
         self.env['ir.attachment'].create({'name': comment, 'description': comment,
                                           'res_model': 'hr.applicant', 'res_id': self.id,
@@ -205,8 +218,12 @@ class Interview(models.Model):
         [('initial', 'Initial status'), ('published', 'Published status'), ('closed', 'Closed status')],
         default='initial')
     conference_ids = fields.One2many('career.conference', 'interview_id', string="Conference")
-    mode = fields.Selection([('conference', 'Conference interview'), ('video', 'Video interview')], default='video')
+    mode = fields.Selection([('conference', 'Conference interview'), ('video', 'Video interview'),('quiz', 'Quiz interview')], default='video')
     round = fields.Integer(string="Interview round number", default=1)
+    quest_num = fields.Integer("Number of question")
+    benchmark = fields.Integer("Number of correct answer to pass the test")
+    shuffle = fields.Boolean("Randomize the question order")
+    quiz_time = fields.Integer("Total quiz time in second")
 
     @api.model
     def create(self, vals):
@@ -223,15 +240,22 @@ class Interview(models.Model):
                     'mode': vals['mode'],
                     'exitUrl': vals['exitUrl'],
                     'prepare': int(vals['prepare']) if 'prepare' in vals else False,
-                    'language': vals['language'] if 'language' in vals else False})
+                    'language': vals['language'] if 'language' in vals else False,
+                    'quest_num': int(vals['questionNum']) if 'questionNum' in vals else False,
+                    'benchmark': int(vals['benchmark']) if 'benchmark' in vals else False,
+                    'shuffle': bool(vals['shuffle']) if 'shuffle' in vals else False,
+                    'quiz_time': int(vals['quizTime']) if 'quizTime' in vals else False
+                    })
         return True
 
     @api.multi
     def addInterviewQuestion(self, jQuestions):
         self.ensure_one()
         questionIds = []
+        print jQuestions
         for jQuestion in jQuestions:
             page = self.env['survey.page'].create({'title': 'Single Page', 'survey_id': self.id})
+            question_type = 'free_text' if self.mode!='quiz' else 'simple_choice'
             question = self.env['survey.question'].create(
                 {'question': jQuestion['title'],
                  'response': int(jQuestion['response']) if 'response' in jQuestion else False,
@@ -239,7 +263,13 @@ class Interview(models.Model):
                  'videoUrl': jQuestion['videoUrl'],
                  'prepare': int(jQuestion['prepare']) if 'prepare' in jQuestion else False,
                  'source': jQuestion['source'], 'mode': jQuestion['type'], 'page_id': page.id,
+                 'type':question_type,
                  'sequence': int(jQuestion['order']), 'survey_id': self.id})
+            if self.mode=='quiz':
+                for jOption in jQuestion['options']:
+                    option = self.env['survey.label'].create(
+                        {'question_id': question.id,
+                         'value': jOption['title'], 'quizz_mark': 1 if jOption['correct'] else -1})
             questionIds.append(question.id)
         return questionIds
 
@@ -247,9 +277,15 @@ class Interview(models.Model):
     def getInterviewQuestion(self):
         self.ensure_one()
         questions = self.env['survey.question'].search([('survey_id', '=', self.id)])
-        questionList = [
-            {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry, 'videoUrl': q.videoUrl,
-             'source': q.source, 'type': q.mode, 'order': q.sequence, 'prepare': q.prepare} for q in questions]
+        if self.mode != 'quiz':
+            questionList = [
+                {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry, 'videoUrl': q.videoUrl,
+                'source': q.source, 'type': q.mode, 'order': q.sequence, 'prepare': q.prepare} for q in questions]
+        else:
+            questionList = [
+                {'id': q.id, 'title': q.question, 'source': q.source, 'order': q.sequence,
+                 'options': [{'id': o.id, 'title': o.value, 'correct': True if o.quizz_mark > 0 else False} for o in
+                             q.labels_ids]} for q in questions]
         return questionList
 
     @api.multi
@@ -280,9 +316,10 @@ class Interview(models.Model):
         self.ensure_one()
         candidateList = []
         for applicant in self.env['hr.applicant'].search(
-                ['|', ('interview_id', '=', self.id), ('survey', '=', self.id)]):
+                ['|', ('interview_id', '=', self.id), ('job_id', '=', self.job_id.id)]):
             candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
                          'shortlist': applicant.shortlist,
+                         'round':applicant.interview_id.round,
                          'invited': True if self.env['career.email.history'].search([('survey_id', '=', self.id),
                                                                                      ('email', '=',
                                                                                       applicant.email_from)]) else False}
@@ -364,19 +401,9 @@ class Interview(models.Model):
     def getInterview(self):
         self.ensure_one()
         return {'id': self.id, 'name': self.title, 'response': self.response,
-                'prepare': self.prepare,
-                'retry': self.retry, 'introUrl': self.introUrl, 'exitUrl': self.exitUrl,
-                'aboutUsUrl': self.aboutUsUrl}
-
-    @api.multi
-    def getInterviewQuestion(self):
-        self.ensure_one()
-        questions = self.env['survey.question'].search([('survey_id', '=', self.id)])
-        questionList = [
-            {'id': q.id, 'title': q.question, 'response': q.response, 'retry': q.retry, 'prepare': q.prepare,
-             'videoUrl': q.videoUrl,
-             'source': q.source, 'type': q.mode, 'order': q.sequence} for q in questions]
-        return questionList
+                'prepare': self.prepare,'status':self.status,'mode':self.mode,'round':self.round,
+                'retry': self.retry, 'introUrl': self.introUrl, 'exitUrl': self.exitUrl,'language':self.language,
+                'aboutUsUrl': self.aboutUsUrl,'benchmark':self.benchmark,'quizTime':self.quiz_time,'shuffle':self.shuffle}
 
 
 class InterviewQuestion(models.Model):

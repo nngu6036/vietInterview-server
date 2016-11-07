@@ -45,7 +45,7 @@
 
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} invites you to the following position on :${object.job_id.name} interview.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} invites you to the following position on : ${object.job_id.name} interview.<br>
             For tips on video interviewing, please go to <a href="${object.company_id.url}/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your interview session will expired on ${object.job_id.deadline}. When you are ready, click the "Start interview" button to start.
 
@@ -117,7 +117,7 @@
 
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào ${object.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau :${object.job_id.name}.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} mời bạn tham gia cuộc phỏng vấn video cho vị trí sau : ${object.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn video, hãy vào <a href="https://vietinterview.com/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn video, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành cuộc phỏng vấn trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 
@@ -159,7 +159,154 @@
             <field name='type'>model</field>
         </record>
 
+ <record model="email.template" id="career.quiz_invitation_email_template">
+            <field name="name">Quiz invitation</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="subject">Quiz invitation</field>
+            <field name="email_from">${object.company_id.name}&lt;contact@vietinterview.com&gt;</field>
+            <field name="email_to">${object.email_from}</field>
+            <field name="mail_server_id" ref="career.career_smtp_host"/>
+            <field name="body_html">
+                <![CDATA[
+               <div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody><tr>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.company_id.name} would like you to complete a quiz interview </td>
+                </tr>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+<tr>
+  <td colspan="3" style="border-radius:3px;background-color:#ffffff">
+      <center style="padding:0 20px">
+          <table style="width:100%">
+              <tbody>
 
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.name}<br><br>
+            </td></tr>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} invites you to the following position on : ${object.job_id.name} interview.<br>
+            For tips on quiz interviewing, please go to <a href="${object.company_id.url}/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
+            The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the video interview. Your quiz session will expired on ${object.job_id.deadline}. When you are ready, click the "Start quiz" button to start.
+
+            </td></tr>
+            <tr>
+             <td  style="padding-top:20px">
+    <center>
+        <a href="${object.company_id.url}/#/quiz?code=${object.response_id.token}&translate=en" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+            Start Quiz
+        </a><br><br>
+    </center>
+  </td>
+        </tr>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">If you have any question, contact <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       Thank you,<br><br>
+       ${object.company_id.name}
+
+            </td></tr>
+          </tbody></table>
+      </center>
+    </td>
+</tr><tr>
+
+</tr>
+
+              </tbody></table>
+            </center>
+          </td>
+        </tr>
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+                ]]>
+            </field>
+        </record>
+
+
+        <record model='ir.translation' id='career.quiz_invitation_email_template_vi'>
+            <field name='name'>email.template,body_html</field>
+            <field name='res_id' ref="career.quiz_invitation_email_template"/>
+            <field name='lang'>vi_VN</field>
+            <field name='value'>
+                <![CDATA[
+               <div>
+    <center style="background-color:#f2f3f3">
+      <table style="width:100%;border-spacing:0">
+        <tbody><tr>
+          <td style="background-color:#1cb2fb;padding:5px ;text-align:center">
+            <img height=50px src="${object.company_id.url}/images/logow.png" align="center">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <center style="padding-top:30px">
+              <table style="width:50%;border-spacing:0">
+                <tbody><tr>
+                  <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">${object.company_id.name} muốn bạn hoàn thành một bài thi trắc nghiệm </td>
+                </tr>
+                 <tr>
+    <td style="padding-top:27px"></td>
+  </tr>
+<tr>
+  <td colspan="3" style="border-radius:3px;background-color:#ffffff">
+      <center style="padding:0 20px">
+          <table style="width:100%">
+              <tbody>
+
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào ${object.name}<br><br>
+            </td></tr>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.company_id.name} mời bạn tham gia bài thi trắc nghiệm cho vị trí sau : ${object.job_id.name}.<br>
+            Để tìm hiểu thêm về thi trắc nghiệm, hãy vào <a href="https://vietinterview.com/#/career_detail?careertab=employee">${object.company_id.name} Website</a><br>
+            Thời gian bài thi khoảng 30 phút. Để thực hiện bài thi, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Bạn cần hoàn thành bài thi trước ${object.job_id.deadline}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Bài Thi” dưới đây để  bắt đầu:
+
+            </td></tr>
+            <tr>
+             <td  style="padding-top:20px">
+    <center>
+        <a href="${object.company_id.url}/#/quiz?code=${object.response_id.token}&translate=vi" style="border-radius:3px;background-color:#046d9a;font-family:OpenSans;color:#ffffff;font-size:16px;font-weight:400;line-height:18px;text-align:center;padding:16px 50px;border:0;text-transform:uppercase;text-decoration:none;display:inline-block" target="_blank">
+            Bắt đầu bài thi
+        </a><br><br>
+    </center>
+  </td>
+        </tr>
+       <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px">Nếu bạn có bất kỳ câu hỏi kỹ thuật, hãy liên hệ  <a href="mailto:info@vietinterview.com">info@vietinterview.com</a> <br>
+       Xin cảm ơn,<br><br>
+       ${object.company_id.name}
+
+            </td></tr>
+          </tbody></table>
+      </center>
+    </td>
+</tr><tr>
+
+</tr>
+
+              </tbody></table>
+            </center>
+          </td>
+        </tr>
+      </tbody></table>
+    </center>
+</div>
+</div><br></div>
+
+                ]]>
+            </field>
+            <field name='module'>career</field>
+            <field name='state'>translated</field>
+            <field name='type'>model</field>
+        </record>
 
         <record model="email.template" id="career.conference_invitation_email_template">
             <field name="name">Interview invitation</field>
@@ -196,7 +343,7 @@
 
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Hello ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on :${object.conference_id.interview_id.job_id.name} interview.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} invites you to the following position on : ${object.conference_id.interview_id.job_id.name} interview.<br>
             For tips on conference interviewing, please go to <a href="${object.conference_id.applicant_id.company_id.url}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} url</a><br>
             The entire process takes about 30 minutes on average. You will need Chrome or Firefox browser installed on your computer to run the conference interview. Your interview session will start at ${object.conference_id.schedule}. When you are ready, click the "Start conference" button to start.
 
@@ -268,7 +415,7 @@
 
             <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> Xin chào ${object.conference_id.applicant_id.name}<br><br>
             </td></tr>
-            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau :${object.conference_id.interview_id.job_id.name}.<br>
+            <tr><td style="font-family:Arial;color:#000000;font-size:14px;font-weight:400;text-align:justify;line-height:21px"> ${object.conference_id.applicant_id.company_id.name} mời bạn tham gia cuộc phỏng vấn trực tuyến cho vị trí sau : ${object.conference_id.interview_id.job_id.name}.<br>
             Để tìm hiểu thêm về phỏng vấn trực tuyến, hãy vào <a href="${object.conference_id.applicant_id.company_id.url}/#/career_detail?careertab=employee">${object.conference_id.applicant_id.company_id.name} url</a><br>
             Toàn bộ quá trình phỏng vấn là khoảng 30 phút. Để thực hiện phỏng vấn trực tuyến, bạn cần cài trình duyệt Chome hoặc Firefox trên máy tính. Cuộc phỏng vấn sẽ bắt đầu vào lúc ${object.conference_id.schedule}. Khi đã săn sàng, hãy nhấp chuột vào biểu tượng “Bắt Đầu Phỏng Vấn” dưới đây để  bắt đầu:
 

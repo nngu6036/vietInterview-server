@@ -66,10 +66,15 @@ class CompanyUser(models.Model):
                      'language': vals['language'] if 'language' in vals else False,
                      'round': int(vals['round']) if 'roumd' in vals else False,
                      'aboutUsUrl': self.company_id.partner_id.videoUrl,
+                     'quest_num': int(vals['questionNum']) if 'questionNum' in vals else False,
+                     'benchmark': int(vals['benchmark']) if 'benchmark' in vals else False,
+                     'shuffle': bool(vals['shuffle']) if 'shuffle' in vals else False,
+                     'quiz_time': int(vals['quizTime']) if 'quizTime' in vals else False,
                      'mode': vals['mode'] if 'mode' in vals else False})
 
                 return interview.id
         return False
+
 
     @api.one
     def getConference(self):
@@ -142,6 +147,8 @@ class CompanyUser(models.Model):
                 for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
                         self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                    if interview.mode == 'quiz':
+                        self.env['career.mail_service'].sendQuizInterviewInvitation(candidate, subject)
                     if interview.mode == 'conference':
                         self.scheduleMeeting(candidate, jsCandidate['schedule'])
                         self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
