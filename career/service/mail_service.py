@@ -122,3 +122,9 @@ class MailService(osv.AbstractModel):
             return False
         self.pool.get('email.template').send_mail(cr, uid, email_template.id, applicant.id, True, False, {'lang':lang})
         return True
+
+    @api .model
+    def sendMail(self,subject,body,email_to):
+        cr, uid, context = self.env.args
+        mail = self.env['mail.mail'].create({'email_to':email_to,'body_html':body,'subject':subject})
+        return mail.send([mail.id],context)

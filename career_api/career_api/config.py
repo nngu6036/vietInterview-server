@@ -14,6 +14,7 @@ class DefaultConfig(object):
     ERP_DB = 'career'
     ERP_DB_USER = 'admin'
     ERP_DB_PASS = '123456'
+    ERP_CONTACT_EMAIL = 'huong.dao@vietinterview.com'
     FILE_UPLOAD_FOLDER = '/home/data/Documents'
     VIDEO_UPLOAD_FOLDER = '/home/data/Videos'
     VIDEO_DOWNLOAD_FOLDER = 'videos'
