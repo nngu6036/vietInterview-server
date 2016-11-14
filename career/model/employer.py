@@ -19,7 +19,7 @@ class CompanyUser(models.Model):
         catIdList = vals['categoryIdList']
         address = self.env['res.partner'].create({'name': vals['name'], 'type': 'contact',
                                                   'country_id': 'countryId' in vals and int(vals['countryId']),
-                                                  'province_id': 'provinceId' in vals and int(vals['provinceId']),
+                                                  'state_id': 'provinceId' in vals and int(vals['provinceId']),
                                                   'company_id': self.user_id.company_id.id})
         assignment = self.env['hr.job'].create({'name': vals['name'], 'description': vals['description'],
                                                 'deadline': vals['deadline'], 'company_id': self.user_id.company_id.id,
@@ -66,10 +66,15 @@ class CompanyUser(models.Model):
                      'language': vals['language'] if 'language' in vals else False,
                      'round': int(vals['round']) if 'roumd' in vals else False,
                      'aboutUsUrl': self.company_id.partner_id.videoUrl,
+                     'quest_num': int(vals['questionNum']) if 'questionNum' in vals else False,
+                     'benchmark': int(vals['benchmark']) if 'benchmark' in vals else False,
+                     'shuffle': bool(vals['shuffle']) if 'shuffle' in vals else False,
+                     'quiz_time': int(vals['quizTime']) if 'quizTime' in vals else False,
                      'mode': vals['mode'] if 'mode' in vals else False})
 
                 return interview.id
         return False
+
 
     @api.one
     def getConference(self):
@@ -142,6 +147,8 @@ class CompanyUser(models.Model):
                 for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
                         self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                    if interview.mode == 'quiz':
+                        self.env['career.mail_service'].sendQuizInterviewInvitation(candidate, subject)
                     if interview.mode == 'conference':
                         self.scheduleMeeting(candidate, jsCandidate['schedule'])
                         self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
@@ -247,9 +254,17 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def getCandidate(self):
+    def getCandidate(self, start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
         candidateList = []
-        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id)]):
+        total = 0
+        if count:
+            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id),
+                                                           ('user_id', '!=', None)])
+        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id),
+                                                          ('user_id', '!=', None)], limit=length,
+                                                         offset=start, order='create_date desc'):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
@@ -261,7 +276,7 @@ class CompanyUser(models.Model):
                 candidate['certList'] = employee.getCertificate()
                 candidate['docList'] = employee.getDocument()
             candidateList.append(candidate)
-        return candidateList
+        return {'result': True, 'candidateList': candidateList, 'total': total}
 
     @api.one
     def addInterviewQuestion(self, interviewId, jQuestions):

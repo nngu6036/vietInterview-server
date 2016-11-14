@@ -4,6 +4,7 @@
             <field name="key">company.url</field>
             <field name="value">https://vietinterview.com</field>
         </record>
+
         <function model="career.career" name="install"/>
     </data>
 

@@ -96,7 +96,10 @@ def searchJob():
     if request.method == 'POST':
       keyword = request.values['keyword'] if 'keyword' in request.values else False
       option = json.loads(request.values['option']) if 'option' in request.values else False
-      jobList = common_service.searchJob(keyword, option)
+      offset = request.values['offset'] if 'offset' in request.values else None
+      length = request.values['length'] if 'length' in request.values else None
+      count = request.values['count'] if 'count' in request.values else False
+      jobList = common_service.searchJob(keyword, option, offset, length, count)
       return jsonify(jobList=jobList)
   except Exception as exc:
     print(exc)
@@ -132,7 +135,7 @@ def resetPass():
         return jsonify(result=False)
 
 
-@app.route('/common/company', methods=['GET'],endpoint='employee-company')
+@app.route('/common/company', methods=['GET'],endpoint='common-company')
 def company():
     try:
          if request.method == 'GET':
@@ -145,7 +148,7 @@ def company():
         print request.values
         return jsonify(result=False)
 
-@app.route('/common/question', methods=['GET'],endpoint='employer-question')
+@app.route('/common/question', methods=['GET'],endpoint='common-question')
 def question():
     try:
          if request.method == 'GET':
@@ -159,7 +162,7 @@ def question():
         print request.values
         return jsonify(result=False)
 
-@app.route('/common/question/category', methods=['GET'],endpoint='admin-question-employer')
+@app.route('/common/question/category', methods=['GET'],endpoint='common-question-employer')
 def questionCategory():
     try:
          if request.method == 'GET':
@@ -173,7 +176,7 @@ def questionCategory():
         print request.values
         return jsonify(result=False)
 
-@app.route('/common/assessment', methods=['GET'],endpoint='employer-assessment')
+@app.route('/common/assessment', methods=['GET'],endpoint='common-assessment')
 def assessment():
     try:
          if request.method == 'GET':
@@ -183,5 +186,19 @@ def assessment():
     except Exception as exc:
         print(exc)
         print 'Assessment error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/common/mail', methods=['POST'],endpoint='common-mail')
+def sendMail():
+    try:
+         if request.method == 'POST':
+            body = request.values['body']
+            subject = request.values['subject']
+            mail_service.sendMail(subject,body,app.confi['ERP_CONTACT_EMAIL'])
+         return jsonify(result=True,assessment=assessment)
+    except Exception as exc:
+        print(exc)
+        print 'Send mail error '
         print request.values
         return jsonify(result=False)

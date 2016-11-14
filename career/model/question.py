@@ -36,11 +36,14 @@ class Question(models.Model):
 	videoUrl = fields.Text(string="VIdeo")
 	category_id = fields.Many2one('career.question_category', string="Category")
 	lang = fields.Char(string="Language",default="en")
+	type = fields.Selection([('ET', 'Extended text'), ('SC', 'Single choice')],default='ET')
+	option_ids  = fields.One2many('career.question_option', 'question_id',string="Option")
 
 	@api.model
 	def getQuestion(self,lang):
 		questions = self.env['career.question'].search([('lang','=',lang)])
-		questionList = [{'id':q.id,'title':q.title,'content':q.content,'videoUrl':q.videoUrl,'categoryId':q.category_id.id    } for q in questions]
+		questionList = [{'id':q.id,'title':q.title,'content':q.content,'videoUrl':q.videoUrl,'categoryId':q.category_id.id,
+						 'type':q.type, 'options':[{'id':o.id,'title':o.title,'correct':o.correct} for o in q.option_ids]} for q in questions]
 		return questionList
 
 	@api.model
@@ -55,3 +58,23 @@ class Question(models.Model):
 		self.write({'title':vals['title'],'content':vals['content'],'videoUrl':vals['videoUrl'],
 												   'categoryId':int(vals['categoryId'])})
 		return True
+
+class QuestionOption(models.Model):
+	_name = 'career.question_option'
+	title = fields.Text(string="Title",translate=True)
+	correct = fields.Boolean(string="Is correct")
+	question_id = fields.Many2one('career.question', string="Question")
+	lang = fields.Char(string="Language",default="en")
+
+	@api.model
+	def createQuestionOption(self,vals):
+		option = self.env['career.question_option'].create({'title':vals['title'],'correct':bool(vals['correct']),
+															'question_id':int(vals['questionId']),'lang':vals['lang']})
+		return option.id
+
+
+	@api.multi
+	def deleteQuestionOption(self):
+		if self.unlink():
+			return True
+		return False

@@ -4,8 +4,8 @@ from fabric.contrib import *
 from fabric.api import *
 
 # the user to use for the remote commands
-env.user = 'adminname'
-env.password = 'cmcti@123'
+env.user = 'root'
+env.password = 'Tc!@#6102'
 # the servers where the commands are executed
 env.hosts = ['vietinterview.com']
 project = 'career_api'
