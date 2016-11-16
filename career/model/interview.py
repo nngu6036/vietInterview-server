@@ -34,6 +34,8 @@ class Applicant(models.Model):
     def getInterviewScore(self):
         if self.response_id.state != 'done':
             return 0
+        if len(self.response_id.user_input_line_ids) == 0:
+            return 0
         return self.response_id.quizz_score * 100 / len(self.response_id.user_input_line_ids)
 
     @api.one
@@ -304,6 +306,8 @@ class Interview(models.Model):
                 response = {}
                 response['candidate'] = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
                                          'shortlist': applicant.shortlist,
+                                         'score': applicant.getInterviewScore(),
+                                         'pass': applicant.getInterviewScore() >= self.benchmark,
                                          'invited': True if self.env['career.email.history'].search(
                                              [('applicant_id', '=', applicant.id)]) else False}
                 response['answerList'] = [
