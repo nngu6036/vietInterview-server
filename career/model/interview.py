@@ -275,7 +275,7 @@ class Interview(models.Model):
                 for jOption in jQuestion['options']:
                     option = self.env['survey.label'].create(
                         {'question_id': question.id,
-                         'value': jOption['title'], 'quizz_mark': 1 if jOption['correct'] else -1})
+                         'value': jOption['title'], 'quizz_mark': 1 if jOption['correct'] else 0})
             questionIds.append(question.id)
         return questionIds
 
