@@ -30,8 +30,9 @@ class Applicant(models.Model):
             return True
         return False
 
-    @api.one
+    @api.multi
     def getInterviewScore(self):
+        self.ensure_one()
         if self.response_id.state != 'done':
             return 0
         if len(self.response_id.user_input_line_ids) == 0:
@@ -260,7 +261,6 @@ class Interview(models.Model):
     def addInterviewQuestion(self, jQuestions):
         self.ensure_one()
         questionIds = []
-        print jQuestions
         for jQuestion in jQuestions:
             page = self.env['survey.page'].create({'title': 'Single Page', 'survey_id': self.id})
             question_type = 'free_text' if self.mode!='quiz' else 'simple_choice'
@@ -277,7 +277,7 @@ class Interview(models.Model):
                 for jOption in jQuestion['options']:
                     option = self.env['survey.label'].create(
                         {'question_id': question.id,
-                         'value': jOption['title'], 'quizz_mark': 1 if jOption['correct'] else -1})
+                         'value': jOption['title'], 'quizz_mark': 1 if jOption['correct'] else 0})
             questionIds.append(question.id)
         return questionIds
 
