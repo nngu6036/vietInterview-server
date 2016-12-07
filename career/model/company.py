@@ -192,14 +192,14 @@ class Conpany(models.Model):
         self.env['hr.employee'].create(
             {'address_id': self.partner_id.id, 'work_email': vals['email'], 'name': vals['name'],
              'user_id': user.id, 'company_id': self.id})
-        new_employer = self.env['career.employer'].create({'user_id': user.id, 'is_admin': False})
+        new_employer = self.env['career.employer'].create({'user_id': user.id, 'is_admin': False,'auto_approve':vals['autoApproved'] if 'autoApproved' in vals else False})
         return new_employer.id
 
     @api.one
     def getCompanyUser(self):
         userList = []
         for employer in self.env['career.employer'].search([('company_id', '=', self.id)]):
-            userList.append({'id': employer.id, 'name': employer.name, 'email': employer.login})
+            userList.append({'id': employer.id, 'name': employer.name, 'email': employer.login,'autoApproved':employer.auto_approve})
         return userList
 
     @api.one

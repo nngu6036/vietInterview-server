@@ -84,12 +84,27 @@ class Assignment(models.Model):
 
     @api.multi
     def deleteAssignment(self):
-        if self.status == 'initial':
-            self.unlink()
-            return True
-        return False
+        self.unlink()
+        return True
 
-
+    @api.multi
+    def getCandidate(self):
+        self.ensure_one()
+        candidateList = []
+        for applicant in self.env['hr.applicant'].search(
+            [ ('job_id', '=', self.id)]):
+            candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from}
+            for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
+                candidate['employeeId'] = employee.id
+                candidate['profile'] = employee.getProfile()
+                candidate['expList'] = employee.getWorkExperience()
+                candidate['eduList'] = employee.getEducationHistory()
+                candidate['certList'] = employee.getCertificate()
+                candidate['docList'] = employee.getDocument()
+                candidate['viewed'] = self.env['career.employee.history'].search_count(
+                    [('employee_id', '=', employee.id), ('company_id', '=', self.company_id.id)]) > 0
+            candidateList.append(candidate)
+        return candidateList
 
     @api.multi
     def getInterviewList(self):

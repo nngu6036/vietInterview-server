@@ -13,6 +13,7 @@ class CompanyUser(models.Model):
     company_id = fields.Many2one(string='Company', related='user_id.company_id')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
+    auto_approve = fields.Boolean(string='Job created by this user will be auto-approved')
 
     @api.one
     def createAssignment(self, vals):
@@ -28,12 +29,15 @@ class CompanyUser(models.Model):
                                                 'position_id': int(
                                                     vals['positionId']) if 'positionId' in vals else False,
                                                 'address_id': address.id, 'state': 'open'})
+        if self.auto_approve:
+            assignment.write({'state': 'recruit'})
         self.env['career.mail_service'].sendNewJobNotification(assignment.id)
         return assignment.id
 
     @api.one
     def updateCompanyUser(self, vals):
         self.user_id.write({'name': vals['name'], 'password': vals['password']})
+        self.write({'auto_approve':vals['autoApproved'] if 'autoApproved' in vals else False})
         return True
 
     @api.one
@@ -246,11 +250,16 @@ class CompanyUser(models.Model):
 
     @api.one
     def getCandidateByInterview(self, interviewId):
-        print interviewId
         for interview in self.env['survey.survey'].browse(interviewId):
-            print interview
             if interview.job_id.company_id.id == self.company_id.id:
                 return interview.getCandidate()
+        return False
+
+    @api.one
+    def getCandidateByJob(self, assignmentId):
+        for job in self.env['hr.job'].browse(assignmentId):
+            if job.company_id.id == self.company_id.id:
+                return job.getCandidate()
         return False
 
     @api.one
@@ -260,10 +269,8 @@ class CompanyUser(models.Model):
         candidateList = []
         total = 0
         if count:
-            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id),
-                                                           ('user_id', '!=', None)])
-        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id),
-                                                          ('user_id', '!=', None)], limit=length,
+            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id)])
+        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id)], limit=length,
                                                          offset=start, order='create_date desc'):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id

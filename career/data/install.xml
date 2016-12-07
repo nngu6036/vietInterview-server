@@ -5,6 +5,7 @@
             <field name="value">https://vietinterview.com</field>
         </record>
 
+
         <function model="career.career" name="install"/>
     </data>
 

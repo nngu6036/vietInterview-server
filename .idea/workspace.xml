@@ -2,19 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" afterPath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/service/mail_service.py" afterPath="$PROJECT_DIR$/career/service/mail_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/common/__init__.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/common/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/config.py" afterPath="$PROJECT_DIR$/career_api/career_api/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/data/install.xml" afterPath="$PROJECT_DIR$/career/data/install.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/assignment.py" afterPath="$PROJECT_DIR$/career/model/assignment.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/company.py" afterPath="$PROJECT_DIR$/career/model/company.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/employer.py" afterPath="$PROJECT_DIR$/career/model/employer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/service/common_service.py" afterPath="$PROJECT_DIR$/career/service/common_service.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/VietInterviewServer$deploy.coverage" NAME="deploy Coverage Results" MODIFIED="1481103894490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/career_api" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -28,38 +37,48 @@
       <file leaf-file-name="employer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/employer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5727">
-              <caret line="252" column="45" selection-start-line="252" selection-start-column="33" selection-end-line="252" selection-end-column="45" />
+            <state relative-caret-position="170">
+              <caret line="212" column="50" selection-start-line="212" selection-start-column="34" selection-end-line="212" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mail_service.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/career/service/mail_service.py">
+      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career/model/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="126" column="16" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="16" />
+            <state relative-caret-position="920">
+              <caret line="40" column="56" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/common/__init__.py">
+      <file leaf-file-name="admin_service.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career/service/admin_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="197" column="75" selection-start-line="197" selection-start-column="75" selection-end-line="197" selection-end-column="75" />
+            <state relative-caret-position="299">
+              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/config.py">
+      <file leaf-file-name="assignment.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career/model/assignment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="16" column="21" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="21" />
+            <state relative-caret-position="-736">
+              <caret line="87" column="8" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="employerapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="88" column="46" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -68,60 +87,48 @@
       <file leaf-file-name="interview.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/interview.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="33" column="25" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="25" />
+            <state relative-caret-position="-2789">
+              <caret line="221" column="10" selection-start-line="221" selection-start-column="4" selection-end-line="221" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common_service.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common_service.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/career/service/common_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-669">
-              <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+            <state relative-caret-position="322">
+              <caret line="23" column="66" selection-start-line="23" selection-start-column="66" selection-end-line="23" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quizapi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/common/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-715">
-              <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-              <folding>
-                <element signature="e#1#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="interviewapi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/interviewapi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+            <state relative-caret-position="2425">
+              <caret line="197" column="75" selection-start-line="197" selection-start-column="75" selection-end-line="197" selection-end-column="75" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="conferenceapi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/conferenceapi.py">
+      <file leaf-file-name="adminapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-621">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="262">
+              <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employee.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career/model/employee.py">
+      <file leaf-file-name="company.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/career/model/company.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="291">
+              <caret line="194" column="169" selection-start-line="194" selection-start-column="97" selection-end-line="194" selection-end-column="169" />
               <folding />
             </state>
           </provider>
@@ -161,7 +168,6 @@
         <option value="$PROJECT_DIR$/career_api/deploy/demo/fabfile.py" />
         <option value="$PROJECT_DIR$/career/model/__init__.py" />
         <option value="$PROJECT_DIR$/career/service/account_service.py" />
-        <option value="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" />
         <option value="$PROJECT_DIR$/career/data/data.xml" />
         <option value="$PROJECT_DIR$/career/model/admin.py" />
         <option value="$PROJECT_DIR$/career/model/session.py" />
@@ -171,25 +177,27 @@
         <option value="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
         <option value="$PROJECT_DIR$/career_api/deploy/prod/fabfile.py" />
         <option value="$PROJECT_DIR$/career/model/employee.py" />
-        <option value="$PROJECT_DIR$/career/service/common_service.py" />
-        <option value="$PROJECT_DIR$/career/model/company.py" />
         <option value="$PROJECT_DIR$/test/test.py" />
         <option value="$PROJECT_DIR$/career/report/report_assessment_summary.xml" />
         <option value="$PROJECT_DIR$/career/model/question.py" />
-        <option value="$PROJECT_DIR$/career/model/employer.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/candidate/interviewapi.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/candidate/__init__.py" />
-        <option value="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
-        <option value="$PROJECT_DIR$/career/model/assignment.py" />
         <option value="$PROJECT_DIR$/career/install.py" />
         <option value="$PROJECT_DIR$/career/data/mail.xml" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/proxy.py" />
-        <option value="$PROJECT_DIR$/test/connect_demo.py" />
         <option value="$PROJECT_DIR$/career/model/interview.py" />
         <option value="$PROJECT_DIR$/career/service/mail_service.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/config.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/common/__init__.py" />
+        <option value="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
+        <option value="$PROJECT_DIR$/test/connect_demo.py" />
+        <option value="$PROJECT_DIR$/career/data/install.xml" />
+        <option value="$PROJECT_DIR$/career/model/company.py" />
+        <option value="$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py" />
+        <option value="$PROJECT_DIR$/career/model/employer.py" />
+        <option value="$PROJECT_DIR$/career/model/assignment.py" />
+        <option value="$PROJECT_DIR$/career/service/common_service.py" />
       </list>
     </option>
   </component>
@@ -265,6 +273,10 @@
               <option name="myItemId" value="VietInterviewServer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="documentation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -317,6 +329,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VietInterviewServer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VietInterviewServer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="career_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="career_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="employer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -394,7 +432,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="candidate" />
+              <option name="myItemId" value="admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -495,13 +533,14 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="507" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\git\VietInterviewServer\career_api\career_api\api\candidate" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.connect_demo">
+  <component name="RunManager" selected="Python.deploy">
     <configuration default="false" name="deploy" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -592,6 +631,57 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VietInterview" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VietInterview" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VietInterview" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -621,6 +711,22 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <module name="VietInterview" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Attests">
@@ -742,8 +848,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.connect_demo" />
-        <item index="1" class="java.lang.String" itemvalue="Python.deploy" />
+        <item index="0" class="java.lang.String" itemvalue="Python.deploy" />
+        <item index="1" class="java.lang.String" itemvalue="Python.connect_demo" />
         <item index="2" class="java.lang.String" itemvalue="Python.test" />
         <item index="3" class="java.lang.String" itemvalue="Python.employerlogin" />
         <item index="4" class="java.lang.String" itemvalue="Python.deploy (1)" />
@@ -1123,25 +1229,25 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20817845" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21450152" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49375975" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25508606" sideWeight="0.5367187" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25383306" sideWeight="0.46328124" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25245902" sideWeight="0.46328124" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49687988" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31175467" sideWeight="0.42121685" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960998" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33486944" sideWeight="0.48439938" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20046802" sideWeight="0.5083682" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39906102" sideWeight="0.49687988" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3131488" sideWeight="0.42121685" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39906102" sideWeight="0.49687988" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1203,8 +1309,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/data.py" />
-    <entry file="file://$PROJECT_DIR$/test/employerlogin.py" />
     <entry file="file://$PROJECT_DIR$/test/updatecompany.py" />
     <entry file="file://$PROJECT_DIR$/test/jobcat.py" />
     <entry file="file://$PROJECT_DIR$/test/listassessment.py" />
@@ -1224,20 +1328,6 @@
     <entry file="file://$PROJECT_DIR$/test/employerlogout.py" />
     <entry file="file://$PROJECT_DIR$/test/answerquestion.py" />
     <entry file="file://$PROJECT_DIR$/test/addinterviewquestion.py" />
-    <entry file="file://$PROJECT_DIR$/career/data/location.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4930">
-          <caret line="290" column="36" selection-start-line="290" selection-start-column="36" selection-end-line="290" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/service/admin_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="12" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/static/css/css1.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1266,30 +1356,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="206" column="12" selection-start-line="206" selection-start-column="9" selection-end-line="206" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test.py" />
-    <entry file="file://$PROJECT_DIR$/career/data/data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3089">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="40" column="56" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career/report/html_template.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1311,25 +1378,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="601">
-          <caret line="216" column="48" selection-start-line="216" selection-start-column="43" selection-end-line="216" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career/model/question.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-138">
           <caret line="45" column="120" selection-start-line="45" selection-start-column="120" selection-end-line="45" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-388">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1348,26 +1400,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career/install.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2753">
-          <caret line="417" column="241" selection-start-line="417" selection-start-column="241" selection-end-line="417" selection-end-column="241" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1378,118 +1414,192 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/company.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1840">
-          <caret line="83" column="24" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/model/assignment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="51" column="9" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/proxy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2047">
           <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding>
-            <element signature="e#48#62#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/conferenceapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/service/mail_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2691">
+          <caret line="126" column="16" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/model/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/interviewapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1817">
+          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4531">
+          <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/connect_demo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-          <folding />
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        <state relative-caret-position="5681">
+          <caret line="251" column="17" selection-start-line="251" selection-start-column="17" selection-end-line="251" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9591">
+          <caret line="417" column="241" selection-start-line="417" selection-start-column="241" selection-end-line="417" selection-end-column="241" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/location.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6670">
+          <caret line="290" column="36" selection-start-line="290" selection-start-column="36" selection-end-line="290" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/job.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/install.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/model/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="40" column="56" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/service/admin_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/model/company.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="194" column="169" selection-start-line="194" selection-start-column="97" selection-end-line="194" selection-end-column="169" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/admin/adminapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="88" column="46" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5727">
-          <caret line="252" column="45" selection-start-line="252" selection-start-column="33" selection-end-line="252" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-715">
-          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-          <folding>
-            <element signature="e#1#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/interviewapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/conferenceapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-621">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="212" column="50" selection-start-line="212" selection-start-column="34" selection-end-line="212" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/interview.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career/service/common_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-669">
-          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/career_api/career_api/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="21" />
+        <state relative-caret-position="-2789">
+          <caret line="221" column="10" selection-start-line="221" selection-start-column="4" selection-end-line="221" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/common/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
+        <state relative-caret-position="2425">
           <caret line="197" column="75" selection-start-line="197" selection-start-column="75" selection-end-line="197" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/service/mail_service.py">
+    <entry file="file://$PROJECT_DIR$/career/model/assignment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="126" column="16" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="16" />
+        <state relative-caret-position="-736">
+          <caret line="87" column="8" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/service/common_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="23" column="66" selection-start-line="23" selection-start-column="66" selection-end-line="23" selection-end-column="66" />
           <folding />
         </state>
       </provider>
