@@ -21,7 +21,7 @@ class CommonService(osv.AbstractModel):
         assignmentList = []
         start = int(start) if start != None else None
         length = int(length) if length != None else None
-        domain = [('state','=','recruit')]
+        domain = [('state','=','recruit'),('status','!=','closed')]
         countryId = options['countryId'] if options and options['countryId'] else False
         provinceId = options['provinceId'] if options and options['provinceId'] else False
         positionId = options['positionId'] if options and options['positionId'] else False
