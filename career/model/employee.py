@@ -288,10 +288,16 @@ class EmployeeUser(models.Model):
             interview_link = False
             if applicant.response_id:
                 interview_link = "https://vietinterview.com/interview?code=%s&" % applicant.response_id.token
+            jobInfo = {'id': applicant.job_id.id, 'name': applicant.job_id.name, 'description': applicant.job_id.description, 'deadline': applicant.job_id.deadline, 'status': applicant.job_id.status,
+             'requirements': applicant.job_id.requirements, 'approved': applicant.job_id.state == 'recruit',
+             'company': applicant.job_id.company_id.name, 'companyId': applicant.job_id.company_id.id,
+             'countryId': applicant.job_id.country_id.id, 'provinceId': applicant.job_id.province_id.id,
+             'createDate': applicant.job_id.create_date,
+             'categoryIdList': list(applicant.job_id.category_ids.ids), 'positionId': applicant.job_id.position_id.id}
             applicationList.append(
                 {'id': applicant.id, 'title': applicant.job_id.name, 'company': applicant.company_id.name,
                  'interview': applicant.interview_id.title, 'round': applicant.interview_id.round,
-                 'deadline': applicant.job_id.deadline, 'applyDate': applicant.create_date,
+                 'deadline': applicant.job_id.deadline, 'applyDate': applicant.create_date,'jobInfo':jobInfo,
                  'interview_link': interview_link})
         return applicationList
 
