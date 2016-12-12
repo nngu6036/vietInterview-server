@@ -4,6 +4,7 @@ from openerp import models, fields, api,tools
 from openerp.osv import osv
 from openerp.service import common
 from datetime import date, datetime, timedelta
+
 class Career(osv.AbstractModel):
     _name = 'career.career'
 
