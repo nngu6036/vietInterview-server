@@ -28,7 +28,7 @@ class MailService(osv.AbstractModel):
         email_template.write({'subject':subject})
         license_service = self.env['career.license_service']
         if not license_service.validateLicense(candidate.company_id.id):
-            print "License error ", candidate.company_id.name
+            print "License error ", candidate.company_id.id
             return False
         self.pool.get('email.template').send_mail(cr, uid, email_template.id, candidate.id, True,False,{'lang':lang})
         license_service.consumeEmail(candidate.id)
