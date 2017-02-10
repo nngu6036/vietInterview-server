@@ -1,7 +1,7 @@
 import string
 
 from openerp import models, fields, api
-
+from datetime import datetime
 from .. import util
 
 
@@ -9,7 +9,7 @@ class Applicant(models.Model):
     _name = 'hr.applicant'
     _inherit = 'hr.applicant'
 
-    shortlist = fields.Boolean(string="Short-listed", default=False)
+
     interview_id = fields.Many2one('survey.survey', string="Interview to join")
     input_token = fields.Char(string="Input token", related='response_id.token')
     letter = fields.Text(string="Cover letter")
@@ -25,6 +25,8 @@ class Applicant(models.Model):
 
     @api.one
     def startInterview(self):
+        if not self.date_action:
+            self.write({'date_action': fields.Date.today()})
         if self.response_id.state == 'new':
             self.response_id.write({'state': 'skip'})
             return True
@@ -37,7 +39,11 @@ class Applicant(models.Model):
             return 0
         if len(self.response_id.user_input_line_ids) == 0:
             return 0
-        return self.response_id.quizz_score * 100 / len(self.response_id.user_input_line_ids)
+        score = 0
+        for line in self.response_id.user_input_line_ids:
+            if line.quizz_mark >0 :
+                score +=1
+        return score * 100 / len(self.response_id.user_input_line_ids)
 
     @api.one
     def stopInterview(self):
@@ -304,14 +310,15 @@ class Interview(models.Model):
             for applicant in self.env['hr.applicant'].search(
                     [('email_from', '=', input.email), ('response_id', '=', input.id)]):
                 response = {}
+                response['interviewDate'] = applicant.date_action
                 response['candidate'] = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
-                                         'shortlist': applicant.shortlist,
                                          'score': applicant.getInterviewScore(),
                                          'pass': applicant.getInterviewScore() >= self.benchmark,
                                          'invited': True if self.env['career.email.history'].search(
                                              [('applicant_id', '=', applicant.id)]) else False}
                 response['answerList'] = [
-                    {'id': line.id, 'questionId': line.question_id.id, 'videoUrl': line.value_video_url} for line in
+                    {'id': line.id, 'questionId': line.question_id.id, 'videoUrl': line.value_video_url,'optionId':line.value_suggested.id if line.value_suggested else False,
+                     'score':line.quizz_mark} for line in
                     input.user_input_line_ids]
                 documents = self.env['ir.attachment'].search(
                     [('res_model', '=', 'hr.applicant'), ('res_id', '=', applicant[0].id)])
@@ -328,7 +335,6 @@ class Interview(models.Model):
         for applicant in self.env['hr.applicant'].search(
                 ['|', ('interview_id', '=', self.id), ('job_id', '=', self.job_id.id)]):
             candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
-                         'shortlist': applicant.shortlist,
                          'round':applicant.interview_id.round,
                          'score': applicant.getInterviewScore(),
                          'pass':applicant.getInterviewScore() >= self.benchmark,

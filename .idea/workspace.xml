@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8c1d76e-ad56-4c86-9c19-cc08a93cdf87" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" afterPath="$PROJECT_DIR$/career_api/dist/career_api-3.0.2.tar.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/data/mail.xml" afterPath="$PROJECT_DIR$/career/data/mail.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/assessment.py" afterPath="$PROJECT_DIR$/career/model/assessment.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/assignment.py" afterPath="$PROJECT_DIR$/career/model/assignment.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/employer.py" afterPath="$PROJECT_DIR$/career/model/employer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career/model/interview.py" afterPath="$PROJECT_DIR$/career/model/interview.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/__init__.py" afterPath="$PROJECT_DIR$/career_api/career_api/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employee/employeeapi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" afterPath="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/deploy/demo/fabfile.py" afterPath="$PROJECT_DIR$/career_api/deploy/demo/fabfile.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/career_api/setup.py" afterPath="$PROJECT_DIR$/career_api/setup.py" />
     </list>
     <ignored path="VietInterviewServer.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/VietInterviewServer$deploy.coverage" NAME="deploy Coverage Results" MODIFIED="1481540219646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/career_api" />
+    <SUITE FILE_PATH="coverage/VietInterviewServer$deploy.coverage" NAME="deploy Coverage Results" MODIFIED="1486639598569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/career_api" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -26,18 +36,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="employer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/career/model/employer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5888">
-              <caret line="259" column="45" selection-start-line="259" selection-start-column="45" selection-end-line="259" selection-end-column="45" />
-              <folding>
-                <marker date="1481539589809" expanded="true" signature="14677:14678" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="mail_service.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/service/mail_service.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,11 +66,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="interview.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="interview.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/interview.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="101">
               <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mail.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="1053" column="0" selection-start-line="1053" selection-start-column="0" selection-end-line="1053" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -91,7 +99,7 @@
       <file leaf-file-name="quizapi.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
+            <state relative-caret-position="276">
               <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
               <folding>
                 <element signature="e#1#42#0" expanded="true" />
@@ -123,68 +131,9 @@
       <file leaf-file-name="employee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/career/model/employee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="322">
               <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding>
-                <marker date="1481539589807" expanded="true" signature="174:407" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="444:1752" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="1195:1658" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="1269:1636" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="1710:1752" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="1792:2701" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="2330:2576" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="2373:2554" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="2630:2701" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="2736:3356" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="3033:3236" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="3063:3214" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="3285:3356" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="3388:3564" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="3493:3564" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="4325:5018" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="4411:4497" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="4735:4913" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="5061:5399" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="5145:5370" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="5146:5350" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="5441:5965" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="5526:5964" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="6016:6839" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="6082:6817" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="6888:7450" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="6975:7427" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="7004:7425" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="7505:8641" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="7632:8617" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="8699:8925" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="8804:8904" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="8981:9190" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9073:9169" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9242:9563" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9328:9540" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9374:9538" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9620:10086" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="9706:10062" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10146:10376" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10253:10355" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10434:10647" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10528:10626" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10709:12937" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10802:12916" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10841:12916" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="10887:11531" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11089:11499" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11191:11411" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11584:12916" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11637:12916" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11852:12116" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="11965:12114" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="12215:12349" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="12393:12880" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="12503:12788" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="12988:14487" ph="..." />
-                <marker date="1481539589807" expanded="true" signature="13176:14456" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -244,7 +193,6 @@
         <option value="$PROJECT_DIR$/career_api/career_api/api/employer/employerapi.py" />
         <option value="$PROJECT_DIR$/career/model/assignment.py" />
         <option value="$PROJECT_DIR$/career/install.py" />
-        <option value="$PROJECT_DIR$/career/data/mail.xml" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/proxy.py" />
         <option value="$PROJECT_DIR$/test/connect_demo.py" />
@@ -252,6 +200,7 @@
         <option value="$PROJECT_DIR$/career_api/career_api/config.py" />
         <option value="$PROJECT_DIR$/career_api/career_api/api/common/__init__.py" />
         <option value="$PROJECT_DIR$/career/model/interview.py" />
+        <option value="$PROJECT_DIR$/career/data/mail.xml" />
       </list>
     </option>
   </component>
@@ -262,10 +211,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="-7" />
+    <option name="width" value="1372" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -292,6 +240,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -530,7 +479,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -738,6 +686,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -1244,16 +1198,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-7" y="0" width="1372" height="735" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21148036" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21461187" sideWeight="0.4916318" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49375975" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25508606" sideWeight="0.5367187" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25212947" sideWeight="0.46328124" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49687988" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31175467" sideWeight="0.42121685" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31141868" sideWeight="0.42121685" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960998" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33486944" sideWeight="0.48439938" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20046802" sideWeight="0.5083682" order="2" side_tool="true" content_ui="tabs" />
@@ -1484,14 +1438,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2753">
-          <caret line="417" column="241" selection-start-line="417" selection-start-column="241" selection-end-line="417" selection-end-column="241" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/career/service/license_service.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1530,16 +1476,14 @@
     <entry file="file://$PROJECT_DIR$/career/model/employer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5888">
-          <caret line="259" column="45" selection-start-line="259" selection-start-column="45" selection-end-line="259" selection-end-column="45" />
-          <folding>
-            <marker date="1481539589809" expanded="true" signature="14677:14678" ph="..." />
-          </folding>
+          <caret line="259" column="0" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/career_api/career_api/api/candidate/quizapi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
+        <state relative-caret-position="276">
           <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
           <folding>
             <element signature="e#1#42#0" expanded="true" />
@@ -1597,68 +1541,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/career/model/employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
+        <state relative-caret-position="322">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <marker date="1481539589807" expanded="true" signature="174:407" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="444:1752" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="1195:1658" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="1269:1636" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="1710:1752" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="1792:2701" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="2330:2576" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="2373:2554" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="2630:2701" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="2736:3356" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="3033:3236" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="3063:3214" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="3285:3356" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="3388:3564" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="3493:3564" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="4325:5018" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="4411:4497" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="4735:4913" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="5061:5399" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="5145:5370" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="5146:5350" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="5441:5965" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="5526:5964" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="6016:6839" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="6082:6817" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="6888:7450" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="6975:7427" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="7004:7425" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="7505:8641" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="7632:8617" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="8699:8925" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="8804:8904" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="8981:9190" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9073:9169" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9242:9563" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9328:9540" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9374:9538" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9620:10086" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="9706:10062" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10146:10376" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10253:10355" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10434:10647" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10528:10626" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10709:12937" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10802:12916" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10841:12916" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="10887:11531" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11089:11499" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11191:11411" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11584:12916" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11637:12916" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11852:12116" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="11965:12114" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="12215:12349" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="12393:12880" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="12503:12788" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="12988:14487" ph="..." />
-            <marker date="1481539589807" expanded="true" signature="13176:14456" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1666,6 +1551,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/career/data/mail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="1053" column="0" selection-start-line="1053" selection-start-column="0" selection-end-line="1053" selection-end-column="0" />
           <folding />
         </state>
       </provider>

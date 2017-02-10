@@ -285,22 +285,6 @@ def candidateAssessment(employer):
         return jsonify(result=False)
 
 
-@app.route('/employer/assignment/interview/shortlist', methods=['POST'],
-           endpoint='employer-assignment-interview-shortlist')
-@employer_session
-def candidateShortlist(employer):
-    try:
-        if request.method == 'POST':
-            applicantId = int(request.values['candidateId'])
-            result = employer.shortlistCandidate(applicantId)
-            return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Candidate shortlist error '
-        print request.values
-        return jsonify(result=False)
-
-
 @app.route('/employer/interview/candidate', methods=['GET'], endpoint='employer-interview-caandidate')
 @employer_session
 def getCandidateNyInterview(employer):

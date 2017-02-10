@@ -5,7 +5,7 @@ from fabric.contrib import *
 
 # the user to use for the remote commands
 env.user = 'root'
-env.password = 'VTDC@123456@'
+env.password = 'TCAC2017@'
 # the servers where the commands are executed
 env.hosts = ['125.212.233.5']
 project = 'career_api'

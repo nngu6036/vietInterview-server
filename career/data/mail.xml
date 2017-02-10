@@ -1051,7 +1051,6 @@
                 </tr>
                  <tr>
             <td style="padding-top:27px">
-            ${object.letter}
             </td>
             </tr>
 

@@ -93,7 +93,7 @@ class Assignment(models.Model):
         candidateList = []
         for applicant in self.env['hr.applicant'].search(
             [ ('job_id', '=', self.id)]):
-            candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from}
+            candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,'letter':applicant.letter}
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
                 candidate['employeeId'] = employee.id
                 candidate['profile'] = employee.getProfile()

@@ -11,7 +11,7 @@ class InterviewAssessment(models.Model):
 	applicant_id = fields.Many2one('hr.applicant',tring='Applicant ')
 	rating =  fields.Integer(string="Rating")
 	note_summary =  fields.Text(string="Comment")
-
+	shortlist = fields.Boolean(string="Short-listed", default=False)
 
 	@api.model
 	def getAssessment(self,lang):

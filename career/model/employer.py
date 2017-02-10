@@ -105,7 +105,7 @@ class CompanyUser(models.Model):
                 {'evaluation_id': hr_eval.id, 'phase_id': hr_eval_phase.id,
                  'applicant_id': int(assessmentResult['candidateId']), 'state': 'done', 'user_id': self.user_id.id})
         hr_interview_assessment.write(
-            {'rating': int(assessmentResult['vote']), 'note_summary': assessmentResult['comment']})
+            {'rating': int(assessmentResult['vote']), 'note_summary': assessmentResult['comment'],'shortlist':assessmentResult['shortlist'] if 'shortlist' in assessmentResult else False})
         for jAns in assessmentResult['answerList']:
             if not self.env['survey.user_input_line'].search(
                     [('user_input_id', '=', hr_interview_assessment[0].request_id.id),
@@ -123,13 +123,8 @@ class CompanyUser(models.Model):
         answerList = [{'id': answer.id, 'questionId': answer.question_id.id, 'answer': answer.value_number}
                       for answer in hr_interview_assessment.request_id.user_input_line_ids]
         return {'id': hr_interview_assessment.id, 'comment': hr_interview_assessment.note_summary,
-                'vote': hr_interview_assessment.rating, 'answerList': answerList}
+                'vote': hr_interview_assessment.rating, 'answerList': answerList,'shortlist': hr_interview_assessment.shortlist}
 
-    @api.one
-    def shortlistCandidate(self, applicantId):
-        for applicant in self.env['hr.applicant'].browse(applicantId):
-            applicant.write({'shortlist': not applicant.shortlist})
-        return True
 
     @api.one
     def getOtherAssessment(self, assessmentId, applicantId):
@@ -141,6 +136,7 @@ class CompanyUser(models.Model):
                                  for answer in hr_interview_assessment.request_id.user_input_line_ids],
                  'id': hr_interview_assessment.id, 'comment': hr_interview_assessment.note_summary,
                  'vote': hr_interview_assessment.rating,
+                 'shortlist': hr_interview_assessment.shortlist,
                  'user': hr_interview_assessment.user_id.name})
         return assessmentResultList
 
@@ -275,6 +271,7 @@ class CompanyUser(models.Model):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
+            candidate['letter'] = applicant.letter
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
                 candidate['employeeId'] = employee.id
                 candidate['profile'] = employee.getProfile()

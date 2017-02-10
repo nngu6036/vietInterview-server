@@ -12,6 +12,7 @@ def register():
         login = request.values['email']
         password = request.values['password']
         result = user_obj.createEmployee(login,password)
+        print(login,password)
         return jsonify(result=result)
     except Exception as exc:
         print(exc)
