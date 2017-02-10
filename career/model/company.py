@@ -203,14 +203,17 @@ class Conpany(models.Model):
         return userList
 
     @api.one
-    def getAssignment(self):
-        assignments = self.env['hr.job'].search([('company_id', '=', self.id)])
-        assignmentList = [
-            {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
-             'requirements': a.requirements, 'approved': a.state == 'recruit',
-             'countryId': a.country_id.id, 'provinceId': a.province_id.id,
-             'createDate': a.create_date,
-             'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
+    def getAssignment(self,start=None,length=None,count=False):
+        if count:
+            assignmentList = self.env['hr.job'].search_count([('company_id', '=', self.id)])
+        else:
+            assignments = self.env['hr.job'].search([('company_id', '=', self.id)],limit=length, offset=start)
+            assignmentList = [
+                {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
+                 'requirements': a.requirements, 'approved': a.state == 'recruit',
+                 'countryId': a.country_id.id, 'provinceId': a.province_id.id,
+                 'createDate': a.create_date,
+                 'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
         return assignmentList
 
     @api.one

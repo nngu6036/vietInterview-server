@@ -71,7 +71,10 @@ def companyLicense(employer):
 def assignment(employer):
     try:
         if request.method == 'GET':
-            assignmentList = employer.company_id.getAssignment()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count']=='true' if 'count' in request.values else False
+            assignmentList = employer.company_id.getAssignment(offset,length,count)
             return jsonify(result=True, assignmentList=assignmentList)
         if request.method == 'PUT':
             assignment = json.loads(request.values['assignment'])
@@ -336,7 +339,10 @@ def changePass(employer):
 def conference(employer):
     try:
         if request.method == 'GET':
-            conferenceList = employer.getConference()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count'] == 'true' if 'count' in request.values else False
+            conferenceList = employer.getConference(offset,length,count)
             return jsonify(result=True, conferenceList=conferenceList)
     except Exception as exc:
         print(exc)
@@ -412,9 +418,12 @@ def employeeViewContactInfo(employer):
 def employeeSearch(employer):
     try:
         options = json.loads(request.values['option'])
+        offset = int(request.values['offset']) if 'offset' in request.values else None
+        length = int(request.values['length']) if 'length' in request.values else None
+        count = request.values['count'] == 'true' if 'count' in request.values else False
         if request.method == 'GET':
-            employeeList = employer.searchEmployee(options)
-            return jsonify(result=True, employeeList=employeeList)
+            employeeList,nextOffset = employer.searchEmployee(options,offset,length,count)
+            return jsonify(result=True, employeeList=employeeList,nextOffset=nextOffset)
     except Exception as exc:
         print(exc)
         print 'Employee search error '

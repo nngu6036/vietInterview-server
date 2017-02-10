@@ -81,14 +81,17 @@ class CompanyUser(models.Model):
 
 
     @api.one
-    def getConference(self):
-        conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)])
-        conferenceList = [
-            {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
-             'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
-             'schedule': c.schedule, 'status': c.status,
-             'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
-            conferences]
+    def getConference(self,start=None,length=None,count=False):
+        if count:
+            conferenceList = self.env['career.conference'].search_count([('company_id', '=', self.company_id.id)])
+        else:
+            conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)],limit=length, offset=start)
+            conferenceList = [
+                {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
+                 'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
+                 'schedule': c.schedule, 'status': c.status,
+                 'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
+                conferences]
         return conferenceList
 
     @api.one
@@ -337,7 +340,7 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def searchEmployee(self, options):
+    def searchEmployee(self, options,start=None,length=None,count=False):
         employeeList = []
         domain = []
         if options:
@@ -348,7 +351,9 @@ class CompanyUser(models.Model):
         categoryId = int(options['categoryId']) if 'categoryId' in options and options['categoryId'] != '' else False
         positionId = int(options['positionId']) if 'positionId' in options and options['positionId'] != '' else False
         keyword = options['keyword'] if 'keyword' in options and options['keyword'] != '' else False
-        for e in self.env['career.employee'].search(domain):
+        next_offset = start
+        for e in self.env['career.employee'].search(domain,offset=start):
+            next_offset = next_offset + 1
             latest_exp = self.env['career.work_experience'].search([('employee_id', '=', e.id)], offset=0, limit=1,
                                                                    order='start_date desc')
             match = True
@@ -381,7 +386,10 @@ class CompanyUser(models.Model):
                                      'viewed': self.env['career.employee.history'].search_count(
                                          [('employee_id', '=', e.id),
                                          ('company_id', '=', self.company_id.id)]) > 0})
-        return employeeList
+                length = length - 1
+                if length ==0:
+                    break
+        return employeeList, next_offset
 
     @api.one
     def getEmployeeDetail(self, employeeId):
