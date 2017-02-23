@@ -163,14 +163,20 @@ class Conpany(models.Model):
         return True
 
     @api.model
-    def getCompany(self):
+    def getCompany(self,start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
+        total = 0
         main_compnay = self.env.ref('base.main_company')
-        companys = self.env['res.company'].search([('id', '!=', main_compnay.id)])
-        companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False,'url':c.website, 'videoUrl': c.partner_id.videoUrl,
-                        'licenseId': c.license_instance_id.license_id.id if c.license_instance_id else False,
-                        'license': c.license_instance_id.license_id.name if c.license_instance_id else False,
-                        'licenseExpire': c.expire_date if c.license_instance_id else False, 'email': c.partner_id.email}
-                       for c in companys]
+        if count:
+            companyList = self.env['res.company'].search_count([('id', '!=', main_compnay.id)])
+        else:
+            companys = self.env['res.company'].search([('id', '!=', main_compnay.id)],limit=length,offset=start, order='create_date desc')
+            companyList = [{'id': c.id, 'name': c.name, 'image': c.logo or False,'url':c.website, 'videoUrl': c.partner_id.videoUrl,
+                            'licenseId': c.license_instance_id.license_id.id if c.license_instance_id else False,
+                            'license': c.license_instance_id.license_id.name if c.license_instance_id else False,
+                            'licenseExpire': c.expire_date if c.license_instance_id else False, 'email': c.partner_id.email}
+                           for c in companys]
         return companyList
 
     @api.one
@@ -203,17 +209,21 @@ class Conpany(models.Model):
         return userList
 
     @api.one
-    def getAssignment(self,start=None,length=None,count=False):
+    def getAssignment(self,start=None,length=None,count=False,overview=False):
         if count:
             assignmentList = self.env['hr.job'].search_count([('company_id', '=', self.id)])
         else:
-            assignments = self.env['hr.job'].search([('company_id', '=', self.id)],limit=length, offset=start)
-            assignmentList = [
-                {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
-                 'requirements': a.requirements, 'approved': a.state == 'recruit',
-                 'countryId': a.country_id.id, 'provinceId': a.province_id.id,
-                 'createDate': a.create_date,
-                 'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
+            assignments = self.env['hr.job'].search([('company_id', '=', self.id)],limit=length, offset=start,order='create_date desc')
+            if overview:
+                assignmentList = [
+                    {'id': a.id, 'name': a.name, 'status': a.status} for a in assignments]
+            else:
+                assignmentList = [
+                    {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
+                     'requirements': a.requirements, 'approved': a.state == 'recruit',
+                     'countryId': a.country_id.id, 'provinceId': a.province_id.id,
+                     'createDate': a.create_date,
+                     'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
         return assignmentList
 
     @api.one

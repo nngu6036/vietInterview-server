@@ -85,7 +85,7 @@ class CompanyUser(models.Model):
         if count:
             conferenceList = self.env['career.conference'].search_count([('company_id', '=', self.company_id.id)])
         else:
-            conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)],limit=length, offset=start)
+            conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)],limit=length, offset=start,order='create_date desc')
             conferenceList = [
                 {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
                  'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
@@ -146,6 +146,7 @@ class CompanyUser(models.Model):
     @api.one
     def inviteCandidate(self, jsCandidates, subject, interviewId):
         for jsCandidate in jsCandidates:
+            jsCandidate['invited'] = True
             for interview in self.env['survey.survey'].browse(interviewId):
                 for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
@@ -275,13 +276,24 @@ class CompanyUser(models.Model):
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
             candidate['letter'] = applicant.letter
+            candidate['name'] = applicant.name
+            candidate['email'] = applicant.email_from
+            candidate['source'] = applicant.source
+            candidate['invited'] = True if self.env['career.email.history'].search([('survey_id', '=', self.id),
+                                                                                    ('email', '=',
+                                                                                     applicant.email_from)]) else False
+
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
                 candidate['employeeId'] = employee.id
-                candidate['profile'] = employee.getProfile()
+                partner = employee.user_id.partner_id
+                candidate['phone'] = partner.phone
+                candidate['mobile'] = partner.mobile
+                candidate['birthdate'] = partner.birthdate or False
+                #candidate['profile'] = employee.getProfile()
                 candidate['expList'] = employee.getWorkExperience()
                 candidate['eduList'] = employee.getEducationHistory()
-                candidate['certList'] = employee.getCertificate()
-                candidate['docList'] = employee.getDocument()
+                #candidate['certList'] = employee.getCertificate()
+                #candidate['docList'] = employee.getDocument()
             candidateList.append(candidate)
         return {'result': True, 'candidateList': candidateList, 'total': total}
 
@@ -385,7 +397,8 @@ class CompanyUser(models.Model):
                                      'categoryIds': list(latest_exp.cat_ids.ids),
                                      'viewed': self.env['career.employee.history'].search_count(
                                          [('employee_id', '=', e.id),
-                                         ('company_id', '=', self.company_id.id)]) > 0})
+                                         ('company_id', '=', self.company_id.id)]) > 0}) or  self.env['hr.applicant'].search_count(
+                [('source', '=', 'user'),('email_from','=',e.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
                 length = length - 1
                 if length ==0:
                     break
@@ -407,7 +420,11 @@ class CompanyUser(models.Model):
             employeeDetail['certList'] = employee.getCertificate()
             employeeDetail['docList'] = employee.getDocument()
             employeeDetail['viewed'] = self.env['career.employee.history'].search_count(
-                [('employee_id', '=', employeeId), ('company_id', '=', self.company_id.id)]) > 0
+                [('employee_id', '=', employeeId), ('company_id', '=', self.company_id.id)]) > 0 or self.env['hr.applicant'].search_count(
+                [('source', '=', 'user'), ('email_from','=',employee.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
+            #print (self.env['hr.applicant'].search_count(
+            #    [('source', '=', 'user'), ('user_id','=',employee.user_id.id), ('company_id', '=', self.company_id.id)]))
+            #print (employee.user_id.id)
             employeeDetail['cost'] = cost
             return employeeDetail
         return False
@@ -430,6 +447,7 @@ class CompanyUser(models.Model):
                      'certList': e.getCertificate(),
                      'docList': e.getDocument(),
                      'viewed': self.env['career.employee.history'].search_count(
-                         [('employee_id', '=', e.id), ('company_id', '=', self.company_id.id)]) > 0
+                         [('employee_id', '=', e.id), ('company_id', '=', self.company_id.id)]) > 0 or self.env['hr.applicant'].search_count(
+                         [('source', '=', 'user'), ('email_from','=',e.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
                      } for e in self.env['career.employee'].search([('login', '=', email)])]
         return employee

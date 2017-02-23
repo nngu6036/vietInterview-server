@@ -13,6 +13,7 @@ class Applicant(models.Model):
     interview_id = fields.Many2one('survey.survey', string="Interview to join")
     input_token = fields.Char(string="Input token", related='response_id.token')
     letter = fields.Text(string="Cover letter")
+    source = fields.Selection([('system', 'Create by system'), ('user', 'Create by user')],default='system')
 
     @api.one
     def getInterviewHistory(self):
@@ -336,11 +337,13 @@ class Interview(models.Model):
                 ['|', ('interview_id', '=', self.id), ('job_id', '=', self.job_id.id)]):
             candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,
                          'round':applicant.interview_id.round,
+                         'source':applicant.source,
                          'score': applicant.getInterviewScore(),
                          'pass':applicant.getInterviewScore() >= self.benchmark,
                          'invited': True if self.env['career.email.history'].search([('survey_id', '=', self.id),
                                                                                      ('email', '=',
                                                                                       applicant.email_from)]) else False}
+            candidate['viewed'] = applicant.source == 'user'
             for conference in self.conference_ids:
                 if conference.applicant_id.id == applicant.id:
                     candidate['schedule'] = conference.schedule
@@ -352,7 +355,7 @@ class Interview(models.Model):
                 candidate['certList'] = employee.getCertificate()
                 candidate['docList'] = employee.getDocument()
                 candidate['viewed'] = self.env['career.employee.history'].search_count(
-                    [('employee_id', '=', employee.id), ('company_id', '=', self.job_id.company_id.id)]) > 0
+                    [('employee_id', '=', employee.id), ('company_id', '=', self.job_id.company_id.id)]) > 0 or candidate['viewed']
             candidateList.append(candidate)
         return candidateList
 
@@ -411,7 +414,7 @@ class Interview(models.Model):
         if createNew:
             candidate = self.env['hr.applicant'].create(
                 {'name': vals['name'] or vals['email'], 'email_from': vals['email'], 'job_id': self.job_id.id,
-                 'interview_id': self.id,
+                 'interview_id': self.id,'source':'system',
                  'company_id': self.job_id.company_id.id, 'response_id': user_input.id})
         return candidate
 

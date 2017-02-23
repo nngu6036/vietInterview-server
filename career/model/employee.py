@@ -133,10 +133,15 @@ class EmployeeUser(models.Model):
         return employee.id
 
     @api.model
-    def getEmployee(self):
-        employees = self.env['career.employee'].search([])
-        employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'email': e.user_id.partner_id.email, 'mobile': e.user_id.partner_id.mobile or False,
-                         'countryId': e.user_id.partner_id.country_id.id} for e in employees]
+    def getEmployee(self,start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
+        if count:
+            employeeList = self.env['career.employee'].search_count([])
+        else:
+            employees = self.env['career.employee'].search([],limit=length,offset=start, order='create_date desc')
+            employeeList = [{'id': e.id, 'name': e.user_id.partner_id.name, 'email': e.user_id.partner_id.email, 'mobile': e.user_id.partner_id.mobile or False,
+                             'countryId': e.user_id.partner_id.country_id.id} for e in employees]
         return employeeList
 
     @api.multi
@@ -255,7 +260,7 @@ class EmployeeUser(models.Model):
                     if not candidate:
                         applicant_id = self.env['hr.applicant'].create(
                             {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
-                             'company_id': assignment.company_id.id, 'letter': letter,
+                             'company_id': assignment.company_id.id, 'letter': letter,'source':'user',
                              'user_id': self.user_id.id})
                         self.env['career.mail_service'].sendCoverLetter(applicant_id)
                     return True
@@ -273,7 +278,7 @@ class EmployeeUser(models.Model):
                         if not candidate:
                             applicant_id = self.env['hr.applicant'].create(
                                 {'name': self.name, 'email_from': self.user_id.login, 'job_id': assignment.id,
-                                 'company_id': assignment.company_id.id, 'response_id': user_input.id,
+                                 'company_id': assignment.company_id.id, 'response_id': user_input.id,'source':'user',
                                  'interview_id': survey.id, 'letter': letter, 'user_id': self.user_id.id})
                             self.env['career.mail_service'].sendCoverLetter(applicant_id)
                         return True

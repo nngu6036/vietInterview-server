@@ -996,12 +996,10 @@
                   <td colspan="3" style="font-family:OpenSans;color:#414849;font-size:26px;font-weight:300;line-height:28px;text-align:justify">Hello ${object.company_id.name}, <br>
                    Your assignment ${object.job_id.name} has a new applicant from ${object.name}.
                    Please login to your account at vietinterview.com for more applicant's information<br>
-                   Bellow is his/her cover letter:
                    </td>
                 </tr>
                  <tr>
             <td style="padding-top:27px">
-            ${object.letter}
             </td>
             </tr>
 

@@ -74,7 +74,8 @@ def assignment(employer):
             offset = int(request.values['offset']) if 'offset' in request.values else None
             length = int(request.values['length']) if 'length' in request.values else None
             count = request.values['count']=='true' if 'count' in request.values else False
-            assignmentList = employer.company_id.getAssignment(offset,length,count)
+            overview = request.values['overview'] == 'true' if 'overview' in request.values else False
+            assignmentList = employer.company_id.getAssignment(offset,length,count,overview)
             return jsonify(result=True, assignmentList=assignmentList)
         if request.method == 'PUT':
             assignment = json.loads(request.values['assignment'])
