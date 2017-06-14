@@ -99,7 +99,8 @@ def searchJob():
       offset = request.values['offset'] if 'offset' in request.values else None
       length = request.values['length'] if 'length' in request.values else None
       count = request.values['count'] if 'count' in request.values else False
-      jobList = common_service.searchJob(keyword, option, offset, length, count)
+      company = request.values['company'] if 'company' in request.values else False
+      jobList = common_service.searchJob(keyword, option, offset, length, count,company)
       return jsonify(jobList=jobList)
   except Exception as exc:
     print(exc)
@@ -195,7 +196,7 @@ def sendMail():
          if request.method == 'POST':
             body = request.values['body']
             subject = request.values['subject']
-            mail_service.sendMail(subject,body,app.confi['ERP_CONTACT_EMAIL'])
+            mail_service.sendMail(subject,body,app.config['ERP_CONTACT_EMAIL'])
          return jsonify(result=True,assessment=assessment)
     except Exception as exc:
         print(exc)

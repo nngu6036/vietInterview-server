@@ -5,9 +5,9 @@ from fabric.api import *
 
 # the user to use for the remote commands
 env.user = 'root'
-env.password = 'Tc!@#6102'
+env.password = 'Thanhcong2017@'
 # the servers where the commands are executed
-env.hosts = ['vietinterview.com']
+env.hosts = ['vietinterview.com.vn']
 project = 'career_api'
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.abspath(os.path.join(cur_dir, os.pardir))
