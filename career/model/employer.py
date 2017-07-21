@@ -13,6 +13,7 @@ class CompanyUser(models.Model):
     company_id = fields.Many2one(string='Company', related='user_id.company_id')
     password = fields.Char(string='Password', related='user_id.password')
     name = fields.Char(string='Name', related='user_id.name')
+    auto_approve = fields.Boolean(string='Job created by this user will be auto-approved')
 
     @api.one
     def createAssignment(self, vals):
@@ -28,12 +29,15 @@ class CompanyUser(models.Model):
                                                 'position_id': int(
                                                     vals['positionId']) if 'positionId' in vals else False,
                                                 'address_id': address.id, 'state': 'open'})
+        if self.auto_approve:
+            assignment.write({'state': 'recruit'})
         self.env['career.mail_service'].sendNewJobNotification(assignment.id)
         return assignment.id
 
     @api.one
     def updateCompanyUser(self, vals):
         self.user_id.write({'name': vals['name'], 'password': vals['password']})
+        self.write({'auto_approve':vals['autoApproved'] if 'autoApproved' in vals else False})
         return True
 
     @api.one
@@ -66,20 +70,28 @@ class CompanyUser(models.Model):
                      'language': vals['language'] if 'language' in vals else False,
                      'round': int(vals['round']) if 'roumd' in vals else False,
                      'aboutUsUrl': self.company_id.partner_id.videoUrl,
+                     'quest_num': int(vals['questionNum']) if 'questionNum' in vals else False,
+                     'benchmark': int(vals['benchmark']) if 'benchmark' in vals else False,
+                     'shuffle': bool(vals['shuffle']) if 'shuffle' in vals else False,
+                     'quiz_time': int(vals['quizTime']) if 'quizTime' in vals else False,
                      'mode': vals['mode'] if 'mode' in vals else False})
 
                 return interview.id
         return False
 
+
     @api.one
-    def getConference(self):
-        conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)])
-        conferenceList = [
-            {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
-             'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
-             'schedule': c.schedule, 'status': c.status,
-             'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
-            conferences]
+    def getConference(self,start=None,length=None,count=False):
+        if count:
+            conferenceList = self.env['career.conference'].search_count([('company_id', '=', self.company_id.id)])
+        else:
+            conferences = self.env['career.conference'].search([('company_id', '=', self.company_id.id)],limit=length, offset=start,order='create_date desc')
+            conferenceList = [
+                {'id': c.id, 'name': c.name, 'language': c.language, 'meetingId': c.meeting_id,
+                 'job': c.interview_id.job_id.name, 'interview': c.interview_id.round, 'candidate': c.applicant_id.name,
+                 'schedule': c.schedule, 'status': c.status,
+                 'memberList': [{'name': m.name, 'memberId': m.member_id, 'role': m.role} for m in c.member_ids]} for c in
+                conferences]
         return conferenceList
 
     @api.one
@@ -96,7 +108,7 @@ class CompanyUser(models.Model):
                 {'evaluation_id': hr_eval.id, 'phase_id': hr_eval_phase.id,
                  'applicant_id': int(assessmentResult['candidateId']), 'state': 'done', 'user_id': self.user_id.id})
         hr_interview_assessment.write(
-            {'rating': int(assessmentResult['vote']), 'note_summary': assessmentResult['comment']})
+            {'rating': int(assessmentResult['vote']), 'note_summary': assessmentResult['comment'],'shortlist':assessmentResult['shortlist'] if 'shortlist' in assessmentResult else False})
         for jAns in assessmentResult['answerList']:
             if not self.env['survey.user_input_line'].search(
                     [('user_input_id', '=', hr_interview_assessment[0].request_id.id),
@@ -114,13 +126,8 @@ class CompanyUser(models.Model):
         answerList = [{'id': answer.id, 'questionId': answer.question_id.id, 'answer': answer.value_number}
                       for answer in hr_interview_assessment.request_id.user_input_line_ids]
         return {'id': hr_interview_assessment.id, 'comment': hr_interview_assessment.note_summary,
-                'vote': hr_interview_assessment.rating, 'answerList': answerList}
+                'vote': hr_interview_assessment.rating, 'answerList': answerList,'shortlist': hr_interview_assessment.shortlist}
 
-    @api.one
-    def shortlistCandidate(self, applicantId):
-        for applicant in self.env['hr.applicant'].browse(applicantId):
-            applicant.write({'shortlist': not applicant.shortlist})
-        return True
 
     @api.one
     def getOtherAssessment(self, assessmentId, applicantId):
@@ -132,16 +139,20 @@ class CompanyUser(models.Model):
                                  for answer in hr_interview_assessment.request_id.user_input_line_ids],
                  'id': hr_interview_assessment.id, 'comment': hr_interview_assessment.note_summary,
                  'vote': hr_interview_assessment.rating,
+                 'shortlist': hr_interview_assessment.shortlist,
                  'user': hr_interview_assessment.user_id.name})
         return assessmentResultList
 
     @api.one
     def inviteCandidate(self, jsCandidates, subject, interviewId):
         for jsCandidate in jsCandidates:
+            jsCandidate['invited'] = True
             for interview in self.env['survey.survey'].browse(interviewId):
                 for candidate in interview.createCandidate(jsCandidate):
                     if interview.mode == 'video':
                         self.env['career.mail_service'].sendVideoInterviewInvitation(candidate, subject)
+                    if interview.mode == 'quiz':
+                        self.env['career.mail_service'].sendQuizInterviewInvitation(candidate, subject)
                     if interview.mode == 'conference':
                         self.scheduleMeeting(candidate, jsCandidate['schedule'])
                         self.env['career.mail_service'].sendConferenceInvitation(candidate, subject)
@@ -239,11 +250,16 @@ class CompanyUser(models.Model):
 
     @api.one
     def getCandidateByInterview(self, interviewId):
-        print interviewId
         for interview in self.env['survey.survey'].browse(interviewId):
-            print interview
             if interview.job_id.company_id.id == self.company_id.id:
                 return interview.getCandidate()
+        return False
+
+    @api.one
+    def getCandidateByJob(self, assignmentId):
+        for job in self.env['hr.job'].browse(assignmentId):
+            if job.company_id.id == self.company_id.id:
+                return job.getCandidate()
         return False
 
     @api.one
@@ -253,21 +269,31 @@ class CompanyUser(models.Model):
         candidateList = []
         total = 0
         if count:
-            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id),
-                                                           ('user_id', '!=', None)])
-        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id),
-                                                          ('user_id', '!=', None)], limit=length,
+            total = self.env['hr.applicant'].search_count([('company_id', '=', self.company_id.id)])
+        for applicant in self.env['hr.applicant'].search([('company_id', '=', self.company_id.id)], limit=length,
                                                          offset=start, order='create_date desc'):
             candidate = {}
             candidate['jobId'] = applicant.job_id.id
             candidate['jobName'] = applicant.job_id.name
+            candidate['letter'] = applicant.letter
+            candidate['name'] = applicant.name
+            candidate['email'] = applicant.email_from
+            candidate['source'] = applicant.source
+            candidate['invited'] = True if self.env['career.email.history'].search([('survey_id', '=', self.id),
+                                                                                    ('email', '=',
+                                                                                     applicant.email_from)]) else False
+
             for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
                 candidate['employeeId'] = employee.id
-                candidate['profile'] = employee.getProfile()
+                partner = employee.user_id.partner_id
+                candidate['phone'] = partner.phone
+                candidate['mobile'] = partner.mobile
+                candidate['birthdate'] = partner.birthdate or False
+                #candidate['profile'] = employee.getProfile()
                 candidate['expList'] = employee.getWorkExperience()
                 candidate['eduList'] = employee.getEducationHistory()
-                candidate['certList'] = employee.getCertificate()
-                candidate['docList'] = employee.getDocument()
+                #candidate['certList'] = employee.getCertificate()
+                #candidate['docList'] = employee.getDocument()
             candidateList.append(candidate)
         return {'result': True, 'candidateList': candidateList, 'total': total}
 
@@ -326,7 +352,7 @@ class CompanyUser(models.Model):
         return False
 
     @api.one
-    def searchEmployee(self, options):
+    def searchEmployee(self, options,start=None,length=None,count=False):
         employeeList = []
         domain = []
         if options:
@@ -337,7 +363,9 @@ class CompanyUser(models.Model):
         categoryId = int(options['categoryId']) if 'categoryId' in options and options['categoryId'] != '' else False
         positionId = int(options['positionId']) if 'positionId' in options and options['positionId'] != '' else False
         keyword = options['keyword'] if 'keyword' in options and options['keyword'] != '' else False
-        for e in self.env['career.employee'].search(domain):
+        next_offset = start
+        for e in self.env['career.employee'].search(domain,offset=start):
+            next_offset = next_offset + 1
             latest_exp = self.env['career.work_experience'].search([('employee_id', '=', e.id)], offset=0, limit=1,
                                                                    order='start_date desc')
             match = True
@@ -369,8 +397,12 @@ class CompanyUser(models.Model):
                                      'categoryIds': list(latest_exp.cat_ids.ids),
                                      'viewed': self.env['career.employee.history'].search_count(
                                          [('employee_id', '=', e.id),
-                                         ('company_id', '=', self.company_id.id)]) > 0})
-        return employeeList
+                                         ('company_id', '=', self.company_id.id)]) > 0}) or  self.env['hr.applicant'].search_count(
+                [('source', '=', 'user'),('email_from','=',e.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
+                length = length - 1
+                if length ==0:
+                    break
+        return employeeList, next_offset
 
     @api.one
     def getEmployeeDetail(self, employeeId):
@@ -388,7 +420,11 @@ class CompanyUser(models.Model):
             employeeDetail['certList'] = employee.getCertificate()
             employeeDetail['docList'] = employee.getDocument()
             employeeDetail['viewed'] = self.env['career.employee.history'].search_count(
-                [('employee_id', '=', employeeId), ('company_id', '=', self.company_id.id)]) > 0
+                [('employee_id', '=', employeeId), ('company_id', '=', self.company_id.id)]) > 0 or self.env['hr.applicant'].search_count(
+                [('source', '=', 'user'), ('email_from','=',employee.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
+            #print (self.env['hr.applicant'].search_count(
+            #    [('source', '=', 'user'), ('user_id','=',employee.user_id.id), ('company_id', '=', self.company_id.id)]))
+            #print (employee.user_id.id)
             employeeDetail['cost'] = cost
             return employeeDetail
         return False
@@ -411,6 +447,7 @@ class CompanyUser(models.Model):
                      'certList': e.getCertificate(),
                      'docList': e.getDocument(),
                      'viewed': self.env['career.employee.history'].search_count(
-                         [('employee_id', '=', e.id), ('company_id', '=', self.company_id.id)]) > 0
+                         [('employee_id', '=', e.id), ('company_id', '=', self.company_id.id)]) > 0 or self.env['hr.applicant'].search_count(
+                         [('source', '=', 'user'), ('email_from','=',e.user_id.partner_id.email), ('company_id', '=', self.company_id.id)]) > 0
                      } for e in self.env['career.employee'].search([('login', '=', email)])]
         return employee

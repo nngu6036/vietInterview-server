@@ -14,7 +14,7 @@
                                                 <td style="padding:5px ;text-align:center">
                                                     <a href="https://vietinterview.com">
                                                         <img style="height:50px"
-                                                             src="https://vietinterview.com/images/logo.png"
+                                                             t-attf-src="{{o.company_id.url}}/images/logow.png"
                                                              align="center">
                                                         </img>
                                                     </a>

@@ -112,7 +112,10 @@ def licenseCategory(session):
 def company(session):
     try:
         if request.method == 'GET':
-            companyList = company_obj.getCompany()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count'] == 'true' if 'count' in request.values else False
+            companyList = company_obj.getCompany(offset,length,count)
             return jsonify(result=True, companyList=companyList)
         if request.method == 'PUT':
             company = json.loads(request.values['company'])
@@ -176,6 +179,7 @@ def companyUser(session):
             return jsonify(result=True, userList=userList)
         if request.method == 'PUT':
             user = json.loads(request.values['user'])
+            print(user)
             company_user_obj.get(int(user['id'])).updateCompanyUser(user)
             return jsonify(result=True)
         if request.method == 'POST':
@@ -243,7 +247,10 @@ def assignmentApprove(session):
 def assignment(session):
     try:
         if request.method == 'GET':
-            assignmentList = assignment_obj.getAssignment()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count'] == 'true' if 'count' in request.values else False
+            assignmentList = assignment_obj.getAssignment(offset,length,count)
             return jsonify(result=True, assignmentList=assignmentList)
         if request.method == 'PUT':
             assignment = json.loads(request.values['assignment'])
@@ -273,8 +280,11 @@ def assignment(session):
 def employee(session):
     try:
         if request.method == 'GET':
-            employeeList = user_obj.getEmployee()
-            return jsonify(result=True, companyList=employeeList)
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count'] == 'true' if 'count' in request.values else False
+            employeeList = user_obj.getEmployee(offset,length,count)
+            return jsonify(result=True, employeeList=employeeList)
         if request.method == 'POST':
             login = request.values['email']
             password = request.values['password']

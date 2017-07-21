@@ -48,8 +48,8 @@ class Assignment(models.Model):
     @api.multi
     def isEnabled(self):
         self.ensure_one()
-        if self.state != 'recruit':
-            return False
+        #if self.state != 'recruit':
+        #    return False
         if not self.deadline:
             return True
         deadline = datetime.datetime.strptime(self.deadline, "%Y-%m-%d")
@@ -60,15 +60,21 @@ class Assignment(models.Model):
 
 
     @api.model
-    def getAssignment(self):
-        assignments = self.env['hr.job'].search([])
-        assignmentList = [
-            {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
-             'requirements': a.requirements, 'approved': a.state == 'recruit',
-             'company': a.company_id.name, 'companyId': a.company_id.id,
-             'countryId': a.country_id.id, 'provinceId': a.province_id.id,
-             'createDate': a.create_date,
-             'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
+    def getAssignment(self,start=None, length=None, count=True):
+        start = int(start) if start != None else None
+        length = int(length) if length != None else None
+        total = 0
+        if count:
+            assignmentList = self.env['hr.job'].search_count([])
+        else:
+            assignments = self.env['hr.job'].search([],limit=length,offset=start, order='create_date desc')
+            assignmentList = [
+                {'id': a.id, 'name': a.name, 'description': a.description, 'deadline': a.deadline, 'status': a.status,
+                 'requirements': a.requirements, 'approved': a.state == 'recruit',
+                 'company': a.company_id.name, 'companyId': a.company_id.id,
+                 'countryId': a.country_id.id, 'provinceId': a.province_id.id,
+                 'createDate': a.create_date,
+                 'categoryIdList': list(a.category_ids.ids), 'positionId': a.position_id.id} for a in assignments]
         return assignmentList
 
     @api.multi
@@ -84,25 +90,39 @@ class Assignment(models.Model):
 
     @api.multi
     def deleteAssignment(self):
-        if self.status == 'initial':
-            self.unlink()
-            return True
-        return False
+        self.unlink()
+        return True
 
-
+    @api.multi
+    def getCandidate(self):
+        self.ensure_one()
+        candidateList = []
+        for applicant in self.env['hr.applicant'].search(
+            [ ('job_id', '=', self.id)]):
+            candidate = {'id': applicant.id, 'name': applicant.name, 'email': applicant.email_from,'letter':applicant.letter,'source':applicant.source}
+            candidate['invited'] = True if self.env['career.email.history'].search([('survey_id', '=', self.id),
+                                                                        ('email', '=',
+                                                                         applicant.email_from)]) else False
+            candidate['viewed'] = applicant.source=='user'
+            for employee in self.env['career.employee'].search([('login', '=', applicant.email_from)]):
+                candidate['employeeId'] = employee.id
+                candidate['expList'] = employee.getWorkExperience()
+                candidate['eduList'] = employee.getEducationHistory()
+                partner = employee.user_id.partner_id
+                candidate['phone'] = partner.phone
+                candidate['mobile'] = partner.mobile
+                candidate['birthdate'] = partner.birthdate or False
+                candidate['viewed'] = self.env['career.employee.history'].search_count(
+                    [('employee_id', '=', employee.id), ('company_id', '=', self.company_id.id)]) > 0 or candidate['viewed']
+            candidateList.append(candidate)
+        return candidateList
 
     @api.multi
     def getInterviewList(self):
         self.ensure_one()
         interviewList = []
         for interview in self.survey_ids:
-            interviewList.append({'id': interview.id, 'name': interview.title,
-                                  'response': interview.response,
-                                  'retry': interview.retry, 'introUrl': interview.introUrl,
-                                  'exitUrl': interview.exitUrl,
-                                  'aboutUsUrl': interview.aboutUsUrl, 'language': interview.language,
-                                  'prepare': interview.prepare, 'job_id': self.id, 'round': interview.round,
-                                  'mode': interview.mode, 'status': interview.status})
+            interviewList.append(interview.getInterview())
         return interviewList
 
 

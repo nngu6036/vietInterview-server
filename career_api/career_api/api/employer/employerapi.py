@@ -71,7 +71,11 @@ def companyLicense(employer):
 def assignment(employer):
     try:
         if request.method == 'GET':
-            assignmentList = employer.company_id.getAssignment()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count']=='true' if 'count' in request.values else False
+            overview = request.values['overview'] == 'true' if 'overview' in request.values else False
+            assignmentList = employer.company_id.getAssignment(offset,length,count,overview)
             return jsonify(result=True, assignmentList=assignmentList)
         if request.method == 'PUT':
             assignment = json.loads(request.values['assignment'])
@@ -230,7 +234,6 @@ def interviewQuestion(employer):
         print request.values
         return jsonify(result=False)
 
-
 @app.route('/employer/assignment/interview/invite', methods=['POST'], endpoint='employer-assignment-interview-invite')
 @employer_session
 def invitation(employer):
@@ -286,22 +289,6 @@ def candidateAssessment(employer):
         return jsonify(result=False)
 
 
-@app.route('/employer/assignment/interview/shortlist', methods=['POST'],
-           endpoint='employer-assignment-interview-shortlist')
-@employer_session
-def candidateShortlist(employer):
-    try:
-        if request.method == 'POST':
-            applicantId = int(request.values['candidateId'])
-            result = employer.shortlistCandidate(applicantId)
-            return jsonify(result=result)
-    except Exception as exc:
-        print(exc)
-        print 'Candidate shortlist error '
-        print request.values
-        return jsonify(result=False)
-
-
 @app.route('/employer/interview/candidate', methods=['GET'], endpoint='employer-interview-caandidate')
 @employer_session
 def getCandidateNyInterview(employer):
@@ -353,7 +340,10 @@ def changePass(employer):
 def conference(employer):
     try:
         if request.method == 'GET':
-            conferenceList = employer.getConference()
+            offset = int(request.values['offset']) if 'offset' in request.values else None
+            length = int(request.values['length']) if 'length' in request.values else None
+            count = request.values['count'] == 'true' if 'count' in request.values else False
+            conferenceList = employer.getConference(offset,length,count)
             return jsonify(result=True, conferenceList=conferenceList)
     except Exception as exc:
         print(exc)
@@ -429,9 +419,12 @@ def employeeViewContactInfo(employer):
 def employeeSearch(employer):
     try:
         options = json.loads(request.values['option'])
+        offset = int(request.values['offset']) if 'offset' in request.values else None
+        length = int(request.values['length']) if 'length' in request.values else None
+        count = request.values['count'] == 'true' if 'count' in request.values else False
         if request.method == 'GET':
-            employeeList = employer.searchEmployee(options)
-            return jsonify(result=True, employeeList=employeeList)
+            employeeList,nextOffset = employer.searchEmployee(options,offset,length,count)
+            return jsonify(result=True, employeeList=employeeList,nextOffset=nextOffset)
     except Exception as exc:
         print(exc)
         print 'Employee search error '
@@ -472,5 +465,20 @@ def searchEmployeeByEmail(employer):
     except Exception as exc:
         print(exc)
         print 'Search employee error '
+        print request.values
+        return jsonify(result=False)
+
+@app.route('/employer/assignment/candidate', methods=['GET'], endpoint='employer-assignment-candidate')
+@employer_session
+def getAssignmentCandidate(employer):
+    try:
+        if request.method == 'GET':
+            candidateList = employer.getCandidateByJob(int(request.values['assignmentId']))
+            if candidateList:
+                return jsonify(candidateList)
+            return jsonify(result=False)
+    except Exception as exc:
+        print(exc)
+        print 'Get candidate by job  error '
         print request.values
         return jsonify(result=False)

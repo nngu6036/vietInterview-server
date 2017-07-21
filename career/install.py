@@ -4,6 +4,7 @@ from openerp import models, fields, api,tools
 from openerp.osv import osv
 from openerp.service import common
 from datetime import date, datetime, timedelta
+
 class Career(osv.AbstractModel):
     _name = 'career.career'
 
@@ -23,6 +24,10 @@ class Career(osv.AbstractModel):
         self.env['ir.cron'].create(
             {'name': 'DAILY_TASK', 'interval_number': 1, 'interval_type': 'days', 'numbercall': -1,
              'model': 'career.career_task', 'function': 'runDaily', 'nextcall': next_call})
+
+        for job in self.env['hr.job'].search([('status','=','published')]):
+            if not job.isEnabled():
+                job.write({'status':'closed'})
 
 
 
