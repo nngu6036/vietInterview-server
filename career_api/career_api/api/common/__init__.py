@@ -3,7 +3,7 @@ import json
 import os
 
 from career_api.proxy import common_service,account_service,mail_service, job_cat_obj,job_pos_obj,degree_obj,country_obj,province_obj,assessment_obj,question_obj,question_category_obj
-from flask import request, jsonify, abort
+from flask import request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from career_api import app
 from urlparse import urlparse
@@ -31,12 +31,16 @@ def upload_file():
         server_fname = '%s%s' % (datetime.datetime.now().strftime('%S%M%H%m%d%Y'), filename)
         file.save(os.path.join(app.config['VIDEO_UPLOAD_FOLDER'], server_fname))
         parsed_uri = urlparse(request.url_root)
-        domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+        domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
         return jsonify(result=True, url='%s/%s/%s' % (domain,app.config['VIDEO_DOWNLOAD_FOLDER'], server_fname))
   except Exception as exc:
     print(exc)
     print 'Upload file error '
     return jsonify(result=False)
+
+@app.route('/videos/<path:path>')
+def send_videos(path):
+    return send_from_directory(app.config['VIDEO_UPLOAD_FOLDER'], path)
 
 @app.route('/common/assignment/category', methods=['GET'], endpoint='common-assignment-category')
 def jobCategory():
