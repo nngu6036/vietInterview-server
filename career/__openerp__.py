@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','hr','survey','hr_recruitment','mail','mass_mailing','hr_evaluation'],
+    'depends': ['base','hr','survey','hr_recruitment','mail','mass_mailing','hr_recruitment_survey'],
 
     # always loaded
     'data': [
