@@ -32,7 +32,7 @@ def upload_file():
         file.save(os.path.join(app.config['VIDEO_UPLOAD_FOLDER'], server_fname))
         parsed_uri = urlparse(request.url_root)
         print 'URL root', parsed_uri
-        domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+        domain = 'https://{uri.netloc}/'.format(uri=parsed_uri)
         return jsonify(result=True, url='%s/%s/%s' % (domain,app.config['VIDEO_DOWNLOAD_FOLDER'], server_fname))
   except Exception as exc:
     print(exc)
